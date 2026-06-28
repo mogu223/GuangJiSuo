@@ -1,0 +1,5 @@
+#include "STLFileLoader"
+
+STLFileLoader::STLFileLoader(QObject *parent)
+    : QObject{parent}
+{}

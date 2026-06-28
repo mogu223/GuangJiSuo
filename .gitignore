@@ -87,5 +87,33 @@ x86/
 # 日志
 *.log
 
-# 嵌入的 Git 仓库
-GuangJiSuo/LRU
+# 生成的文档 / 帮助文件
+*.html
+*.qbk
+*.quickbook
+*.dimacs
+*.rst
+*.mml
+*.adoc
+*.ipp
+*.v2
+
+# 临时文件
+*.TMP
+*.tmp
+
+# CodeGraph 索引
+.codegraph/
+
+# LRU 构建产物与第三方依赖
+GuangJiSuo/LRU/build/
+GuangJiSuo/LRU/debug/
+GuangJiSuo/LRU/release/
+GuangJiSuo/LRU/bin/
+GuangJiSuo/LRU/log/
+GuangJiSuo/LRU/ThirdLibs/
+GuangJiSuo/LRU/.qmake.stash
+GuangJiSuo/LRU/.qtc_clangd/
+GuangJiSuo/LRU/.qtcreator/
+GuangJiSuo/LRU/*.pro.user
+GuangJiSuo/LRU/*.pro.user.*
