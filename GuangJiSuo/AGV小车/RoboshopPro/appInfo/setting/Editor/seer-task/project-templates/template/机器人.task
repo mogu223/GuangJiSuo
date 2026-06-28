@@ -1,0 +1,1802 @@
+{
+    "id": "dtzxGiUmhA5pxwzqUrFcYP",
+    "text": "机器人",
+    "blocks": [
+        {
+            "id": "ejWCgdZ8LeK7bf7bvTrDCV",
+            "url": "/seer/rbk/robot",
+            "parameters": [
+                {
+                    "id": "468MSFyM1V2WkEbH8CQD5f",
+                    "name": "ip",
+                    "exp": null,
+                    "type": 1,
+                    "in": true,
+                    "value": "58.34.177.162",
+                    "required": true,
+                    "isExp": false,
+                    "valid": true,
+                    "spread": true,
+                    "text": "机器人ip"
+                },
+                {
+                    "id": "abD8KWmw2QnUbbhUgzsMVy",
+                    "name": "action",
+                    "exp": null,
+                    "type": 10,
+                    "value": null,
+                    "isExp": false,
+                    "spread": true,
+                    "text": "选择成功后"
+                },
+                {
+                    "id": "9JG3JpSMgtUoicrDEujQqs",
+                    "name": "robot",
+                    "exp": null,
+                    "type": 7,
+                    "customType": "/seer/rbk",
+                    "out": true,
+                    "value": null,
+                    "var": "robot",
+                    "isExp": false,
+                    "spread": true,
+                    "text": "机器人"
+                }
+            ],
+            "blocks": {
+                "abD8KWmw2QnUbbhUgzsMVy": [
+                    {
+                        "id": "26wHbBgudDj4d8cqFKJ4Gj",
+                        "url": "/seer/base/debug",
+                        "parameters": [
+                            {
+                                "id": "ekF6jb7tpiJPdrC42NmPVb",
+                                "name": "data",
+                                "exp": "robot",
+                                "express": {
+                                    "operator": "root",
+                                    "childs": [
+                                        {
+                                            "operator": "variable",
+                                            "value": "robot",
+                                            "childs": []
+                                        }
+                                    ]
+                                },
+                                "type": 12,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "spread": true,
+                                "text": "信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "thTuZ1KBVQUDEgRNRoTUgb",
+                        "url": "/seer/rbk/query/robot_status_info_req",
+                        "parameters": [
+                            {
+                                "id": "irbo6934eJYaMukf5eibCE",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "hwvyBc9P8fv3DxwstKEhsm",
+                                "name": "info",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "8s2tCEscb1XC5vCt7LfL8L",
+                                        "name": "id",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人id"
+                                    },
+                                    {
+                                        "id": "9zYZzGBDHc4eYVqFpNFyHB",
+                                        "name": "vehicle_id",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人名称"
+                                    },
+                                    {
+                                        "id": "7rJBhNJE3o1sa5pyT5CW6J",
+                                        "name": "robot_note",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人备注"
+                                    },
+                                    {
+                                        "id": "aNGYQiX4hDE4QcujsgaEzz",
+                                        "name": "model",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人模型名"
+                                    },
+                                    {
+                                        "id": "22PN8RnaLPHGPUbnh9NCdm",
+                                        "name": "dsp_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "固件版本号"
+                                    },
+                                    {
+                                        "id": "gyuCURdfR85m2FrNCeFgoF",
+                                        "name": "gyro_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "陀螺仪版本号"
+                                    },
+                                    {
+                                        "id": "6rS74EZBB4SKWuq8jdraig",
+                                        "name": "map_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "地图版本号"
+                                    },
+                                    {
+                                        "id": "3u4E5bPs3gWtGcy3XNEtKX",
+                                        "name": "model_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "模型版本号"
+                                    },
+                                    {
+                                        "id": "pnL83Cwv8Bhf5Q5vLsyZ4A",
+                                        "name": "netprotocol_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "网络协议版本号"
+                                    },
+                                    {
+                                        "id": "nM5Q36aagZN7tqGKcKBXet",
+                                        "name": "modbus_version",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "ModbusTCP 协议版本号"
+                                    },
+                                    {
+                                        "id": "iukKUD2UqYVq6G4smhBMyf",
+                                        "name": "current_map",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "当前地图名"
+                                    },
+                                    {
+                                        "id": "hT91LTHvkEkeZsZkwtqddt",
+                                        "name": "current_map_md5",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "当前地图 MD5"
+                                    },
+                                    {
+                                        "id": "mv6SQbMCv1FYJgaFSTLPnR",
+                                        "name": "model_md5",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "当前模型 MD5"
+                                    },
+                                    {
+                                        "id": "oSE956BqHQFwCNGYjpxtsa",
+                                        "name": "ssid",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "SSID"
+                                    },
+                                    {
+                                        "id": "uzVEpXKs3YbPbhKVaoHE4X",
+                                        "name": "rssi",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "Wifi的信号强度"
+                                    },
+                                    {
+                                        "id": "iNbURCsmKYaERXy5BrYNA4",
+                                        "name": "ap_addr",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "AP的mac地址"
+                                    },
+                                    {
+                                        "id": "rXG8f18XxYzQS5jSR9HFRW",
+                                        "name": "current_ip",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "IP"
+                                    },
+                                    {
+                                        "id": "47y5K8A82LhTxd1PRTbQrR",
+                                        "name": "MAC",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "MAC"
+                                    },
+                                    {
+                                        "id": "qDjA1iw1dooZuYDrW4DMf7",
+                                        "name": "echoid",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器码 "
+                                    },
+                                    {
+                                        "id": "e3xyRSTJy6KcfkVTwAWoB2",
+                                        "name": "echoid_type",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器码类型"
+                                    },
+                                    {
+                                        "id": "1To4pB9JRkD6VRcDAKECaq",
+                                        "name": "features",
+                                        "exp": null,
+                                        "type": 9,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "功能模块"
+                                    }
+                                ],
+                                "var": "info",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "pzvp8QHiBgHFMVdL7pcj8s",
+                        "url": "/seer/base/debug",
+                        "parameters": [
+                            {
+                                "id": "tNBDZAvH7TxY1kmuPFLPu5",
+                                "name": "data",
+                                "exp": "info",
+                                "express": {
+                                    "operator": "root",
+                                    "childs": [
+                                        {
+                                            "operator": "variable",
+                                            "value": "info",
+                                            "childs": []
+                                        }
+                                    ]
+                                },
+                                "type": 12,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "spread": true,
+                                "text": "信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "pzvp8QHiBgHFMVdL7pcj8s"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "kis88421rZ34yUYCJv8deH",
+                        "url": "/seer/rbk/query/robot_status_loc_req",
+                        "parameters": [
+                            {
+                                "id": "tJ4a75DtHnMRNHbAf18Ttc",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "e59AkeV86DjL65opVJqo1g",
+                                "name": "loc",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "3gih1TuabbWqnpteq8nhAj",
+                                        "name": "x",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "x坐标"
+                                    },
+                                    {
+                                        "id": "6yfQJSFKgygdSicKVod4ch",
+                                        "name": "y",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "y坐标"
+                                    },
+                                    {
+                                        "id": "vY2QhJhAvoLmtkdasASAA6",
+                                        "name": "angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "angle坐标"
+                                    },
+                                    {
+                                        "id": "3smCrfH8i7LNte4s1GS6sV",
+                                        "name": "confidence",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "置信度"
+                                    },
+                                    {
+                                        "id": "xwpLtzK9dKN2tqHTXKDfsx",
+                                        "name": "current_station",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "当前所在站点的id"
+                                    },
+                                    {
+                                        "id": "2shLg6yNsEC7P9ZdvTLFqF",
+                                        "name": "last_station",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "上一个所在站点的id"
+                                    }
+                                ],
+                                "var": "loc",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人位置信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "kis88421rZ34yUYCJv8deH"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "nLuYo5zJZ8TvsgQETGJVs8",
+                        "url": "/seer/rbk/query/robot_status_run_req",
+                        "parameters": [
+                            {
+                                "id": "odzTPANFLhJYqRrEuVEXSw",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "vH9bGV61MKQ6xvfWihm6ks",
+                                "name": "runInfo",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "ktaZ469FuoZTTLUNMFPNCV",
+                                        "name": "odo",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "里程"
+                                    },
+                                    {
+                                        "id": "jUupCoTWbAmu4nXnYVDQKX",
+                                        "name": "today_odo",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人备注"
+                                    },
+                                    {
+                                        "id": "gtnR2jWWgHXabivaYp54vi",
+                                        "name": "time",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运行时间"
+                                    },
+                                    {
+                                        "id": "7eVJZZu83KZtiDHGyzdmrE",
+                                        "name": "total_time",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "累计运行时间"
+                                    },
+                                    {
+                                        "id": "49Nnv1YDXtBcpzY5R4rW7i",
+                                        "name": "controller_temp",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "控制器温度"
+                                    },
+                                    {
+                                        "id": "uSbvXrw3wnrhsk2xVb5vj8",
+                                        "name": "controller_humi",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "控制器湿度"
+                                    },
+                                    {
+                                        "id": "wbKF2Nax5phqwK3qZNLdHT",
+                                        "name": "controller_voltage",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "控制器电压"
+                                    }
+                                ],
+                                "var": "runInfo",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人运行信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "nLuYo5zJZ8TvsgQETGJVs8"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "1uXFb7p9jiCDYwPx6GtFjC",
+                        "url": "/seer/rbk/query/robot_status_battery_req",
+                        "parameters": [
+                            {
+                                "id": "2dzA9VgWuGj2jhtjaZnVzo",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "qozi959tLdZdLHDD7Wug4U",
+                                "name": "robot_battery_detail",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "2F91YwAoFqBWpipetoj19z",
+                                        "name": "battery_level",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "电池电量"
+                                    },
+                                    {
+                                        "id": "3JKhkaXE2hMy158VR7cCJr",
+                                        "name": "battery_temp",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "电池温度"
+                                    },
+                                    {
+                                        "id": "tdywJCoFCvE5eN6fvKWcxx",
+                                        "name": "charging",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否正在充电"
+                                    },
+                                    {
+                                        "id": "p9Zq1bjnEVVg9T6JLUdRmX",
+                                        "name": "voltage",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "电压"
+                                    },
+                                    {
+                                        "id": "2SC1PWJEF7GMFY7ZjXdavp",
+                                        "name": "current",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "电流"
+                                    },
+                                    {
+                                        "id": "8jpVtYdL4SpM8KoykZTxS3",
+                                        "name": "max_charge_voltage",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "允许充电的最大电压"
+                                    },
+                                    {
+                                        "id": "6YzHEU6EHNSgPfMMprEUGE",
+                                        "name": "max_charge_current",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "允许充电的最大电流"
+                                    },
+                                    {
+                                        "id": "pBwfnYUyzV3SKonQvHmm8U",
+                                        "name": "manual_charge",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否连接手动充电器"
+                                    },
+                                    {
+                                        "id": "wMrPzrgWsTM2gNjucWGgzc",
+                                        "name": "auto_charge",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否连接自动充电桩"
+                                    },
+                                    {
+                                        "id": "xmBruSoBYjqQHuWUqbJySv",
+                                        "name": "battery_cycle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "电池循环次数"
+                                    },
+                                    {
+                                        "id": "iTkEewYt98EznHSCz4ZwGS",
+                                        "name": "battery_user_data",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "用户自定义数据"
+                                    }
+                                ],
+                                "var": "robot_battery_detail",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人电池状态"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "1uXFb7p9jiCDYwPx6GtFjC"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "6QXN34V9rwXyp6eznDQtGL",
+                        "url": "/seer/rbk/query/robot_status_battery_req_simple",
+                        "parameters": [
+                            {
+                                "id": "vvccJgM22ohCWjipf1Zf6P",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "6QdhUjQnBhkU4x3PJLe8yo",
+                                "name": "robot_battery_level",
+                                "exp": null,
+                                "type": 4,
+                                "out": true,
+                                "value": null,
+                                "var": "robot_battery_level",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人电池电量"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "6QXN34V9rwXyp6eznDQtGL"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "sYpqQDyWiyC4JMtdc4PGyM",
+                        "url": "/seer/rbk/query/robot_status_speed_req",
+                        "parameters": [
+                            {
+                                "id": "1xx3b8y6tpxTEJrQoojieV",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "2kUv5VcMfaF4nKupUPSJU5",
+                                "name": "speedInfo",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "gwrGhzFRHdxn8SFcPwxDYh",
+                                        "name": "vx",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "x 方向速度"
+                                    },
+                                    {
+                                        "id": "j8PoYPAmnRoQzPy9uyjphy",
+                                        "name": "vy",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "y 方向速度"
+                                    },
+                                    {
+                                        "id": "4Cy7utAcsjz2oqVNVJ2HFd",
+                                        "name": "w",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "角速度"
+                                    },
+                                    {
+                                        "id": "45ZofCDEk9Uadvjeih4DBm",
+                                        "name": "steer",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "舵轮角度"
+                                    },
+                                    {
+                                        "id": "hUmQUxn8cFNLzrSxbQ5s2Q",
+                                        "name": "spin",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "托盘角度"
+                                    },
+                                    {
+                                        "id": "5aqJrQEqYjN3rkqLYtdSBk",
+                                        "name": "r_vx",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到的x 方向速度"
+                                    },
+                                    {
+                                        "id": "p6qxtpGC7QwtscoPegWcXq",
+                                        "name": "r_vy",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到的y 方向速度"
+                                    },
+                                    {
+                                        "id": "2c2DTSBu7G7vLsYUuwUhG1",
+                                        "name": "r_w",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到角速度"
+                                    },
+                                    {
+                                        "id": "cjXy4UzUDTHUViYvz7zSW5",
+                                        "name": "r_steer",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到舵轮角度"
+                                    },
+                                    {
+                                        "id": "w7zanFL3KregbpcBjdzr1K",
+                                        "name": "r_spin",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到托盘转动速度"
+                                    },
+                                    {
+                                        "id": "346P13MJy2h4Pnstqzmwaj",
+                                        "name": "steer_angles",
+                                        "exp": null,
+                                        "type": 8,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "多舵轮当前舵角角度"
+                                    },
+                                    {
+                                        "id": "qBAxEHj8aT1EKvEsJDExMB",
+                                        "name": "r_steer_angles",
+                                        "exp": null,
+                                        "type": 8,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接收到多舵轮舵角角度"
+                                    }
+                                ],
+                                "var": "speedInfo",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人速度信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "sYpqQDyWiyC4JMtdc4PGyM"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "irniNDZXuavGTeFCU8QqTh",
+                        "url": "/seer/rbk/query/robot_status_block_req",
+                        "parameters": [
+                            {
+                                "id": "vg1BwgeYyNnREaTcfsC6zo",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "qZcKtQreZB68SFBmy6muKw",
+                                "name": "robot_block_detail",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "rtN7qkE4G3mktEy5QwUjxn",
+                                        "name": "blocked",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否被阻挡"
+                                    },
+                                    {
+                                        "id": "ffcLBELJXRXqr8Av1poANx",
+                                        "name": "block_reason",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "阻挡原因"
+                                    },
+                                    {
+                                        "id": "eCiunS37TuGqD8kCSQzbWR",
+                                        "name": "block_x",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "block_x"
+                                    },
+                                    {
+                                        "id": "8j9K1tP1yeiMi4CYyW4zFx",
+                                        "name": "block_y",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "block_y"
+                                    },
+                                    {
+                                        "id": "aEnsMTPxNtd3AQewVdB94x",
+                                        "name": "block_id",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "block_id"
+                                    },
+                                    {
+                                        "id": "ucUAvEB9VypnA1VMiVaaPu",
+                                        "name": "slowed",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否减速"
+                                    },
+                                    {
+                                        "id": "4YgaQXJqsMu64JLgMnWUWs",
+                                        "name": "slow_reason",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "减速的原因"
+                                    },
+                                    {
+                                        "id": "8aYbWaZFR5aQUHGRrn5qTE",
+                                        "name": "slow_x",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "slow_x"
+                                    },
+                                    {
+                                        "id": "c3m4ApGfFGzLdTJRdo1joi",
+                                        "name": "slow_y",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "slow_y"
+                                    },
+                                    {
+                                        "id": "8jXUd5FwekSNPHsdePYx2J",
+                                        "name": "slow_id",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "减速的 id 号"
+                                    }
+                                ],
+                                "var": "robot_block_detail",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人阻挡状态"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "irniNDZXuavGTeFCU8QqTh"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "2DsjhyD3ywuRgrrMnsUwH6",
+                        "url": "/seer/base/guid",
+                        "parameters": [
+                            {
+                                "id": "jwKw8wjXcsPE1cPC11baHV",
+                                "name": "guid",
+                                "exp": null,
+                                "type": 1,
+                                "out": true,
+                                "value": null,
+                                "var": "guid",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "Guid码"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "cAQBJ2kac75wB1xHVVTSVd",
+                        "url": "/seer/rbk/settings/robot_config_lock_req",
+                        "parameters": [
+                            {
+                                "id": "uqHsMGnyuVTcUBmwBvgceN",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "46TtuvVBqBW14wdYiSKyRd",
+                                "name": "nick_name",
+                                "exp": "guid",
+                                "express": {
+                                    "operator": "root",
+                                    "childs": [
+                                        {
+                                            "operator": "variable",
+                                            "value": "guid",
+                                            "childs": []
+                                        }
+                                    ]
+                                },
+                                "type": 1,
+                                "in": true,
+                                "value": "robot_test",
+                                "isExp": true,
+                                "spread": true,
+                                "text": "抢占者名称"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "6uHrRKfPvfmnzJtbgt49Dk",
+                        "url": "/seer/rbk/nav/robot_task_gotarget_req",
+                        "parameters": [
+                            {
+                                "id": "sLNE7vKNZP4GU3RAVUzifJ",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "77Gd7vonYP9ZhobJ1uXYG8",
+                                "name": "source_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP1",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "起始站点"
+                            },
+                            {
+                                "id": "kfjXKtDqXaJnJrC61h6Hb1",
+                                "name": "id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP2",
+                                "required": true,
+                                "isExp": false,
+                                "valid": true,
+                                "spread": true,
+                                "text": "目标站点"
+                            },
+                            {
+                                "id": "k8NckCLvX4372c7nnW8Ppt",
+                                "name": "task_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "任务编号"
+                            },
+                            {
+                                "id": "w2wXnA6gaZ7UJd3Eydy8Qh",
+                                "name": "task_nav_detail",
+                                "exp": null,
+                                "type": 6,
+                                "folder": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "8XRR4GnWEBTkK3UFmZz65X",
+                                        "name": "angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "角度值"
+                                    },
+                                    {
+                                        "id": "uamgochXAiH3Nw2nL8m8dB",
+                                        "name": "method",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运动方式"
+                                    },
+                                    {
+                                        "id": "e9dKD73UZBV4TTG5E2MLsm",
+                                        "name": "max_speed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大速度"
+                                    },
+                                    {
+                                        "id": "3Ecm4WzsAo2Mcy14vVAHNU",
+                                        "name": "max_wspeed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角速度"
+                                    },
+                                    {
+                                        "id": "uwVP29vU6DoYk37FC24HYf",
+                                        "name": "max_acc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大加速度"
+                                    },
+                                    {
+                                        "id": "8GBARThbHQAMH9gNqCFSsV",
+                                        "name": "max_wacc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角加速度"
+                                    },
+                                    {
+                                        "id": "278St5H7UZxor35RZ5XifX",
+                                        "name": "duration",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "等待时间"
+                                    },
+                                    {
+                                        "id": "5E5pz5xdvhHKTYcUrfzXzX",
+                                        "name": "spin",
+                                        "exp": null,
+                                        "type": 3,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否随动"
+                                    },
+                                    {
+                                        "id": "5CUb4RrstFN1HNg6Wq9N6j",
+                                        "name": "delay",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": 0,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "延迟结束时间"
+                                    },
+                                    {
+                                        "id": "17n26JQgawJXQwAgXH7UJ9",
+                                        "name": "rot_dir",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "旋转角度"
+                                    },
+                                    {
+                                        "id": "5vqHemN9EbKTthwdHb8Mrj",
+                                        "name": "reach_dist",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点位置精度"
+                                    },
+                                    {
+                                        "id": "b8ZzCeToqbdBzawk4RgkUt",
+                                        "name": "reach_angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点角度精度"
+                                    },
+                                    {
+                                        "id": "9nWpcbweUFP53ymoTsnvww",
+                                        "name": "skill_name",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "技能"
+                                    }
+                                ],
+                                "isExp": false,
+                                "spread": false,
+                                "text": "高级路径导航"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "6uHrRKfPvfmnzJtbgt49Dk"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "sEL21UaW5Y4Nc7jMQXbLDQ",
+                        "url": "/seer/rbk/nav/robot_task_gotarget_req",
+                        "parameters": [
+                            {
+                                "id": "u7gQKMS5hkdASrW5TujHAC",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "2wVx8FgzhJNqryiZNP3MNb",
+                                "name": "source_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP3",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "起始站点"
+                            },
+                            {
+                                "id": "ezDLCzVSk5Pj9gdwZqFZ1P",
+                                "name": "id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP5",
+                                "required": true,
+                                "isExp": false,
+                                "valid": true,
+                                "spread": true,
+                                "text": "目标站点"
+                            },
+                            {
+                                "id": "4Xssp39socGMJQrFsuU4Ng",
+                                "name": "task_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "任务编号"
+                            },
+                            {
+                                "id": "gLF11Kiwzes9UTiTP9mqDz",
+                                "name": "task_nav_detail",
+                                "exp": null,
+                                "type": 6,
+                                "folder": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "iJs4vdxsCXLC9zbrPXHcsm",
+                                        "name": "angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "角度值"
+                                    },
+                                    {
+                                        "id": "fGQ9QfTFSdjCmLhzaQX8X1",
+                                        "name": "method",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运动方式"
+                                    },
+                                    {
+                                        "id": "2vDQRJt2Bz2QDwqjEFiyhD",
+                                        "name": "max_speed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大速度"
+                                    },
+                                    {
+                                        "id": "qYCmy28yM8fVhRsMHi32E2",
+                                        "name": "max_wspeed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角速度"
+                                    },
+                                    {
+                                        "id": "ncLGtiZwFD5EH2HuLdMNZj",
+                                        "name": "max_acc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大加速度"
+                                    },
+                                    {
+                                        "id": "8xBWEvUfHpvEq5NtXep9sp",
+                                        "name": "max_wacc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角加速度"
+                                    },
+                                    {
+                                        "id": "rEeYStCG9UP5L1D2aP8We6",
+                                        "name": "duration",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "等待时间"
+                                    },
+                                    {
+                                        "id": "3azBAUWApQcswFb9fd8EYf",
+                                        "name": "spin",
+                                        "exp": null,
+                                        "type": 3,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否随动"
+                                    },
+                                    {
+                                        "id": "4kVGjHcX1f2fxqsD7AxQZ3",
+                                        "name": "delay",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": 0,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "延迟结束时间"
+                                    },
+                                    {
+                                        "id": "maTssqSCexhZYxahAnkNZu",
+                                        "name": "rot_dir",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "旋转角度"
+                                    },
+                                    {
+                                        "id": "32WpTNVrtTkEQqckWWw7fE",
+                                        "name": "reach_dist",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点位置精度"
+                                    },
+                                    {
+                                        "id": "cn7n1Kbzzo6972sdWyL9f9",
+                                        "name": "reach_angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点角度精度"
+                                    },
+                                    {
+                                        "id": "5Frgc3zf3dpe6wcroqJUhH",
+                                        "name": "skill_name",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "技能"
+                                    }
+                                ],
+                                "isExp": false,
+                                "spread": true,
+                                "text": "高级路径导航"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "sEL21UaW5Y4Nc7jMQXbLDQ"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "eGhA2M648RLcqZjvL2G2LN",
+                        "url": "/seer/rbk/nav/robot_task_gotarget_req",
+                        "parameters": [
+                            {
+                                "id": "3gE3RZNZcN1w4zkoKvWun7",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "dANj6xZkTNYW2pbDcoVdx7",
+                                "name": "source_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP5",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "起始站点"
+                            },
+                            {
+                                "id": "hck675qJdqDTncKAQmkLCj",
+                                "name": "id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "AP1",
+                                "required": true,
+                                "isExp": false,
+                                "valid": true,
+                                "spread": true,
+                                "text": "目标站点"
+                            },
+                            {
+                                "id": "qPiZXBFjcYN2iDayNGBqQ6",
+                                "name": "task_id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "任务编号"
+                            },
+                            {
+                                "id": "eVSCZG9cWdQaMrUSJHxeKX",
+                                "name": "task_nav_detail",
+                                "exp": null,
+                                "type": 6,
+                                "folder": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "qJx47aTbHuqEBgwQQtEcxX",
+                                        "name": "angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "角度值"
+                                    },
+                                    {
+                                        "id": "e6P9NPZissQT3THBRSs2XW",
+                                        "name": "method",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运动方式"
+                                    },
+                                    {
+                                        "id": "54tRv8r8XGQUMDwg4YN4ff",
+                                        "name": "max_speed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大速度"
+                                    },
+                                    {
+                                        "id": "x22FFHWLkRuw5hztDgK2JZ",
+                                        "name": "max_wspeed",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角速度"
+                                    },
+                                    {
+                                        "id": "i9ou3d39oJQDip98c2A3hB",
+                                        "name": "max_acc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大加速度"
+                                    },
+                                    {
+                                        "id": "1h4RSKD3B72njcjrKjDMAe",
+                                        "name": "max_wacc",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "最大角加速度"
+                                    },
+                                    {
+                                        "id": "v6DBbt2dnKHoyTvHcDQxwy",
+                                        "name": "duration",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "等待时间"
+                                    },
+                                    {
+                                        "id": "bf4L9Kg8bb3n482uKn1x1z",
+                                        "name": "spin",
+                                        "exp": null,
+                                        "type": 3,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "是否随动"
+                                    },
+                                    {
+                                        "id": "a68pCgsKPrXMHWYVBTE9i6",
+                                        "name": "delay",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": 0,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "延迟结束时间"
+                                    },
+                                    {
+                                        "id": "ratm9Q7kxdFaC8atJbkg9S",
+                                        "name": "rot_dir",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "旋转角度"
+                                    },
+                                    {
+                                        "id": "9GBQ6pUej2VkjjGd6iABAg",
+                                        "name": "reach_dist",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点位置精度"
+                                    },
+                                    {
+                                        "id": "shhS5dQTsVBffsYeiEr9Nn",
+                                        "name": "reach_angle",
+                                        "exp": null,
+                                        "type": 4,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "到点角度精度"
+                                    },
+                                    {
+                                        "id": "9F2SpHAcdvRewwambynWQj",
+                                        "name": "skill_name",
+                                        "exp": null,
+                                        "type": 1,
+                                        "in": true,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "技能"
+                                    }
+                                ],
+                                "isExp": false,
+                                "spread": false,
+                                "text": "高级路径导航"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [
+                            "eGhA2M648RLcqZjvL2G2LN"
+                        ],
+                        "annotation": false
+                    },
+                    {
+                        "id": "3tAbr65qqYALn2bSkefypK",
+                        "url": "/seer/rbk/settings/robot_config_unlock_req",
+                        "parameters": [
+                            {
+                                "id": "bgZyYN7PoeRHjLZqrSzH14",
+                                "name": "robot",
+                                "exp": "robot",
+                                "type": 7,
+                                "customType": "/seer/rbk",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "机器人"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    }
+                ]
+            },
+            "breaks": [
+                "abD8KWmw2QnUbbhUgzsMVy"
+            ],
+            "annotation": false
+        }
+    ],
+    "args": []
+}

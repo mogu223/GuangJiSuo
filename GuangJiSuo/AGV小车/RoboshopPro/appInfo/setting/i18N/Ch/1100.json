@@ -1,0 +1,161 @@
+{
+    "double": [
+	    {
+            "key": "timeDiff",
+            "desc": "通信延迟(ms)",
+			"isChecked":true
+        },
+        {
+            "key": "r_vx",
+            "desc": "x下发速度(m/s)"
+        },
+        {
+            "key": "vx",
+            "desc": "x实际速度(m/s)"
+        },
+        {
+            "key": "r_vy",
+            "desc": "y下发速度(m/s)"
+        },
+        {
+            "key": "vy",
+            "desc": "y实际速度(m/s)"
+        },
+        {
+            "key": "r_w",
+            "desc": "下发角速度(°/s)"
+        },
+        {
+            "key": "w",
+            "desc": "实际角速度(°/s)"
+        },
+        {
+            "key": "r_steer",
+            "desc": "下发单舵轮角度"
+        },
+        {
+            "key": "steer",
+            "desc": "实际单舵轮角度"
+        },
+        {
+            "key": "r_steer_angles1",
+            "desc": "下发舵角 1"
+        },
+        {
+            "key": "r_steer_angles2",
+            "desc": "下发舵角 2"
+        },
+        {
+            "key": "steer_angles1",
+            "desc": "实际舵角 1"
+        },
+        {
+            "key": "steer_angles2",
+            "desc": "实际舵角 2"
+        },
+        {
+            "key": "yaw",
+            "desc": "陀螺仪偏航角(°)"
+        },
+        {
+            "key": "roll",
+            "desc": "陀螺仪滚转角(°)"
+        },
+        {
+            "key": "pitch",
+            "desc": "陀螺仪俯仰角(°)"
+        },
+        {
+            "key": "fork_height",
+            "desc": "货叉当前高度(m)"
+        },
+        {
+            "key": "jack_speed",
+            "desc": "顶升电机速率(mm/s)"
+        },
+        {
+            "key": "jack_height",
+            "desc": "顶升当前高度(m)"
+        },
+        {
+            "key":"confidence",
+            "desc":"置信度"
+        },
+        {
+            "key":"spin",
+            "desc":"实际托盘角度(°)"
+        },
+        {
+            "key":"r_spin",
+            "desc":"下发托盘速度(°/s)"
+        },
+        {
+            "key":"battery_level",
+            "desc":"电池电量"
+        },
+        {
+            "key":"voltage",
+            "desc":"电池电压"
+        },
+        {
+            "key":"current",
+            "desc":"电池电流"
+        },
+        {
+            "key":"max_charge_voltage",
+            "desc":"最大充电电压"
+        },
+        {
+            "key":"max_charge_current",
+            "desc":"最大充电电流"
+        }
+    ],
+    "bool": [
+        {
+            "key": "charging",
+            "desc": "是否正在充电",
+			"isChecked":true
+        },
+        {
+            "key": "roller_emc",
+            "desc": "滚筒是否急停"
+        },
+        {
+            "key": "roller_isFull",
+            "desc": "滚筒是否有料"
+        },
+        {
+            "key": "fork_height_in_place",
+            "desc": "货叉是否到位"
+        },
+        {
+            "key": "emergency",
+            "desc": "急停是否拍下"
+        },
+        {
+            "key": "slowed",
+            "desc": "是否减速"
+        },
+        {
+            "key": "blocked",
+            "desc": "是否被阻挡"
+        },
+        {
+            "key": "manual_charge",
+            "desc": "手动充电"
+        },
+        {
+            "key": "auto_charge",
+            "desc": "自动充电"
+        },
+        {
+            "key": "brake",
+            "desc": "抱闸状态",
+			"isChecked":true
+        },
+        {
+            "key": "driver_emc",
+            "desc": "驱动器失能状态"
+        }
+    ]
+}

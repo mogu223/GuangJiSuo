@@ -1,0 +1,256 @@
+{
+ "name": "model-4",
+ "tasks": [
+  {
+   "taskId": 0,
+   "desc": "",
+   "actionGroups": [
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30005"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 1",
+     "actionGroupId": 0,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30006"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 2",
+     "actionGroupId": 1,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30005"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 3",
+     "actionGroupId": 2,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30007"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 4",
+     "actionGroupId": 3,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30005"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 5",
+     "actionGroupId": 4,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30008"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 6",
+     "actionGroupId": 5,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30005"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 7",
+     "actionGroupId": 6,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30009"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 8",
+     "actionGroupId": 7,
+     "checked": true
+    },
+    {
+     "actions": [
+      {
+       "actionName": "move_action",
+       "pluginName": "MoveFactory",
+       "params": [
+        {
+         "key": "skill_name",
+         "stringValue": "GotoSpecifiedPose"
+        },
+        {
+         "key": "target_name",
+         "stringValue": "LM30005"
+        }
+       ],
+       "ignoreReturn": false,
+       "overtime": 0,
+       "externalOverId": -1,
+       "needResult": false,
+       "sleepTime": 0,
+       "actionId": 0
+      }
+     ],
+     "actionGroupName": "group 9",
+     "actionGroupId": 8,
+     "checked": true
+    }
+   ],
+   "checked": true
+  }
+ ],
+ "loop": false
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "centerPos": {
+            "x": 1329.3,
+            "y": 105.9867322293556
+        },
+        "itemType": 1232,
+        "json": "{\"className\":\"LocationMark\",\"instanceName\":\"LM30002\",\"pos\":{\"x\":13.293,\"y\":1.06},\"property\":[{\"key\":\"spin\",\"type\":\"bool\",\"value\":\"ZmFsc2U=\",\"boolValue\":false}],\"ignoreDir\":true}"
+    },
+    {
+        "centerPos": {
+            "x": -0.7327208480564877,
+            "y": 70.34120141342754
+        },
+        "itemType": 1234,
+        "json": "{\n    \"curve\": \"StraightPath\",\n    \"data0\": \"{\\\"className\\\":\\\"StraightPath\\\",\\\"instanceName\\\":\\\"LM30001-LM30002\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM30001\\\",\\\"pos\\\":{\\\"x\\\":10.793,\\\"y\\\":1.06}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM30002\\\",\\\"pos\\\":{\\\"x\\\":13.293,\\\"y\\\":1.06}},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"maxspeed\\\",\\\"type\\\":\\\"double\\\",\\\"value\\\":\\\"MC41\\\",\\\"doubleValue\\\":0.5}]}\",\n    \"data1\": \"{\\\"className\\\":\\\"StraightPath\\\",\\\"instanceName\\\":\\\"LM30002-LM30001\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM30002\\\",\\\"pos\\\":{\\\"x\\\":13.293,\\\"y\\\":1.06}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM30001\\\",\\\"pos\\\":{\\\"x\\\":10.793,\\\"y\\\":1.06}},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MQ==\\\",\\\"int32Value\\\":1},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"maxspeed\\\",\\\"type\\\":\\\"double\\\",\\\"value\\\":\\\"MC41\\\",\\\"doubleValue\\\":0.5}]}\",\n    \"direction\": 2\n}\n"
+    },
+    {
+        "centerPos": {
+            "x": -0.7327208480564877,
+            "y": 70.34120141342754
+        },
+        "itemType": 1234,
+        "json": "{\n    \"curve\": \"StraightPath\",\n    \"data0\": \"{\\\"className\\\":\\\"StraightPath\\\",\\\"instanceName\\\":\\\"LM30000-LM30001\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM30000\\\",\\\"pos\\\":{\\\"x\\\":8.293,\\\"y\\\":1.06}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM30001\\\",\\\"pos\\\":{\\\"x\\\":10.793,\\\"y\\\":1.06}},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"maxspeed\\\",\\\"type\\\":\\\"double\\\",\\\"value\\\":\\\"MC41\\\",\\\"doubleValue\\\":0.5}]}\",\n    \"data1\": \"{\\\"className\\\":\\\"StraightPath\\\",\\\"instanceName\\\":\\\"LM30001-LM30000\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM30001\\\",\\\"pos\\\":{\\\"x\\\":10.793,\\\"y\\\":1.06}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM30000\\\",\\\"pos\\\":{\\\"x\\\":8.293,\\\"y\\\":1.06}},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MQ==\\\",\\\"int32Value\\\":1},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"maxspeed\\\",\\\"type\\\":\\\"double\\\",\\\"value\\\":\\\"MC41\\\",\\\"doubleValue\\\":0.5}]}\",\n    \"direction\": 2\n}\n"
+    },
+    {
+        "centerPos": {
+            "x": 1079.3,
+            "y": 105.9867322293556
+        },
+        "itemType": 1232,
+        "json": "{\"className\":\"LocationMark\",\"instanceName\":\"LM30001\",\"pos\":{\"x\":10.793,\"y\":1.06},\"property\":[{\"key\":\"spin\",\"type\":\"bool\",\"value\":\"ZmFsc2U=\",\"boolValue\":false}],\"ignoreDir\":true}"
+    },
+    {
+        "centerPos": {
+            "x": 829.3,
+            "y": 105.9867322293556
+        },
+        "itemType": 1232,
+        "json": "{\"className\":\"LocationMark\",\"instanceName\":\"LM30000\",\"pos\":{\"x\":8.293,\"y\":1.06},\"property\":[{\"key\":\"spin\",\"type\":\"bool\",\"value\":\"ZmFsc2U=\",\"boolValue\":false}],\"ignoreDir\":true}"
+    }
+]

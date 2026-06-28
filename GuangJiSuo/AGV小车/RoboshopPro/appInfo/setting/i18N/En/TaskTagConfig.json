@@ -1,0 +1,107 @@
+[
+
+	{
+		"plugin_name": "MoveFactory",
+		"plugin_text": "Robot Control",
+		"actions": [{
+			"action_name": "move_action",
+			"action_text": "Navigation",
+			"has_parameters": true,
+			"parameters": [{
+					"action_name": "GotoSpecifiedPose",
+					"action_text": "Path Nav",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "Translate",
+					"action_text": "Translation",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "Turn",
+					"action_text": "Rotation",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "Action",
+					"action_text": "Custom Action",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "RoForkAction",
+					"action_text": "Fork",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "RoRollerAction",
+					"action_text": "Roller",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "RoJackAction",
+					"action_text": "Jack",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "RoPlaySound",
+					"action_text": "Play sound",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "RoStopSound",
+					"action_text": "Stop play sound",
+					"has_parameters": true,
+					"parameters": []
+				}
+			]
+		}]
+	},
+	{
+		"plugin_name": "TaskManager",
+		"plugin_text": "Task Manager",
+		"actions": [{
+			"action_name": "action_waitDI",
+			"action_text": "Wait DI Trigger",
+			"has_parameters": true,
+			"parameters": [{
+					"text": "",
+					"key": "index",
+					"value": 4
+				},
+				{
+					"text": "",
+					"key": "value",
+					"value": true
+				}
+			]
+		}]
+	},
+	{
+		"plugin_name": "DSPChassis",
+		"plugin_text": "Chassis Control",
+		"actions": [{
+			"action_name": "action_setDO",
+			"action_text": "Set DO",
+			"has_parameters": true,
+			"parameters": [{
+					"text": "",
+					"key": "index",
+					"value": 0
+				},
+				{
+					"text": "",
+					"key": "value",
+					"value": false
+				}
+			]
+		}]
+	}
+]

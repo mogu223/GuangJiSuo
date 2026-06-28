@@ -1,0 +1,1434 @@
+[
+  {
+    "Buttons": [
+      {
+        "blockType": "action",
+        "className": "QPushButton",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "pushButton"
+                }
+              ],
+              "key": "QObject",
+              "desc": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Button text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "Click it"
+                },
+				{
+				  "desc": "Button icon Path",
+                  "key": "icon",
+                  "name": "icon",
+                  "type": "imgPath",
+                  "value": ""
+				}
+              ],
+              "key": "QAbstractButton",
+              "desc": "QAbstractButton",
+              "name": "QAbstractButton",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 98
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                },
+                {
+                  "defaultValue": 100,
+                  "desc": "backgroud Opacity on ui",
+                  "key": "backgroudOpacity",
+                  "maxValue": 100,
+                  "minValue": 0,
+                  "name": "Backgroud Opacity",
+                  "type": "int",
+                  "unit": "%",
+                  "value": 100
+                }
+              ],
+              "key": "QWidget",
+              "desc": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Push Button"
+      },
+      {
+        "blockType": "action",
+        "className": "QToolButton",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "toolButton"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "ToolButton text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "..."
+                },
+				{
+				  "desc": "Button icon Path",
+                  "key": "icon",
+                  "name": "icon",
+                  "type": "imgPath",
+                  "value": ""
+				}
+              ],
+              "key": "QAbstractButton",
+              "name": "QAbstractButton",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 48
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Tool Button"
+      },
+      {
+        "blockType": "action",
+        "className": "SwitchButton",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "switchButton"
+                }
+              ],
+              "key": "QObject",
+              "desc": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "isActive",
+                  "key": "isActive",
+                  "name": "IsActive",
+                  "type": "bool",
+                  "value": false
+                }
+              ],
+              "key": "SwitchButton",
+              "desc": "SwitchButton",
+              "name": "SwitchButton",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 45
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 20
+                }
+              ],
+              "key": "QWidget",
+              "desc": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Switch Button"
+      },
+      {
+        "blockType": "action",
+        "className": "QRadioButton",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "radioButton"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "QObject"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "RadioButton text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "RadioButton"
+                },
+				{
+				  "desc": "Button icon Path",
+                  "key": "icon",
+                  "name": "icon",
+                  "type": "imgPath",
+                  "value": ""
+				}
+              ],
+              "key": "QAbstractButton",
+              "name": "QAbstractButton",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 117
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Radio Button"
+      },
+      {
+        "blockType": "action",
+        "className": "QCheckBox",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "checkBox"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "CheckBox text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "CheckBox"
+                },
+				{
+				  "desc": "Button icon Path",
+                  "key": "icon",
+                  "name": "icon",
+                  "type": "imgPath",
+                  "value": ""
+				}
+              ],
+              "key": "QAbstractButton",
+              "name": "QAbstractButton",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 93
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Check Box"
+      }
+    ]
+  },
+  {
+    "Input Widgets": [
+      {
+        "blockType": "Input",
+        "className": "QComboBox",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "comboBox"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 89
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "isEditable",
+                  "key": "isEditable",
+                  "name": "isEditable",
+                  "type": "bool",
+                  "value": false
+                },
+                {
+                  "desc": "CurrentText",
+                  "key": "CurrentText",
+                  "name": "CurrentText",
+                  "type": "string",
+                  "value": ""
+                },
+                {
+                  "desc": "CurrentIndex",
+                  "key": "CurrentIndex",
+                  "name": "CurrentIndex",
+                  "type": "int",
+                  "value": -1
+                }
+              ],
+              "key": "QComboBox",
+              "name": "QComboBox",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Combo Box"
+      },
+      {
+        "blockType": "Input",
+        "className": "QLineEdit",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "lineEdit"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "LineEdit Text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "LineEdit"
+                }
+              ],
+              "key": "QLineEdit",
+              "name": "QLineEdit",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 113
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Line Edit"
+      }
+    ]
+  },
+  {
+    "Display Widgets": [
+      {
+        "blockType": "Display",
+        "className": "QLabel",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "labelTitle"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Label Text",
+                  "key": "text",
+                  "name": "text",
+                  "type": "string",
+                  "value": "TextLabel"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 72
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 9
+                  }
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Label"
+      },
+      {
+        "blockType": "Display",
+        "className": "ImageLabel",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "ImageTitle"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 72
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 30
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Picture Path",
+                  "key": "imgPath",
+                  "name": "imgPath",
+                  "type": "imgPath",
+                  "value": ""
+                }
+              ],
+              "key": "ImageLabel",
+              "name": "ImageLabel",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "ImageLabel"
+      },      
+      {
+        "blockType": "Display",
+        "className": "QProgressBar",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "progressBar"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 76
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 31
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "childs": [
+                    {
+                      "desc": "Horizontal progress bar",
+                      "key": "Horizontal",
+                      "name": "Horizontal",
+                      "type": "string",
+                      "value": "Horizontal"
+                    },
+                    {
+                      "desc": "Vertical progress bar",
+                      "key": "Vertical",
+                      "name": "Vertical",
+                      "type": "string",
+                      "value": "Vertical"
+                    }
+                  ],
+                  "desc": "Type of progress bar",
+                  "key": "orientation",
+                  "name": "orientation",
+                  "type": "comboBox",
+                  "value": 0
+                },
+                {
+                  "desc": "The value of the progress bar",
+                  "key": "value",
+                  "name": "value",
+                  "type": "int",
+                  "value": 39
+                },
+                {
+                  "desc": "The maxValue of the progress bar",
+                  "key": "maxValue",
+                  "name": "maxValue",
+                  "type": "int",
+                  "value": 100
+                },
+                {
+                  "desc": "The minValue of the progress bar",
+                  "key": "minValue",
+                  "name": "minValue",
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              "key": "QProgressBar",
+              "name": "QProgressBar",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Progress Bar"
+      },
+      {
+        "blockType": "Display",
+        "className": "CircularProgressBar",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "circularProgressBar"
+                }
+              ],
+              "key": "QObject",
+              "name": "QObject",
+              "type": "QObject"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 75
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 75
+                }
+              ],
+              "key": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "The value of the progress bar",
+                  "key": "value",
+                  "name": "value",
+                  "type": "int",
+                  "value": 37
+                },
+                {
+                  "desc": "The maxValue of the progress bar",
+                  "key": "maxValue",
+                  "name": "maxValue",
+                  "type": "int",
+                  "value": 100
+                },
+                {
+                  "desc": "The minValue of the progress bar",
+                  "key": "minValue",
+                  "name": "minValue",
+                  "type": "int",
+                  "value": 0
+                }
+              ],
+              "key": "QProgressBar",
+              "name": "QProgressBar",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "The OutterBarWidth of the progress bar",
+                  "key": "OutterBarWidth",
+                  "name": "OutterBarWidth",
+                  "type": "float",
+                  "value": 9
+                },
+                {
+                  "desc": "The InnerBarWidth of the progress bar",
+                  "key": "InnerBarWidth",
+                  "name": "InnerBarWidth",
+                  "type": "float",
+                  "value": 8
+                },
+                {
+                  "desc": "The InnerStartColor of the progress bar",
+                  "key": "InnerStartColor",
+                  "name": "InnerStartColor",
+                  "type": "color",
+                  "value": "#ff98b9ff"
+                },
+                {
+                  "desc": "The InnerEndColor of the progress bar",
+                  "key": "InnerEndColor",
+                  "name": "InnerEndColor",
+                  "type": "color",
+                  "value": "#ff696c8b"
+                },
+                {
+                  "desc": "The OutterColor of the progress bar",
+                  "key": "OutterColor",
+                  "name": "OutterColor",
+                  "type": "color",
+                  "value": "#fff7f8ed"
+                },
+                {
+                  "desc": "The TextColor of the progress bar",
+                  "key": "TextColor",
+                  "name": "TextColor",
+                  "type": "color",
+                  "value": "#ff738dc9"
+                },
+                {
+                  "desc": "textfont on ui",
+                  "key": "TextFont",
+                  "name": "TextFont",
+                  "type": "font",
+                  "value": {
+                    "family": "Microsoft YaHei",
+                    "hasStrikeOut": false,
+                    "hasUnderline": false,
+                    "isBold": false,
+                    "isItalic": false,
+                    "pointSize": 12
+                  }
+                }
+              ],
+              "key": "CircularProgressBar",
+              "name": "CircularProgressBar",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Circular ProgressBar"
+      }
+    ]
+  },
+  {
+    "Containers": [
+      {
+        "blockType": "Containers",
+        "className": "QWidget",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "widget"
+                }
+              ],
+              "key": "QObject",
+              "desc": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 140
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 140
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                }
+              ],
+              "key": "QWidget",
+              "desc": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "Widget"
+      },
+      {
+        "blockType": "Containers",
+        "className": "QGroupBox",
+        "in": [],
+        "out": [],
+        "properties": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "desc": "objectName",
+                  "key": "objectName",
+                  "name": "objectName",
+                  "type": "string",
+                  "value": "groupbox"
+                }
+              ],
+              "key": "QObject",
+              "desc": "QObject",
+              "name": "QObject",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "Whether controls are available",
+                  "key": "enable",
+                  "name": "Enable",
+                  "type": "bool",
+                  "value": true
+                },
+                {
+                  "desc": "x on ui",
+                  "key": "x",
+                  "name": "X",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "y on ui",
+                  "key": "y",
+                  "name": "Y",
+                  "type": "int",
+                  "value": 0
+                },
+                {
+                  "desc": "width on ui",
+                  "key": "width",
+                  "name": "Width",
+                  "type": "int",
+                  "value": 140
+                },
+                {
+                  "desc": "height on ui",
+                  "key": "height",
+                  "name": "Height",
+                  "type": "int",
+                  "value": 140
+                },
+                {
+                  "desc": "styleSheet on ui",
+                  "key": "styleSheet",
+                  "name": "StyleSheet",
+                  "type": "styleSheet",
+                  "value": ""
+                },
+                {
+                  "desc": "font on ui",
+                  "key": "font",
+                  "name": "Font",
+                  "type": "font",
+                  "value": {}
+                }
+              ],
+              "key": "QWidget",
+              "desc": "QWidget",
+              "name": "QWidget",
+              "type": "array"
+            },
+            {
+              "childs": [
+                {
+                  "desc": "title",
+                  "key": "title",
+                  "name": "Title",
+                  "type": "string",
+                  "value": "groupBox"
+                },
+                {
+                  "childs": [
+                    {
+                      "desc": "alignLeft",
+                      "key": "alignLeft",
+                      "name": "AlignLeft",
+                      "type": "string",
+                      "value": "AlignLeft"
+                    },
+                    {
+                      "desc": "alignRight",
+                      "key": "alignRight",
+                      "name": "AlignRight",
+                      "type": "string",
+                      "value": "AlignRight"
+                    },
+                    {
+                      "desc": "alignHCenter",
+                      "key": "alignHCenter",
+                      "name": "AlignHCenter",
+                      "type": "string",
+                      "value": "AlignHCenter"
+                    }
+                  ],
+                  "desc": "alignment",
+                  "key": "alignment",
+                  "name": "Alignment",
+                  "type": "comboBox",
+                  "value": 0
+                }
+              ],
+              "key": "QGroupBox",
+              "desc": "QGroupBox",
+              "name": "QGroupBox",
+              "type": "array"
+            }
+          ]
+        },
+        "title": "GroupBox"
+      }      
+    ]
+  }
+]

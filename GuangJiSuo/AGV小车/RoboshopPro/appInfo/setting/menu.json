@@ -1,0 +1,75 @@
+{
+	"menu": [{
+		"key": "view",
+		"name": "View"
+	}, {
+		"childs": [{
+			"key": "network",
+			"name": "Network"
+		}, {
+			"key": "audio",
+			"name": "Audio Setting"
+		}, {
+			"key": "serialPort",
+			"name": "Serial Port Setting"
+		}, {
+			"key": "io",
+			"name": "I/O"
+		}, {
+			"key": "can",
+			"name": "Can Setting"
+		}, {
+			"key": "imu",
+			"name": "IMU"
+		}, {
+			"key": "pmu",
+			"name": "PMU"
+		}, {
+			"key": "fileManagement",
+			"name": "File Management"
+		}, {
+			"key": "timing",
+			"name": "Device Timing"
+		}, {
+			"key": "upgradeBackup",
+			"name": "Upgrade Backup"
+		}, {
+			"key": "version",
+			"name": "Version Information"
+		}, {
+			"key": "authorityManagement",
+			"name": "Authority Management"
+		}],
+		"key": "system",
+		"name": "System"
+	}, {
+		"key": "devices",
+		"name": "Devices"
+	}, {
+		"childs": [{
+			"key": "models",
+			"name": "Model Files"
+		}, {
+			"key": "objects",
+			"name": "Identification Files"
+		}, {
+			"key": "scripts",
+			"name": "Script Files"
+		}, {
+			"key": "sounds",
+			"name": "Sound Files"
+		}, {
+			"key": "maps",
+			"name": "Map Files"
+		},{
+			"key": "locations",
+			"name": "Location Files"
+		}],
+		"key": "resource",
+		"name": "Resource"
+	}, {
+		"key": "functional",
+		"name": "Functional"
+	}]
+
+}

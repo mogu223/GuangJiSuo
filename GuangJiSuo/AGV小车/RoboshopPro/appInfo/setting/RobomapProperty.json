@@ -1,0 +1,3211 @@
+{
+	"line": [{
+			"class_name": "ForbiddenLine",
+			"color_pen": 4278190330,
+			"color_extra": 0,
+			"tooltip": {
+				"Ch": "禁行线",
+				"En": "Forbidden line"
+			}
+		},
+		{
+			"class_name": "FeatureLine",
+			"color_pen": 4294902010,
+			"color_extra": 0,
+			"tooltip": {
+				"Ch": "特征线",
+				"En": "Feature line"
+			}
+		}
+	],
+	"associativeLine": [{
+		"class_name": "MarkAndAP",
+		"color_pen": 4287712253,
+		"color_extra": 0,
+		"tooltip": {
+			"Ch": "关联站点和库位",
+			"En": "Associated Mark and AP"
+		}
+	}],
+	"mark": {
+		"point": [{
+				"class_name": "LocationMark",
+				"abbreviated": "LM",
+				"color_pen": 0,
+				"color_brush": 3359737074,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "普通(站点)",
+					"En": "General(point)"
+				},
+				"property": [
+					{
+						"key": "rdsDockable",
+						"type": "bool",
+						"defaultValue": true,
+						"tooltip": {
+							"Ch": "可停靠",
+							"En": "Dockable"
+						},
+						"checkable": true
+					}, {
+					"key": "M4define",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "M4 用户自定义",
+						"En": "User M4 define"
+					},
+					"checkable": true
+					}
+				]
+			},
+			{
+				"class_name": "ParkPoint",
+				"abbreviated": "PP",
+				"color_pen": 0,
+				"color_brush": 3371466572,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "停靠(站点)",
+					"En": "Parking(point)"
+				}
+			},
+			{
+				"class_name": "SwitchMap",
+				"abbreviated": "SM",
+				"color_pen": 0,
+				"color_brush": 4294945450,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "切换地图(站点)",
+					"En": "SwitchMap(point)"
+				}
+			},
+			{
+				"class_name": "HomeRegion",
+				"abbreviated": "HR",
+				"color_pen": 0,
+				"color_brush": 4204945450,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "Home 区域站点(站点)",
+					"En": "Home Region(point)"
+				}
+			}
+		],
+		"location": [{
+				"class_name": "ActionPoint",
+				"abbreviated": "AP",
+				"color_pen": 0,
+				"color_brush": 335609000,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "动作(工作站)",
+					"En": "Operation(point)"
+				},
+				"executor": [
+					"none",
+					"fork",
+					"jack",
+					"roller",
+					"hook",
+					"PGV",
+					"DMS"
+				],
+				"recfile": [],
+				"property": [
+					{
+						"key": "rdsDockable",
+						"type": "bool",
+						"defaultValue": true,
+						"tooltip": {
+							"Ch": "可停靠",
+							"En": "Dockable"
+						},
+						"checkable": true
+					}, {
+					"key": "M4define",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "M4 用户自定义",
+						"En": "User M4 define"
+					},
+					"checkable": true
+				}
+				]
+			},
+			{
+				"class_name": "TransferLocation",
+				"abbreviated": "TL",
+				"color_pen": 0,
+				"color_brush": 352256255,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "动作(工作站)",
+					"En": "Operation(point)"
+				},
+				"executor": [
+					"none",
+					"fork",
+					"jack",
+					"roller",
+					"hook",
+					"PGV",
+					"DMS"
+				],
+				"recfile": []
+			},
+			{
+				"class_name": "WorkingLocation",
+				"abbreviated": "WL",
+				"color_pen": 0,
+				"color_brush": 335566250,
+				"color_font": 0,
+				"color_extra": 0,
+				"tooltip": {
+					"Ch": "动作(工作站)",
+					"En": "Operation(point)"
+				},
+				"executor": [
+					"none",
+					"fork",
+					"jack",
+					"roller",
+					"hook",
+					"PGV",
+					"DMS"
+				],
+				"recfile": []
+			}
+		],
+		"special_location": [{
+			"class_name": "ChargePoint",
+			"abbreviated": "CP",
+			"color_pen": 0,
+			"color_brush": 335609685,
+			"color_font": 0,
+			"color_extra": 0,
+			"tooltip": {
+				"Ch": "充电(工作站)",
+				"En": "Charge(point)"
+			},
+			"recfile": [
+				"none",
+				"amb.charger"
+			]
+		}]
+	},
+
+	"bezier": [{
+			"key": "direction",
+			"type": "complex",
+			"defaultValue": {
+				"Ch": ["正走", "倒走", "不指定方向"],
+				"En": ["Forward", "Backward", "Not specified"]
+			},
+			"unit": "",
+			"tooltip": {
+				"Ch": "运动方式",
+				"En": "Movement mode"
+			},
+			"checkable": false
+		},
+		{
+			"key": "movestyle",
+			"type": "complex",
+			"defaultValue": {
+				"Ch": ["路径导航", "自由导航", "", "红外引导", "磁条引导", "二维码导航", "固定轨道导航"],
+				"En": ["Path navigation", "Free navigation", "", "Infrared guidance", "Magnetic strip guidance", "QR code navigation", "Rail Guided"]
+			},
+			"unit": "",
+			"tooltip": {
+				"Ch": "导航方式",
+				"En": "Navigation method"
+			},
+			"checkable": false
+		},
+		{
+			"key": "mainroad",
+			"type": "json",
+			"defaultValue": "",
+			"unit": "m/s",
+			"tooltip": {
+				"Ch": "主干道",
+				"En": "Main Road"
+			},
+			"checkable": true
+		},
+		{
+			"key": "maxspeed",
+			"type": "double",
+			"defaultValue": 0.5,
+			"unit": "m/s",
+			"tooltip": {
+				"Ch": "最大速度",
+				"En": "Max speed"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "maxacc",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "最大加速度",
+				"En": "Max acc"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "maxdec",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "最大减速度",
+				"En": "Max dec"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "maxrot",
+			"type": "double",
+			"defaultValue": 60,
+			"unit": "°/s",
+			"tooltip": {
+				"Ch": "最大旋转速度",
+				"En": "Max rot"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "maxrotacc",
+			"type": "double",
+			"defaultValue": 45,
+			"unit": "°/s²",
+			"tooltip": {
+				"Ch": "最大旋转加速度",
+				"En": "Max rot acc"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "maxrotdec",
+			"type": "double",
+			"defaultValue": 45,
+			"unit": "°/s²",
+			"tooltip": {
+				"Ch": "最大旋转减速度",
+				"En": "Max rot dec"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "ultrasonic",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启超声",
+				"En": "Using ultrasonic"
+			},
+			"checkable": true
+		},
+		{
+			"key": "laser",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启激光停障",
+				"En": "Whether to turn on the laser stop"
+			},
+			"checkable": true
+		},
+		{
+			"key": "fallingdown",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启防跌落",
+				"En": "Using fallingdown"
+			},
+			"checkable": true
+		},
+		{
+			"key": "infrared",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启红外",
+				"En": "Using infrared"
+			},
+			"checkable": true
+		},
+		{
+			"key": "virtualLaser",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启虚拟激光",
+				"En": "Whether to turn on the virtual laser"
+			},
+			"checkable": true
+		},
+		{
+			"key": "3DCameraHole",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启 3D 相机坑洞检测",
+				"En": "Using 3D camera hole detection"
+			},
+			"checkable": true
+		},
+		{
+			"key": "3DCameraObstacle",
+			"type": "bool",
+			"defaultValue": false,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启 3D 相机障碍物检测",
+				"En": "Using 3D camera obstacle detection"
+			},
+			"checkable": true
+		},
+		{
+			"key": "collisionGroupId",
+			"type": "int",
+			"defaultValue": 0,
+			"unit": "",
+			"tooltip": {
+				"Ch": "阻挡形状的GroupId",
+				"En": "Collision GroupId"
+			},
+			"minValue": 0,
+			"maxValue": 99999,
+			"singleStep": 1,
+			"checkable": true
+		},
+		{
+			"key": "forbidLaserGroupId",
+			"type": "int",
+			"defaultValue": 0,
+			"unit": "",
+			"tooltip": {
+				"Ch": "屏蔽的激光组id",
+				"En": "forbidden Laser GroupId"
+			},
+			"minValue": 0,
+			"maxValue": 99999,
+			"singleStep": 1,
+			"checkable": true
+		},
+		{
+			"key": "forbidDNodeGroupId",
+			"type": "int",
+			"defaultValue": 0,
+			"unit": "",
+			"tooltip": {
+				"Ch": "屏蔽的距离传感器组id",
+				"En": "forbidden DistanceNode GroupId"
+			},
+			"minValue": 0,
+			"maxValue": 99999,
+			"singleStep": 1,
+			"checkable": true
+		},
+		{
+			"key": "reachdist",
+			"type": "double",
+			"defaultValue": 0.1,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "到点距离精度",
+				"En": "Distance accuracy"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 99,
+			"singleStep": 0.01
+		},
+		{
+			"key": "reachangle",
+			"type": "double",
+			"defaultValue": 0.5,
+			"unit": "°",
+			"tooltip": {
+				"Ch": "到点角度精度",
+				"En": "Angle accuracy"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 180,
+			"singleStep": 1
+		},
+		{
+			"key": "width",
+			"type": "double",
+			"defaultValue": 4.0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "路径宽度",
+				"En": "Path width"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 10,
+			"singleStep": 1.0
+		},
+		{
+			"key": "relaxGoalReachDist",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "宽松到点距离",
+				"En": "Relax Goal Reach Distance"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 10,
+			"singleStep": 1.0
+		},
+		{
+			"key": "length",
+			"type": "double",
+			"defaultValue": 0.0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "曲线长度(权重)",
+				"En": "Curve length(weight)"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 99999,
+			"singleStep": 0.01
+		},
+		{
+			"key": "holdDir",
+			"type": "double",
+			"defaultValue": 999,
+			"unit": "deg",
+			"tooltip": {
+				"Ch": "在该条线路上机器人保持固定朝向(仅对全向机器人有效)",
+				"En": "The robot remains in a fixed direction on this line(Only valid for omni robot)"
+			},
+			"checkable": true,
+			"minValue": -999,
+			"maxValue": 999,
+			"singleStep": 1
+		},
+		{
+			"key": "forbiddenRotAngle",
+			"type": "double",
+			"defaultValue": 999,
+			"unit": "deg",
+			"tooltip": {
+				"Ch": "禁止旋转的角度",
+				"En": "Forbidden rotation Angle"
+			},
+			"checkable": true,
+			"minValue": -999,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "StopAcc",
+			"type": "double",
+			"defaultValue": 2,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "急停减速度",
+				"En": "Decelerate when encountering obstacles"
+			},
+			"checkable": true,
+			"minValue": 0.01,
+			"maxValue": 180,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadStopAcc",
+			"type": "double",
+			"defaultValue": 2,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "载货时的急停减速度",
+				"En": "Decelerate when encountering obstacles with goods"
+			},
+			"checkable": true,
+			"minValue": 0.01,
+			"maxValue": 180,
+			"singleStep": 0.1
+		},
+		{
+			"key": "EmergencyStopDist",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "紧急停止距离",
+				"En": "Emergency Stop distance when encountering obstacles"
+			},
+			"checkable": true,
+			"minValue": 0.01,
+			"maxValue": 1,
+			"singleStep": 0.1
+		},
+		{
+			"key": "goodsDir",
+			"type": "double",
+			"defaultValue": 999,
+			"unit": "deg",
+			"tooltip": {
+				"Ch": "在该条线路上机器人保持货物朝向(仅对拥有随动电机的机器人有效)",
+				"En": "The robot remains in a fixed direction on this line(Only valid for the robot with spin motor)"
+			},
+			"checkable": true,
+			"minValue": -999,
+			"maxValue": 999,
+			"singleStep": 1
+		},
+		{
+			"key": "obsStopDist",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "遇到障碍物时的停障距离",
+				"En": "Stop distance when encountering obstacles"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "obsDecDist",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "遇到障碍物时的提前减速距离",
+				"En": "Deceleration distance when encountering obstacles"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "obsExpansion",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "机器人碰撞预测时的膨胀宽度",
+				"En": "Expansion width of robot collision prediction"
+			},
+			"checkable": true,
+			"minValue": -100.0,
+			"maxValue": 100.0,
+			"singleStep": 0.1
+		},
+		{
+			"key": "decObsExpansion",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "机器人减速碰撞预测时的膨胀宽度",
+				"En": "Expansion width during robot deceleration collision prediction"
+			},
+			"checkable": true,
+			"minValue": -100.0,
+			"maxValue": 100.0,
+			"singleStep": 0.1
+		},
+		{
+			"key": "broken",
+			"type": "bool",
+			"defaultValue": true,
+			"unit": "",
+			"tooltip": {
+				"Ch": "路线检修，不可通行",
+				"En": "Maintenance route, forbidden"
+			},
+			"checkable": true
+		},
+		{
+			"key": "parkRequired",
+			"type": "bool",
+			"defaultValue": true,
+			"unit": "",
+			"tooltip": {
+				"Ch": "到达目标时是否需要停车",
+				"En": "Do you need to stop when you reach the goal"
+			},
+			"checkable": true
+		},
+		{
+			"key": "loadMaxSpeed",
+			"type": "double",
+			"defaultValue": 0.5,
+			"unit": "m/s",
+			"tooltip": {
+				"Ch": "有货物最大速度",
+				"En": "Maximum speed of goods"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadMaxAcc",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "有货物最大加速度",
+				"En": "Maximum acceleration of the cargo"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadMaxDec",
+			"type": "double",
+			"defaultValue": 0.3,
+			"unit": "m/s²",
+			"tooltip": {
+				"Ch": "有货物最大减速度",
+				"En": "Maximum speed of cargo"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 5,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadMaxRot",
+			"type": "double",
+			"defaultValue": 60,
+			"unit": "°/s",
+			"tooltip": {
+				"Ch": "有货物最大旋转速度",
+				"En": "Maximum rotation speed of the cargo"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "loadMaxRotAcc",
+			"type": "double",
+			"defaultValue": 45,
+			"unit": "°/s²",
+			"tooltip": {
+				"Ch": "有货物最大旋转加速度",
+				"En": "Maximum rotational acceleration of the cargo"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "loadMaxRotDec",
+			"type": "double",
+			"defaultValue": 45,
+			"unit": "°/s²",
+			"tooltip": {
+				"Ch": "有货物最大旋转减速度",
+				"En": "Maximum rotation deceleration of the cargo"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 360,
+			"singleStep": 1
+		},
+		{
+			"key": "loadObsStopDist",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "有货物遇到障碍物时的停障距离",
+				"En": "The distance of the obstacle when the goods encounter obstacles"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadObsDecDist",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "有货物遇到障碍物时的提前减速距离",
+				"En": "Early deceleration distance when goods encounter obstacles"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "goAngle",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "degree",
+			"tooltip": {
+				"Ch": "起步角度精度",
+				"En": "Starting angle accuracy"
+			},
+			"checkable": true,
+			"minValue": 0.1,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadObsExpansion",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "有货物机器人碰撞预测时的膨胀宽度",
+				"En": "Expansion width when there is a collision prediction of a cargo robot"
+			},
+			"checkable": true,
+			"minValue": -100.0,
+			"maxValue": 100.0,
+			"singleStep": 0.1
+		},
+		{
+			"key": "loadDecObsExpansion",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "有货物机器人减速碰撞预测时的膨胀宽度",
+				"En": "Expansion width when a cargo robot is decelerating and collision prediction"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "collisionPointThreshold",
+			"type": "int",
+			"defaultValue": 0,
+			"unit": "",
+			"tooltip": {
+				"Ch": "碰撞检测激光点阈值",
+				"En": "Collision detection laser point threshold"
+			},
+			"checkable": true,
+			"minValue": 1,
+			"maxValue": 999,
+			"singleStep": 1
+		},
+		{
+			"key": "collisionPointThresholdCamera",
+			"type": "int",
+			"defaultValue": 0,
+			"unit": "",
+			"tooltip": {
+				"Ch": "碰撞检测相机点阈值",
+				"En": "Collision detection camera point threshold"
+			},
+			"checkable": true,
+			"minValue": 1,
+			"maxValue": 999,
+			"singleStep": 1
+		},
+		{
+			"key": "targetObsDist",
+			"type": "double",
+			"defaultValue": 0,
+			"unit": "m",
+			"tooltip": {
+				"Ch": "终点处障碍外检测延伸的额外距离",
+				"En": "The extra distance of detection extension beyond the obstacle at the end point"
+			},
+			"checkable": true,
+			"minValue": 0,
+			"maxValue": 999,
+			"singleStep": 0.1
+		},
+		{
+			"key": "goodsCollision",
+			"type": "bool",
+			"defaultValue": true,
+			"unit": "",
+			"tooltip": {
+				"Ch": "是否开启货物碰撞检测",
+				"En": "Whether to turn on the goods coliision check"
+			},
+			"checkable": true
+		},
+		{
+			"key": "soundName",
+			"type": "string",
+			"defaultValue": "",
+			"unit": "",
+			"tooltip": {
+				"Ch": "音频名称",
+				"En": "Music Name"
+			},
+			"checkable": true
+		}, {
+			"key": "userDefine",
+			"type": "json",
+			"defaultValue": "",
+			"unit": "",
+			"tooltip": {
+				"Ch": "用户自定义",
+				"En": "User define"
+			},
+			"checkable": true
+		}, {
+					"key": "M4define",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "M4 用户自定义",
+						"En": "User M4 define"
+					},
+					"checkable": true
+		}
+	],
+
+	"area": [{
+			"class_name": "AdvancedArea",
+			"color_pen": 4294901845,
+			"color_brush": 352299605,
+			"tooltip": {
+				"Ch": "高级区域",
+				"En": "Advanced area"
+			},
+			"property": [{
+					"key": "soundName",
+					"type": "string",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "音频名称",
+						"En": "Music Name"
+					},
+					"checkable": true
+				},
+				{
+					"key": "forbidden",
+					"type": "bool",
+					"defaultValue": true,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否禁行(仅自由导航响应)",
+						"En": "Forbidden(Only valid for free navigation)"
+					},
+					"checkable": true
+				},
+				{
+					"key": "maxspeed",
+					"type": "double",
+					"defaultValue": 0.5,
+					"unit": "m/s",
+					"tooltip": {
+						"Ch": "最大速度",
+						"En": "Max speed"
+					},
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1,
+					"checkable": true
+				},
+				{
+					"key": "simLaser",
+					"type": "bool",
+					"defaultValue": true,
+					"unit": "",
+					"tooltip": {
+						"Ch": "仿真下是否产生激光点",
+						"En": "Generate laser points in simulation"
+					},
+					"checkable": true
+				},
+				{
+					"key": "FG_RealTimeAvoid",
+					"type": "bool",
+					"defaultValue": true,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启实时绕障",
+						"En": "Whether allow realtime avoidance"
+					},
+					"checkable": true
+				},
+				{
+					"key": "forbiddenRotAngle",
+					"type": "double",
+					"defaultValue": 999.0,
+					"unit": "degree",
+					"tooltip": {
+						"Ch": "禁止旋转的角度",
+						"En": "Forbidden rotation Angle"
+					},
+					"minValue": -999.0,
+					"maxValue": 999.0,
+					"singleStep": 0.1,
+					"checkable": true
+				},
+				{
+					"key": "maxacc",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "最大加速度",
+						"En": "Max acc"
+					},
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1,
+					"checkable": true
+				},
+				{
+					"key": "maxdec",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "最大减速度",
+						"En": "Max dec"
+					},
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1,
+					"checkable": true
+				},
+				{
+					"key": "maxrot",
+					"type": "double",
+					"defaultValue": 60,
+					"unit": "°/s",
+					"tooltip": {
+						"Ch": "最大旋转速度",
+						"En": "Max rot"
+					},
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "maxrotacc",
+					"type": "double",
+					"defaultValue": 45,
+					"unit": "°/s²",
+					"tooltip": {
+						"Ch": "最大旋转加速度",
+						"En": "Max rot acc"
+					},
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "maxrotdec",
+					"type": "double",
+					"defaultValue": 45,
+					"unit": "°/s²",
+					"tooltip": {
+						"Ch": "最大旋转减速度",
+						"En": "Max rot dec"
+					},
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "ultrasonic",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启超声",
+						"En": "Using ultrasonic"
+					},
+					"checkable": true
+				},
+				{
+					"key": "fallingdown",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启防跌落",
+						"En": "Using fallingdown"
+					},
+					"checkable": true
+				},
+				{
+					"key": "infrared",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启红外",
+						"En": "Using infrared"
+					},
+					"checkable": true
+				},
+				{
+					"key": "laser",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启激光停障",
+						"En": "Whether to turn on the laser stop"
+					},
+					"checkable": true
+				},
+				{
+					"key": "virtualLaser",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启虚拟激光",
+						"En": "Whether to turn on the virtual laser"
+					},
+					"checkable": true
+				},
+				{
+					"key": "3DCameraHole",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启 3D 相机坑洞检测",
+						"En": "Using 3D camera hole detection"
+					},
+					"checkable": true
+				},
+				{
+					"key": "3DCameraObstacle",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启 3D 相机障碍物检测",
+						"En": "Using 3D camera obstacle detection"
+					},
+					"checkable": true
+				},
+				{
+					"key": "collisionGroupId",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "阻挡形状的GroupId",
+						"En": "Collision GroupId"
+					},
+					"minValue": 0,
+					"maxValue": 99999,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "ModbusDoGroupId",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "ModbusDoRegion的GroupId",
+						"En": "Modbus Do Region GroupId"
+					},
+					"minValue": 0,
+					"maxValue": 99999,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "forbidLaserGroupId",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "屏蔽的激光组id",
+						"En": "forbidden Laser GroupId"
+					},
+					"minValue": 0,
+					"maxValue": 99999,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "forbidDNodeGroupId",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "屏蔽的距离传感器组id",
+						"En": "forbidden DistanceNode GroupId"
+					},
+					"minValue": 0,
+					"maxValue": 99999,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "openSound",
+					"type": "bool",
+					"defaultValue": true,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否开启机器人的音频",
+						"En": "Whether to turn on the robot's audio"
+					},
+					"checkable": true
+				},
+				{
+					"key": "weight",
+					"type": "int",
+					"defaultValue": 255,
+					"unit": "",
+					"tooltip": {
+						"Ch": "权重(目前无效)",
+						"En": "Weight(Invalid now)"
+					},
+					"minValue": 0,
+					"maxValue": 99999,
+					"singleStep": 1,
+					"checkable": true
+				},
+				{
+					"key": "StopAcc",
+					"type": "double",
+					"defaultValue": 2,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "急停减速度",
+						"En": "Decelerate when encountering obstacles"
+					},
+					"checkable": true,
+					"minValue": 0.01,
+					"maxValue": 180,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadStopAcc",
+					"type": "double",
+					"defaultValue": 2,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "载货时的急停减速度",
+						"En": "Decelerate when encountering obstacles with goods"
+					},
+					"checkable": true,
+					"minValue": 0.01,
+					"maxValue": 180,
+					"singleStep": 0.1
+				},
+				{
+					"key": "EmergencyStopDist",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "紧急停止距离",
+						"En": "Emergency Stop distance when encountering obstacles"
+					},
+					"checkable": true,
+					"minValue": 0.01,
+					"maxValue": 1,
+					"singleStep": 0.1
+				},
+				{
+					"key": "obsStopDist",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "遇到障碍物时的停障距离",
+						"En": "Stop distance when encountering obstacles"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "obsDecDist",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "遇到障碍物时的提前减速距离",
+						"En": "Deceleration distance when encountering obstacles"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "obsExpansion",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "机器人碰撞预测时的膨胀宽度",
+						"En": "Expansion width of robot collision prediction"
+					},
+					"checkable": true,
+					"minValue": -100.0,
+					"maxValue": 100.0,
+					"singleStep": 0.1
+				},
+				{
+					"key": "decObsExpansion",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "机器人减速碰撞预测时的膨胀宽度",
+						"En": "Expansion width during robot deceleration collision prediction"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadMaxSpeed",
+					"type": "double",
+					"defaultValue": 0.5,
+					"unit": "m/s",
+					"tooltip": {
+						"Ch": "最大速度(载货时)",
+						"En": "Max speed with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadMaxAcc",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "最大加速度(载货时)",
+						"En": "Max acc with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadMaxDec",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "m/s²",
+					"tooltip": {
+						"Ch": "最大减速度(载货时)",
+						"En": "Max dec with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 5,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadMaxRot",
+					"type": "double",
+					"defaultValue": 60,
+					"unit": "°/s",
+					"tooltip": {
+						"Ch": "最大旋转速度(载货时)",
+						"En": "Max rot with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1
+				},
+				{
+					"key": "loadMaxRotAcc",
+					"type": "double",
+					"defaultValue": 45,
+					"unit": "°/s²",
+					"tooltip": {
+						"Ch": "最大旋转加速度(载货时)",
+						"En": "Max rot acc with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1
+				},
+				{
+					"key": "loadMaxRotDec",
+					"type": "double",
+					"defaultValue": 45,
+					"unit": "°/s²",
+					"tooltip": {
+						"Ch": "最大旋转减速度(载货时)",
+						"En": "Max rot dec with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 360,
+					"singleStep": 1
+				},
+				{
+					"key": "loadObsStopDist",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "遇到障碍物时的停障距离(载货时)",
+						"En": "Stop distance when encountering obstacles with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadObsDecDist",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "遇到障碍物时的提前减速距离(载货时)",
+						"En": "Deceleration distance when encountering obstacles with goods"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadObsExpansion",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "机器人碰撞预测时的膨胀宽度(载货时)",
+						"En": "Expansion width of robot collision prediction with goods"
+					},
+					"checkable": true,
+					"minValue": -100.0,
+					"maxValue": 100.0,
+					"singleStep": 0.1
+				},
+				{
+					"key": "loadDecObsExpansion",
+					"type": "double",
+					"defaultValue": 0,
+					"unit": "m",
+					"tooltip": {
+						"Ch": "机器人减速碰撞预测时的膨胀宽度(载货时)",
+						"En": "Expansion width during robot deceleration collision prediction (when loading cargo)"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 999,
+					"singleStep": 0.1
+				},
+				{
+					"key": "collisionPointThreshold",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "碰撞检测激光点阈值",
+						"En": "Collision detection laser point threshold"
+					},
+					"checkable": true,
+					"minValue": 1,
+					"maxValue": 999,
+					"singleStep": 1
+				},
+				{
+					"key": "collisionPointThresholdCamera",
+					"type": "int",
+					"defaultValue": 0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "碰撞检测相机点阈值",
+						"En": "Collision detection camera point threshold"
+					},
+					"checkable": true,
+					"minValue": 1,
+					"maxValue": 999,
+					"singleStep": 1
+				},
+				{
+					"key": "stopConfidence",
+					"type": "double",
+					"defaultValue": 0.0,
+					"unit": "",
+					"tooltip": {
+						"Ch": "停止置信度阈值",
+						"En": "Stop confidence threshold"
+					},
+					"minValue": 0,
+					"maxValue": 1,
+					"singleStep": 0.01,
+					"checkable": true
+				}, {
+					"key": "userDefine",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "用户自定义",
+						"En": "User define"
+					},
+					"checkable": true
+				}, {
+					"key": "M4define",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "M4 用户自定义",
+						"En": "User M4 define"
+					},
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "LocConfigArea",
+			"color_pen": 4294901841,
+			"color_brush": 352299602,
+			"tooltip": {
+				"Ch": "定位配置区域",
+				"En": "locating config area"
+			},
+			"property": [{
+					"key": "useTagCode",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "使用二维码定位",
+						"En": "Use tag code"
+					},
+					"checkable": true
+				},
+				{
+					"key": "use3DTag",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "使用天花板二维码定位",
+						"En": "Use SEERTAG code"
+					},
+					"checkable": true
+				},
+
+				{
+					"key": "useMapUpdate",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "使用地图更新",
+						"En": "Use Map Update"
+					},
+					"checkable": true
+				},
+
+				{
+					"key": "useReflector",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "使用反光板定位",
+						"En": "Use Correct"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useFrontLaser",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "开启前激光定位",
+						"En": "Use front laser"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useBackLaser",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "开启后激光定位",
+						"En": "Use back laser"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useSkidCorrection",
+					"type": "double",
+					"defaultValue": 0.7,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否启用打滑修正",
+						"En": "Enable skid Correction"
+					},
+					"checkable": true,
+					"minValue": -1.0,
+					"maxValue": 1.0,
+					"singleStep": 0.1
+				},
+				{
+					"key": "useRTK",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否融合RTK数据",
+						"En": "Whether to use rtk data"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useFeatureLoc",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否启用特征定位",
+						"En": "Whether to use Feature Loc"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useFeatureMapUpdate",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否启用特征地图更新",
+						"En": "Whether to use Feature Map Update"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useSLAM2D",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否启用2D实时建图定位",
+						"En": "Whether to use 2D SLAM"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useAutoReloc",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否用于2D自动重定位",
+						"En": "Whether to use 2D auto reloc"
+					},
+					"checkable": true
+				},
+				{
+					"key": "useMid360For3DLoc",
+					"type": "bool",
+					"defaultValue": false,
+					"unit": "",
+					"tooltip": {
+						"Ch": "是否将Mid360用于3D定位",
+						"En": "Whether to use mid-360 for 3d loc"
+					},
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "ReflectorArea",
+			"color_pen": 4294901760,
+			"color_brush": 4294923520,
+			"tooltip": {
+				"Ch": "反光板区域",
+				"En": "Reflector area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "FeatureUpdateArea",
+			"color_pen": 4294967040,
+			"color_brush": 4294944000,
+			"tooltip": {
+				"Ch": "特征更新区域",
+				"En": "Feature Update Area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "BlockArea",
+			"color_pen": 4294901760,
+			"color_brush": 4294923520,
+			"tooltip": {
+				"Ch": "互斥区域",
+				"En": "Block area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "BypassArea",
+			"color_pen": 4294901760,
+			"color_brush": 4294923520,
+			"tooltip": {
+				"Ch": "绕障碍区域",
+				"En": "Bypass obstacle area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "TagArea",
+			"color_pen": 4294923775,
+			"color_brush": 4286535167,
+			"tooltip": {
+				"Ch": "二维码区域",
+				"En": "Tag Area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "DOArea",
+			"color_pen": 4278233770,
+			"color_brush": 4278254250,
+			"tooltip": {
+				"Ch": "DO 区域",
+				"En": "DO area"
+			},
+			"warning_tips": {
+				"Ch": "不建议在 DO 区域内开机",
+				"En": "It is not recommended to boot in the DO area"
+			},
+			"property": [{
+					"key": "0",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 0",
+					"checkable": true
+				},
+				{
+					"key": "1",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 1",
+					"checkable": true
+				},
+				{
+					"key": "2",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 2",
+					"checkable": true
+				},
+				{
+					"key": "3",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 3",
+					"checkable": true
+				},
+				{
+					"key": "4",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 4",
+					"checkable": true
+				},
+				{
+					"key": "5",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 5",
+					"checkable": true
+				},
+				{
+					"key": "6",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 6",
+					"checkable": true
+				},
+				{
+					"key": "7",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 7",
+					"checkable": true
+				},
+				{
+					"key": "8",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 8",
+					"checkable": true
+				},
+				{
+					"key": "9",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 9",
+					"checkable": true
+				},
+				{
+					"key": "10",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 10",
+					"checkable": true
+				},
+				{
+					"key": "11",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 11",
+					"checkable": true
+				},
+				{
+					"key": "12",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 12",
+					"checkable": true
+				},
+				{
+					"key": "13",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 13",
+					"checkable": true
+				},
+				{
+					"key": "14",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 14",
+					"checkable": true
+				},
+				{
+					"key": "15",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 15",
+					"checkable": true
+				},
+				{
+					"key": "16",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 16",
+					"checkable": true
+				},
+				{
+					"key": "17",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 17",
+					"checkable": true
+				},
+				{
+					"key": "18",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 18",
+					"checkable": true
+				},
+				{
+					"key": "19",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 19",
+					"checkable": true
+				},
+				{
+					"key": "20",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 20",
+					"checkable": true
+				},
+				{
+					"key": "21",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 21",
+					"checkable": true
+				},
+				{
+					"key": "22",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 22",
+					"checkable": true
+				},
+				{
+					"key": "23",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 23",
+					"checkable": true
+				},
+				{
+					"key": "24",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 24",
+					"checkable": true
+				},
+				{
+					"key": "25",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 25",
+					"checkable": true
+				},
+				{
+					"key": "26",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 26",
+					"checkable": true
+				},
+				{
+					"key": "27",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 27",
+					"checkable": true
+				},
+				{
+					"key": "28",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DO 28",
+					"checkable": true
+				},
+				{
+					"key": "29",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 29",
+					"checkable": true
+				},
+				{
+					"key": "30",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 30",
+					"checkable": true
+				},
+				{
+					"key": "31",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 31",
+					"checkable": true
+				},
+				{
+					"key": "32",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 32",
+					"checkable": true
+				},
+				{
+					"key": "33",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 33",
+					"checkable": true
+				},
+				{
+					"key": "34",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 34",
+					"checkable": true
+				},
+				{
+					"key": "35",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 35",
+					"checkable": true
+				},
+				{
+					"key": "36",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 36",
+					"checkable": true
+				},
+				{
+					"key": "37",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 37",
+					"checkable": true
+				},
+				{
+					"key": "38",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 38",
+					"checkable": true
+				},
+				{
+					"key": "39",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 39",
+					"checkable": true
+				},
+				{
+					"key": "40",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 40",
+					"checkable": true
+				},
+				{
+					"key": "41",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 41",
+					"checkable": true
+				},
+				{
+					"key": "42",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 42",
+					"checkable": true
+				},
+				{
+					"key": "43",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 43",
+					"checkable": true
+				},
+				{
+					"key": "44",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DO 44",
+					"checkable": true
+				},
+				{
+					"key": "45",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 45",
+					"checkable": true
+				},
+				{
+					"key": "46",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 46",
+					"checkable": true
+				},
+				{
+					"key": "47",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 47",
+					"checkable": true
+				},
+				{
+					"key": "48",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 48",
+					"checkable": true
+				},
+				{
+					"key": "49",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 49",
+					"checkable": true
+				},
+				{
+					"key": "50",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 50",
+					"checkable": true
+				},
+				{
+					"key": "51",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 51",
+					"checkable": true
+				},
+				{
+					"key": "52",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 52",
+					"checkable": true
+				},
+				{
+					"key": "53",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 53",
+					"checkable": true
+				},
+				{
+					"key": "54",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 54",
+					"checkable": true
+				},
+				{
+					"key": "55",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 55",
+					"checkable": true
+				},
+				{
+					"key": "56",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 56",
+					"checkable": true
+				},
+				{
+					"key": "57",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 57",
+					"checkable": true
+				},
+				{
+					"key": "58",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 58",
+					"checkable": true
+				},
+				{
+					"key": "59",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 59",
+					"checkable": true
+				},
+				{
+					"key": "60",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DO 60",
+					"checkable": true
+				},
+				{
+					"key": "61",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 61",
+					"checkable": true
+				},
+				{
+					"key": "62",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 62",
+					"checkable": true
+				},
+				{
+					"key": "63",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 63",
+					"checkable": true
+				},
+				{
+					"key": "64",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 64",
+					"checkable": true
+				},
+				{
+					"key": "65",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 65",
+					"checkable": true
+				},
+				{
+					"key": "66",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 66",
+					"checkable": true
+				},
+				{
+					"key": "67",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 67",
+					"checkable": true
+				},
+				{
+					"key": "68",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DO 68",
+					"checkable": true
+				},
+				{
+					"key": "69",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 69",
+					"checkable": true
+				},
+				{
+					"key": "70",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 70",
+					"checkable": true
+				},
+				{
+					"key": "71",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 72",
+					"checkable": true
+				},
+				{
+					"key": "73",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 73",
+					"checkable": true
+				},
+				{
+					"key": "74",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 74",
+					"checkable": true
+				},
+				{
+					"key": "75",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 75",
+					"checkable": true
+				},
+				{
+					"key": "76",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 76",
+					"checkable": true
+				},
+				{
+					"key": "77",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 77",
+					"checkable": true
+				},
+				{
+					"key": "78",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 78",
+					"checkable": true
+				},
+				{
+					"key": "79",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 79",
+					"checkable": true
+				},
+				{
+					"key": "80",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 80",
+					"checkable": true
+				},
+				{
+					"key": "81",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DO 81",
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "DIArea",
+			"color_pen": 4278211925,
+			"color_brush": 335600000,
+			"tooltip": {
+				"Ch": "DI 区域",
+				"En": "DI area"
+			},
+			"warning_tips": {
+				"Ch": "不建议在 DI 区域内开机",
+				"En": "It is not recommended to boot in the DI area"
+			},
+			"property": [{
+					"key": "0",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 0",
+					"checkable": true
+				},
+				{
+					"key": "1",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 1",
+					"checkable": true
+				},
+				{
+					"key": "2",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 2",
+					"checkable": true
+				},
+				{
+					"key": "3",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 3",
+					"checkable": true
+				},
+				{
+					"key": "4",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 4",
+					"checkable": true
+				},
+				{
+					"key": "5",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 5",
+					"checkable": true
+				},
+				{
+					"key": "6",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 6",
+					"checkable": true
+				},
+				{
+					"key": "7",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 7",
+					"checkable": true
+				},
+				{
+					"key": "8",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 8",
+					"checkable": true
+				},
+				{
+					"key": "9",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 9",
+					"checkable": true
+				},
+				{
+					"key": "10",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 10",
+					"checkable": true
+				},
+				{
+					"key": "11",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 11",
+					"checkable": true
+				},
+				{
+					"key": "12",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DI 12",
+					"checkable": true
+				},
+				{
+					"key": "13",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 13",
+					"checkable": true
+				},
+				{
+					"key": "14",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 14",
+					"checkable": true
+				},
+				{
+					"key": "15",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 15",
+					"checkable": true
+				},
+				{
+					"key": "16",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 16",
+					"checkable": true
+				},
+				{
+					"key": "17",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 17",
+					"checkable": true
+				},
+				{
+					"key": "18",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 18",
+					"checkable": true
+				},
+				{
+					"key": "19",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 19",
+					"checkable": true
+				},
+				{
+					"key": "20",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 20",
+					"checkable": true
+				},
+				{
+					"key": "21",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 21",
+					"checkable": true
+				},
+				{
+					"key": "22",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 22",
+					"checkable": true
+				},
+				{
+					"key": "23",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 23",
+					"checkable": true
+				},
+				{
+					"key": "24",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 24",
+					"checkable": true
+				},
+				{
+					"key": "25",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 25",
+					"checkable": true
+				},
+				{
+					"key": "26",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 26",
+					"checkable": true
+				},
+				{
+					"key": "27",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 27",
+					"checkable": true
+				},
+				{
+					"key": "28",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DI 28",
+					"checkable": true
+				},
+				{
+					"key": "29",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 29",
+					"checkable": true
+				},
+				{
+					"key": "30",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 30",
+					"checkable": true
+				},
+				{
+					"key": "31",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 31",
+					"checkable": true
+				},
+				{
+					"key": "32",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 32",
+					"checkable": true
+				},
+				{
+					"key": "33",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 33",
+					"checkable": true
+				},
+				{
+					"key": "34",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 34",
+					"checkable": true
+				},
+				{
+					"key": "35",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 35",
+					"checkable": true
+				},
+				{
+					"key": "36",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 36",
+					"checkable": true
+				},
+				{
+					"key": "37",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 37",
+					"checkable": true
+				},
+				{
+					"key": "38",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 38",
+					"checkable": true
+				},
+				{
+					"key": "39",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 39",
+					"checkable": true
+				},
+				{
+					"key": "40",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 40",
+					"checkable": true
+				},
+				{
+					"key": "41",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 41",
+					"checkable": true
+				},
+				{
+					"key": "42",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 42",
+					"checkable": true
+				},
+				{
+					"key": "43",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 43",
+					"checkable": true
+				},
+				{
+					"key": "44",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DI 44",
+					"checkable": true
+				},
+				{
+					"key": "45",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 45",
+					"checkable": true
+				},
+				{
+					"key": "46",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 46",
+					"checkable": true
+				},
+				{
+					"key": "47",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 47",
+					"checkable": true
+				},
+				{
+					"key": "48",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 48",
+					"checkable": true
+				},
+				{
+					"key": "49",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 49",
+					"checkable": true
+				},
+				{
+					"key": "50",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 50",
+					"checkable": true
+				},
+				{
+					"key": "51",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 51",
+					"checkable": true
+				},
+				{
+					"key": "52",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 52",
+					"checkable": true
+				},
+				{
+					"key": "53",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 53",
+					"checkable": true
+				},
+				{
+					"key": "54",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 54",
+					"checkable": true
+				},
+				{
+					"key": "55",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 55",
+					"checkable": true
+				},
+				{
+					"key": "56",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 56",
+					"checkable": true
+				},
+				{
+					"key": "57",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 57",
+					"checkable": true
+				},
+				{
+					"key": "58",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 58",
+					"checkable": true
+				},
+				{
+					"key": "59",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 59",
+					"checkable": true
+				},
+				{
+					"key": "60",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DI 60",
+					"checkable": true
+				},
+				{
+					"key": "61",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 61",
+					"checkable": true
+				},
+				{
+					"key": "62",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 62",
+					"checkable": true
+				},
+				{
+					"key": "63",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 63",
+					"checkable": true
+				},
+				{
+					"key": "64",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 64",
+					"checkable": true
+				},
+				{
+					"key": "65",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 65",
+					"checkable": true
+				},
+				{
+					"key": "66",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 66",
+					"checkable": true
+				},
+				{
+					"key": "67",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 67",
+					"checkable": true
+				},
+				{
+					"key": "68",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": "DI 68",
+					"checkable": true
+				},
+				{
+					"key": "69",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 69",
+					"checkable": true
+				},
+				{
+					"key": "70",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 70",
+					"checkable": true
+				},
+				{
+					"key": "71",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 72",
+					"checkable": true
+				},
+				{
+					"key": "73",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 73",
+					"checkable": true
+				},
+				{
+					"key": "74",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 74",
+					"checkable": true
+				},
+				{
+					"key": "75",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 75",
+					"checkable": true
+				},
+				{
+					"key": "76",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 76",
+					"checkable": true
+				},
+				{
+					"key": "77",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 77",
+					"checkable": true
+				},
+				{
+					"key": "78",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 78",
+					"checkable": true
+				},
+				{
+					"key": "79",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 79",
+					"checkable": true
+				},
+				{
+					"key": "80",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 80",
+					"checkable": true
+				},
+				{
+					"key": "81",
+					"type": "bool",
+					"defaultValue": false,
+					"tooltip": "DI 81",
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "AreaDescription",
+			"color_pen": 4286513322,
+			"color_brush": 4294967295,
+			"tooltip": {
+				"Ch": "区域描述",
+				"En": "Area description"
+			},
+			"property": [{
+				"key": "TextFontSize",
+				"type": "int32",
+				"defaultValue": 12,
+				"tooltip": {
+					"Ch": "字体大小",
+					"En": "Text Font size"
+				},
+				"minValue": 9,
+				"maxValue": 100,
+				"singleStep": 1,
+				"checkable": true
+			}]
+		},
+		{
+			"class_name": "AreaShielded",
+			"color_pen": 4278190250,
+			"color_brush": 4278190250,
+			"tooltip": {
+				"Ch": "屏蔽区域",
+				"En": "Shielded area"
+			},
+			"property": [{
+					"key": "ShieldLaser",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": {
+						"Ch": "屏蔽激光",
+						"En": "Shield the laser"
+					},
+					"checkable": true
+				},
+				{
+					"key": "ShieldVirtualLaser",
+					"type": "bool",
+					"defaultValue": true,
+					"tooltip": {
+						"Ch": "屏蔽虚拟激光",
+						"En": "Shield virtual laser"
+					},
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "ReferenceObjectArea",
+			"color_pen": 4278190250,
+			"color_brush": 4278190250,
+			"tooltip": {
+				"Ch": "关键参照物区域",
+				"En": "ReferenceObject area"
+			},
+			"property": [{
+					"key": "blockThreshold",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "",
+					"tooltip": {
+						"Ch": "遮挡比例阈值",
+						"En": "blockThreshold"
+					},
+					"checkable": true,
+					"minValue": 0.0,
+					"maxValue": 1.0,
+					"singleStep": 0.01
+				},
+				{
+					"key": "virtualLaserNum",
+					"type": "int",
+					"defaultValue": 30,
+					"unit": "",
+					"tooltip": {
+						"Ch": "区域内可视虚拟激光点数目",
+						"En": "virtualLaserNumThres"
+					},
+					"checkable": true,
+					"minValue": 0,
+					"maxValue": 10000,
+					"singleStep": 1
+				},
+				{
+					"key": "distanceThreshold",
+					"type": "double",
+					"defaultValue": 0.3,
+					"unit": "",
+					"tooltip": {
+						"Ch": "真实激光距离与虚拟激光距离差值阈值",
+						"En": "disffTreshold"
+					},
+					"checkable": true,
+					"minValue": 0.0,
+					"maxValue": 10000.0,
+					"singleStep": 0.1
+				}
+			]
+		},
+		{
+			"class_name": "FluentArea",
+			"color_pen": 4294901760,
+			"color_brush": 4294923520,
+			"tooltip": {
+				"Ch": "不可停靠区域",
+				"En": "Fluent area"
+			},
+			"property": []
+		},
+		{
+			"class_name": "Avoid",
+			"color_pen": 4294901760,
+			"color_brush": 4294923520,
+			"tooltip": {
+				"Ch": "多车绕行区域",
+				"En": "avoid"
+			},
+			"property": []
+		},
+		{
+			"class_name": "NarrowArea",
+			"color_pen": 4278190250,
+			"color_brush": 4278180250,
+			"tooltip": {
+				"Ch": "窄通道",
+				"En": "narrow area"
+			},
+			"property": [
+				{
+					"key": "waitIds",
+					"type": "json",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "避让点",
+						"En": "wait point ids"
+					},
+					"checkable": true
+				}
+			]
+		},
+		{
+			"class_name": "CleanArea",
+			"color_pen": 4278190250,
+			"color_brush": 4278180250,
+			"tooltip": {
+				"Ch": "清扫区域",
+				"En": "Clean Area"
+			},
+			"property": [{
+					"key": "TextFontSize",
+					"type": "int32",
+					"defaultValue": 12,
+					"tooltip": {
+						"Ch": "字体大小",
+						"En": "Text Font size"
+					},
+					"minValue": 9,
+					"maxValue": 100,
+					"singleStep": 1,
+					"checkable": false
+				},
+				{
+					"key": "startSite",
+					"type": "string",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "起始站点",
+						"En": "Start Site"
+					},
+					"checkable": false
+				},
+				{
+					"key": "endSite",
+					"type": "string",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "结束站点",
+						"En": "End Site"
+					},
+					"checkable": false
+				},
+				{
+					"key": "transferSite",
+					"type": "string",
+					"defaultValue": "",
+					"unit": "",
+					"tooltip": {
+						"Ch": "避让点集合",
+						"En": "Transfer Site"
+					},
+					"checkable": false
+				}
+			]
+		}, {
+			"class_name": "SafeSpeedLimitArea",
+			"color_pen": 4278170250,
+			"color_brush": 4278160250,
+			"tooltip": {
+				"Ch": "安全速度限制区域",
+				"En": "Safe Speed Limit Area"
+			},
+			"property": [{
+					"key": "TextFontSize",
+					"type": "int32",
+					"defaultValue": 12,
+					"tooltip": {
+						"Ch": "字体大小",
+						"En": "Text Font size"
+					},
+					"minValue": 9,
+					"maxValue": 100,
+					"singleStep": 1,
+					"checkable": false
+				},
+				{
+					"key": "ZoneClassification",
+					"type": "checkBoxGroup",
+					"defaultValue": "",
+					"unit": "",
+					"checkable": false,
+					"tooltip": {
+						"Ch": "区域分类",
+						"En": "Zone Classification"
+					},
+					"checkBoxGroup": {
+						"Restricted Zone": "",
+						"Operating hazard Zone": ""
+					}
+				},
+				{
+					"key": "MaxSpeed",
+					"type": "checkBoxGroup",
+					"defaultValue": "",
+					"unit": "",
+					"checkable": false,
+					"tooltip": {
+						"Ch": "最大速度",
+						"En": "Max Speed"
+					},
+					"checkBoxGroup": {
+						"1.2m/s": "",
+						"0.7m/s": "",
+						"0.3m/s": "",
+						"Rated Speed": ""
+					}
+				},
+				{
+					"key": "AutomaticRestartPermitted",
+					"type": "bool",
+					"defaultValue": false,
+					"checkable": false,
+					"tooltip": {
+						"Ch": "允许自动复位",
+						"En": "Automatic restart permitted"
+					}
+				}, {
+					"key": "AudioForMutingState",
+					"type": "bool",
+					"defaultValue": false,
+					"checkable": false,
+					"tooltip": {
+						"Ch": "启用激光屏蔽报警声",
+						"En": "Audio for Muting state"
+					}
+				}, {
+					"key": "OpenESPEMuting",
+					"type": "bool",
+					"defaultValue": false,
+					"checkable": false,
+					"tooltip": {
+						"Ch": "允许屏蔽激光",
+						"En": "Open ESPE Muting"
+					}
+				}
+
+			]
+},
+		{
+			"class_name": "ConvexArea",
+			"color_pen": 4278190250,
+			"color_brush": 4278180250,
+			"tooltip": {
+				"Ch": "凸包区域",
+				"En": "Convex Area"
+			},
+			"property": [{
+					"key": "TextFontSize",
+					"type": "int32",
+					"defaultValue": 12,
+					"tooltip": {
+						"Ch": "字体大小",
+						"En": "Text Font size"
+					},
+					"minValue": 9,
+					"maxValue": 100,
+					"singleStep": 1,
+					"checkable": false
+				}]
+		}
+	]
+}

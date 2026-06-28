@@ -1,0 +1,594 @@
+{
+    "categories": [
+        {
+            "children": "",
+            "description": "桌",
+            "name": "桌子",
+            "special": false
+        },
+        {
+            "description": "椅",
+            "name": "椅子",
+            "special": false
+        },
+        {
+            "description": "办公桌",
+            "name": "办公桌",
+            "special": false
+        },
+        {
+            "description": "货架",
+            "name": "货架",
+            "special": true
+        },
+        {
+            "description": "人",
+            "name": "人",
+            "special": false
+        },
+        {
+            "description": "电梯",
+            "name": "电梯",
+            "special": false
+        },
+        {
+            "description": "楼梯",
+            "name": "楼梯",
+            "special": false
+        },
+        {
+            "description": "马桶",
+            "name": "马桶",
+            "special": false
+        },
+        {
+            "description": "洗漱台",
+            "name": "洗漱台",
+            "special": false
+        },
+        {
+            "description": "货物",
+            "name": "货物",
+            "special": false
+        },
+        {
+            "description": "栈板",
+            "name": "栈板",
+            "special": false
+        },
+        {
+            "description": "讲台",
+            "name": "讲台",
+            "special": false
+        },
+        {
+            "description": "广告牌",
+            "name": "广告牌",
+            "special": false
+        }
+    ],
+    "modelList": [
+        {
+            "category": "Pillar",
+            "name": "Pillar",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/MetaShop-DrawTool/Pillar.png",
+                "topView": "/ModeImage/3DTopView/Pillar/Pillar.png"
+            },
+            "title": "柱子",
+            "url": "",
+            "uuid": "{192c06b8-4e33-4762-91b2-e650eb9a8e8d}"
+        },
+        {
+            "category": "货物",
+            "name": "货物",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/货物.png",
+                "topView": "/ModeImage/3DTopView/Models/货物.png"
+            },
+            "title": "货物",
+            "url": "",
+            "uuid": "{86164b41-5e7f-47d9-8ad0-55239dae29c5}"
+        },
+        {
+            "category": "货物",
+            "name": "paperBox",
+            "properties": {
+                "size": {
+                    "x": 19,
+                    "y": 16,
+                    "z": 15
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/paperBox.png",
+                "topView": "/ModeImage/3DTopView/Models/paperBox.png"
+            },
+            "title": "纸箱",
+            "url": "Megascans/3D_Assets/Cardboard_Boxes_Pack_tlbjdbova/SM_Cardboard_Boxes_Pack_tlbjdbova_lod0_Var1.SM_Cardboard_Boxes_Pack_tlbjdbova_lod0_Var1_C",
+            "uuid": "{da60a1bb-2a9a-4456-acdd-043ff283704b}"
+        },
+        {
+            "category": "讲台",
+            "name": "讲台",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/讲台.png",
+                "topView": "/ModeImage/3DTopView/Models/讲台.png"
+            },
+            "title": "讲台",
+            "url": "",
+            "uuid": "{60a9ca8a-a3ca-4a2a-9b7b-52555c45fa9a}"
+        },
+        {
+            "category": "栈板",
+            "name": "栈板",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/栈板.png",
+                "topView": "/ModeImage/3DTopView/Models/栈板.png"
+            },
+            "title": "栈板",
+            "url": "",
+            "uuid": "{5c2efb1e-8aa2-417b-abce-90d3959d9670}"
+        },
+        {
+            "category": "广告牌",
+            "name": "广告牌",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/SEER.png",
+                "topView": "/ModeImage/3DTopView/Models/SEER.png"
+            },
+            "title": "广告牌",
+            "url": "",
+            "uuid": "{4b72f42d-63da-40cc-a0ee-19ab386e1f61}"
+        },
+        {
+            "category": "人",
+            "name": "黑人",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/黑人.png",
+                "topView": "/ModeImage/3DTopView/Models/黑人.png"
+            },
+            "title": "黑人",
+            "url": "",
+            "uuid": "{186084b0-d42e-4d96-aeac-cad2aef5178a}"
+        },
+        {
+            "category": "人",
+            "name": "游客女人",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/游客女人.png",
+                "topView": "/ModeImage/3DTopView/Models/游客女人.png"
+            },
+            "title": "游客女人",
+            "url": "",
+            "uuid": "{14af9fba-54e7-4be8-8f34-5abaf2ea8e9f}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair01",
+            "properties": {
+                "size": {
+                    "x": 63,
+                    "y": 58,
+                    "z": 83
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair01.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair01.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair01/S_Chair01_Actor.S_Chair01_Actor_C",
+            "uuid": "{3325df38-5cdc-4132-ae29-f2e22202e55c}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair02",
+            "properties": {
+                "size": {
+                    "x": 58,
+                    "y": 61,
+                    "z": 82
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair02.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair02.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair02/S_Chair02_Actor.S_Chair02_Actor_C",
+            "uuid": "{bcb6469e-4e85-4005-b9ca-c24c84d69e75}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair14",
+            "properties": {
+                "size": {
+                    "x": 55,
+                    "y": 48,
+                    "z": 70
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair14.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair14.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair14/S_Chair14_Actor.S_Chair14_Actor_C",
+            "uuid": "{78c2c28e-6952-4ca1-8d75-f7a6508057d7}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair27",
+            "properties": {
+                "size": {
+                    "x": 48,
+                    "y": 56,
+                    "z": 90
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair27.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair27.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair27/S_Chair27_Actor.S_Chair27_Actor_C",
+            "uuid": "{8e5661c7-e702-4f85-97e9-35d6e3cccbe3}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair41",
+            "properties": {
+                "size": {
+                    "x": 45,
+                    "y": 45,
+                    "z": 94
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair41.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair41.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair41/S_Chair41_Actor.S_Chair41_Actor_C",
+            "uuid": "{10913772-e363-48ce-8d79-3fbb74cb0cda}"
+        },
+        {
+            "category": "椅子",
+            "name": "Chair47",
+            "properties": {
+                "size": {
+                    "x": 41,
+                    "y": 42,
+                    "z": 91
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Chairs/Chair47.png",
+                "topView": "/ModeImage/3DTopView/Chairs/Chair47.png"
+            },
+            "title": "椅子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Chairs/Chair47/S_Chair47_Actor.S_Chair47_Actor_C",
+            "uuid": "{43234b71-6dbe-473f-a63a-704f6b507e4f}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables01",
+            "properties": {
+                "size": {
+                    "x": 302,
+                    "y": 88,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables01.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables01.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining01/S_TableDining01_Actor.S_TableDining01_Actor_C",
+            "uuid": "{b46fef48-0976-48d3-aa7a-466ac0c93330}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables03",
+            "properties": {
+                "size": {
+                    "x": 180,
+                    "y": 90,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables03.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables03.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining03/S_Tabledining03_Actor.S_TableDining03_Actor_C",
+            "uuid": "{763d1917-aa61-4ffb-b948-b4a7781508ba}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables07",
+            "properties": {
+                "size": {
+                    "x": 160,
+                    "y": 79,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables07.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables07.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining07/S_TableDining07_Actor.S_TableDining07_Actor_C",
+            "uuid": "{e18b02d1-0461-4195-b902-8eeb6f5e3ad6}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables09",
+            "properties": {
+                "size": {
+                    "x": 123,
+                    "y": 123,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables09.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables09.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining09/S_TableDining09_Actor.S_TableDining09_Actor_C",
+            "uuid": "{c95f5157-4b1f-49cb-8ebe-de85a1a33787}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables12",
+            "properties": {
+                "size": {
+                    "x": 260,
+                    "y": 90,
+                    "z": 90
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables12.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables12.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/TableHigh12/S_TableHigh12_Actor.S_TableHigh12_Actor_C",
+            "uuid": "{058bdcb9-d9f3-4b7f-9ea8-7dfd3c5c0e85}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables13",
+            "properties": {
+                "size": {
+                    "x": 200,
+                    "y": 91,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables13.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables13.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining13/S_TableDining13_Actor.S_TableDining13_Actor_C",
+            "uuid": "{27fa9859-f4cb-428c-aa7b-d5f313547149}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables15",
+            "properties": {
+                "size": {
+                    "x": 240,
+                    "y": 100,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables15.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables15.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/Tabledining15/S_TableDining15_Actor.S_TableDining15_Actor_C",
+            "uuid": "{7c450af9-011e-4437-a65c-b6cccab2cd3b}"
+        },
+        {
+            "category": "桌子",
+            "name": "Tables107",
+            "properties": {
+                "size": {
+                    "x": 240,
+                    "y": 100,
+                    "z": 75
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Tables/Tables107.png",
+                "topView": "/ModeImage/3DTopView/Tables/Tables107.png"
+            },
+            "title": "桌子",
+            "url": "Decorate/TMChairsAndTablesPack1/ChairsAndTables/Tables/TableHigh07/S_TableHigh07_Actor.S_TableHigh07_Actor_C",
+            "uuid": "{b41c7d23-578a-4cfc-9d97-5fce8872983f}"
+        },
+        {
+            "category": "电梯",
+            "name": "lift",
+            "properties": {
+                "size": {
+                    "x": 52,
+                    "y": 54,
+                    "z": 77
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/lift.png",
+                "topView": "/ModeImage/3DTopView/Models/lift.png"
+            },
+            "title": "电梯",
+            "url": "",
+            "uuid": "{3863bddb-eccb-4711-b0cd-a85bc37aa89b}"
+        },
+        {
+            "category": "楼梯",
+            "name": "stairs",
+            "properties": {
+                "size": {
+                    "x": 52,
+                    "y": 54,
+                    "z": 77
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/stairs.png",
+                "topView": "/ModeImage/3DTopView/Models/stairs.png"
+            },
+            "title": "楼梯",
+            "url": "",
+            "uuid": "{6c7ef73e-7a41-4722-af9a-d33bb1c9e67c}"
+        },
+        {
+            "category": "马桶",
+            "name": "closestool",
+            "properties": {
+                "size": {
+                    "x": 52,
+                    "y": 54,
+                    "z": 77
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/closestool.png",
+                "topView": "/ModeImage/3DTopView/Models/closestool.png"
+            },
+            "title": "马桶",
+            "url": "",
+            "uuid": "{d9a78cdd-c8ba-4ea9-917e-910031d040da}"
+        },
+        {
+            "category": "洗漱台",
+            "name": "lavabo",
+            "properties": {
+                "size": {
+                    "x": 52,
+                    "y": 54,
+                    "z": 77
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/lavabo.png",
+                "topView": "/ModeImage/3DTopView/Models/lavabo.png"
+            },
+            "title": "洗漱台",
+            "url": "",
+            "uuid": "{0c5f0122-e1f2-4730-8b39-b99b71e209a3}"
+        },
+        {
+            "category": "货架",
+            "name": "shelves",
+            "properties": {
+                "size": {
+                    "x": 45,
+                    "y": 45,
+                    "z": 94
+                }
+            },
+            "style": {
+                "icon": "/ModeImage/3DSideView/Models/shelves.png",
+                "topView": "/ModeImage/3DTopView/Models/shelves.png"
+            },
+            "title": "货架",
+            "url": "",
+            "uuid": "{aa0640e6-4ce7-41e3-ade0-2d467f75f02c}"
+        },
+        {
+            "category": "办公桌",
+            "name": "new",
+            "properties": {
+                "size": {
+                    "x": 50,
+                    "y": 50,
+                    "z": 50
+                }
+            },
+            "style": {
+                "MetaMapView": "/Publish/resources/metamap/lib/new.png",
+                "icon": "/Publish/resources/preview/lib/new.png",
+                "topView": "/Publish/resources/topview/lib/new.png"
+            },
+            "title": "办公桌",
+            "uuid": "{5f25d8ac-2fa4-4f04-8069-b3c5a4341f0f}"
+        }
+    ],
+    "robotStatusType": [
+        {
+            "label": "SJV_SW500",
+            "value": "SJV_SW500"
+        },
+        {
+            "label": "SPK_HAI_A42_5",
+            "value": "SPK_HAI_A42_5"
+        },
+        {
+            "label": "SFL_CDD14",
+            "value": "SFL_CDD14"
+        },
+        {
+            "label": "SFL_MP10S",
+            "value": "SFL_MP10S"
+        }
+    ]
+}

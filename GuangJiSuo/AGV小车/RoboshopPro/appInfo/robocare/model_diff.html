@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input type="file" id="fileInput">
+        <input type="file" id="fileInput2">
+        <input type="checkbox" name="only-diff-checkbox" id="only-diff-checkbox" value="only-diff"><label
+            for="only-diff">仅显示差异</label>
+        <input type="checkbox" name="only-enabled-checkbox" id="only-enabled-checkbox" value="only-enabled"><label
+            for="only-enabled">仅显示启用</label>
+        <button type="button" id="diff" onclick="buttonClick()">对比</button>
+    </div>
+    <div class="scroll-container">
+        <div id="content1" class="content">
+        </div>
+        <div id="content2" class="content">
+        </div>
+    </div>
+    <div id="diff-content">
+
+    </div>
+
+</body>
+<script>
+    function buttonClick() {
+        const file1 = document.getElementById('fileInput').files[0];
+        const file2 = document.getElementById('fileInput2').files[0];
+        const onlyDiff = document.getElementById('only-diff-checkbox').checked;
+        const onlyEnabled = document.getElementById('only-enabled-checkbox').checked;
+
+        if (!file1 || !file2) {
+            alert("需要选择两个模型文件");
+            return;
+        }
+        Promise.all([readFileAsJSON(file1), readFileAsJSON(file2)]).then(
+            ([model1, model2]) => {
+                const ldir = document.getElementById('content1');
+                const rdir = document.getElementById('content2');
+                while (ldir.firstChild) {
+                    ldir.removeChild(ldir.firstChild);
+                }
+                while (rdir.firstChild) {
+                    rdir.removeChild(rdir.firstChild);
+                }
+                const dirs = diff(model1, model2, onlyDiff, onlyEnabled);
+                dirs[0].forEach(e => {
+                    ldir.appendChild(e);
+                });
+                dirs[1].forEach(e => {
+                    rdir.appendChild(e);
+                });
+
+            }
+        );
+    }
+
+    function readFileAsJSON(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                resolve(e.target.result);
+            };
+            reader.onerror = error => {
+                reject(error);
+            };
+            reader.readAsText(file);
+        });
+    }
+    var State;
+    (function (State) {
+        State[State["NONE"] = 0] = "NONE";
+        State[State["EQ"] = 1] = "EQ";
+        State[State["NEW"] = 2] = "NEW";
+        State[State["DEL"] = 3] = "DEL";
+        State[State["EDIT"] = 4] = "EDIT";
+    })(State || (State = {}));
+    var Result = /** @class */ (function () {
+        function Result() {
+            this.state = State.NONE;
+            this.lDiv = document.createElement("div");
+            this.rDiv = document.createElement("div");
+        }
+        return Result;
+    }());
+    function diff(model1, model2, onlyDiff, onlyEnabled) {
+        var m1 = JSON.parse(model1);
+        var m2 = JSON.parse(model2);
+        var lDivs = [];
+        var rDivs = [];
+        // Model
+        modelDiff(m1.model, m2.model, onlyDiff, lDivs, rDivs);
+        // DeviceTypes
+        deviceTypesDiff(m1.deviceTypes, m2.deviceTypes, onlyDiff, onlyEnabled, lDivs, rDivs);
+        return [lDivs, rDivs];
+    }
+    function modelDiff(m1, m2, onlyDiff, lDivs, rDivs) {
+        if (m1 == undefined && m2 == undefined)
+            return;
+        var lDiv = document.createElement("div");
+        var rDiv = document.createElement("div");
+        var clss = ["child"];
+        if (m1 == m2) {
+            if (onlyDiff) {
+                return;
+            }
+            clss.push("eq");
+            lDiv.innerHTML = "<div class='line'>= <b>model:</b><span>".concat(m1, "</span></div>");
+            rDiv.innerHTML = "<div class='line'>= <b>model:</b><span>".concat(m2, "</span></div>");
+        }
+        else if (m1 == undefined) {
+            clss.push("new");
+            lDiv.innerHTML = "<div class='line'>+ </div>";
+            rDiv.innerHTML = "<div class='line'>+ <b>model:</b><span>".concat(m2, "</span></div>");
+        }
+        else if (m2 == undefined) {
+            clss.push("del");
+            lDiv.innerHTML = "<div class='line'>- <b>model:</b><span>".concat(m1, "</span></div>");
+            rDiv.textContent = "<div>- </div>";
+        }
+        else {
+            clss.push("edit");
+            lDiv.innerHTML = "<div class='line'>= <b>model:</b><span>".concat(m1, "</span></div>");
+            rDiv.innerHTML = "<div class='line'>= <b>model:</b><span>".concat(m2, "</span></div>");
+        }
+        clss.forEach(function (e) {
+            lDiv.classList.add(e);
+            rDiv.classList.add(e);
+        });
+        lDivs.push(lDiv);
+        rDivs.push(rDiv);
+    }
+    function deviceTypesDiff(dts1, dts2, onlyDiff, onlyEnabled, lDivs, rDivs) {
+        if (dts1 == undefined) {
+            dts1 = [];
+        }
+        if (dts2 == undefined) {
+            dts2 = [];
+        }
+        dts1.forEach(function (dt1) {
+            var dt2 = undefined;
+            for (var i = 0; i < dts2.length; i++) {
+                var temp = dts2[i];
+                if (dt1.name == temp.name) {
+                    dt2 = dts2.splice(i, 1)[0];
+                    break;
+                }
+            }
+            var result = deviceTypeDiff(dt1, dt2, onlyDiff, onlyEnabled);
+            if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                lDivs.push(result.lDiv);
+                rDivs.push(result.rDiv);
+            }
+        });
+        dts2.forEach(function (dt2) {
+            var result = deviceTypeDiff(undefined, dt2, onlyDiff, onlyEnabled);
+            if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                lDivs.push(result.lDiv);
+                rDivs.push(result.rDiv);
+            }
+        });
+    }
+    function deviceTypeDiff(dt1, dt2, onlyDiff, onlyEnabled) {
+        var r = new Result;
+        if (dt1 == undefined && dt2 == undefined)
+            return r;
+        if (dt1 == undefined) {
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>".concat(dt2.name, ":</b></div>");
+            var count_1 = 0;
+            dt2.devices.forEach(function (d2) {
+                if (onlyEnabled && !d2.isEnabled) {
+                    return;
+                }
+                var result = deviceDiff(undefined, d2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    r.lDiv.appendChild(result.lDiv);
+                    r.rDiv.appendChild(result.rDiv);
+                    count_1++;
+                }
+            });
+            if (count_1 == 0) {
+                r.state = State.NONE;
+            }
+        }
+        else if (dt2 == undefined) {
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>".concat(dt1.name, ":</b></div>");
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            var count_2 = 0;
+            dt1.devices.forEach(function (d1) {
+                if (onlyEnabled && !d1.isEnabled) {
+                    return;
+                }
+                var result = deviceDiff(d1, undefined, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    r.lDiv.appendChild(result.lDiv);
+                    r.rDiv.appendChild(result.rDiv);
+                    count_2++;
+                }
+            });
+            if (count_2 == 0) {
+                r.state = State.NONE;
+            }
+        }
+        else {
+            var count_3 = 0, eqCount_1 = 0;
+            var lDirs_1 = [], rDirs_1 = [];
+            dt1.devices.forEach(function (d1) {
+                var d2 = undefined;
+                for (var i = 0; i < dt2.devices.length; i++) {
+                    var temp = dt2.devices[i];
+                    if (d1.name == temp.name) {
+                        d2 = dt2.devices.splice(i, 1)[0];
+                        break;
+                    }
+                }
+                if (onlyEnabled && !d1.isEnabled && (d2 == undefined || !d2.isEnabled)) {
+                    return;
+                }
+                var result = deviceDiff(d1, d2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    lDirs_1.push(result.lDiv);
+                    rDirs_1.push(result.rDiv);
+                    if (result.state == State.EQ)
+                        eqCount_1++;
+                    count_3++;
+                }
+            });
+            dt2.devices.forEach(function (d2) {
+                if (onlyEnabled && !d2.isEnabled) {
+                    return;
+                }
+                var result = deviceDiff(undefined, d2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    lDirs_1.push(result.lDiv);
+                    rDirs_1.push(result.rDiv);
+                    if (result.state == State.EQ)
+                        eqCount_1++;
+                    count_3++;
+                }
+            });
+            if (count_3 == 0) {
+            }
+            else if (count_3 == eqCount_1) {
+                r.state = State.EQ;
+                r.lDiv.className = "child eq";
+                r.rDiv.className = "child eq";
+                r.lDiv.innerHTML = "<div class='line'>= <b>".concat(dt1.name, ":</b></div>");
+                r.rDiv.innerHTML = "<div class='line'>= <b>".concat(dt2.name, ":</b></div>");
+            }
+            else {
+                r.state = State.EDIT;
+                r.lDiv.className = "child edit";
+                r.rDiv.className = "child edit";
+                r.lDiv.innerHTML = "<div class='line'>~ <b>".concat(dt1.name, ":</b></div>");
+                r.rDiv.innerHTML = "<div class='line'>~ <b>".concat(dt2.name, ":</b></div>");
+            }
+            lDirs_1.forEach(function (e) {
+                r.lDiv.appendChild(e);
+            });
+            rDirs_1.forEach(function (e) {
+                r.rDiv.appendChild(e);
+            });
+        }
+        return r;
+    }
+    function deviceDiff(d1, d2, onlyDiff) {
+        var r = new Result;
+        if (d1 == undefined && d2 == undefined)
+            return r;
+        if (d1 == undefined) {
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>".concat(d2.name, ":</b><span>").concat(d2.isEnabled, "</span></div>");
+            var count_4 = 0;
+            d2.deviceParams.forEach(function (dp2) {
+                var result = deviceParamDiff(undefined, dp2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    r.lDiv.appendChild(result.lDiv);
+                    r.rDiv.appendChild(result.rDiv);
+                    count_4++;
+                }
+            });
+            if (count_4 == 0) {
+                r.state = State.NONE;
+            }
+        }
+        else if (d2 == undefined) {
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>".concat(d1.name, ":</b><span>").concat(d1.isEnabled, "</span></div>");
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            var count_5 = 0;
+            d1.deviceParams.forEach(function (dp1) {
+                var result = deviceParamDiff(dp1, undefined, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    r.lDiv.appendChild(result.lDiv);
+                    r.rDiv.appendChild(result.rDiv);
+                    count_5++;
+                }
+            });
+            if (count_5 == 0) {
+                r.state = State.NONE;
+            }
+        }
+        else {
+            var count_6 = 0, eqCount_2 = 0;
+            var lDirs_2 = [], rDirs_2 = [];
+            d1.deviceParams.forEach(function (dp1) {
+                var dp2 = undefined;
+                for (var i = 0; i < d2.deviceParams.length; i++) {
+                    var temp = d2.deviceParams[i];
+                    if (dp1.key == temp.key) {
+                        dp2 = d2.deviceParams.splice(i, 1)[0];
+                        break;
+                    }
+                }
+                var result = deviceParamDiff(dp1, dp2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    lDirs_2.push(result.lDiv);
+                    rDirs_2.push(result.rDiv);
+                    if (result.state == State.EQ)
+                        eqCount_2++;
+                    count_6++;
+                }
+            });
+            d2.deviceParams.forEach(function (dp2) {
+                var result = deviceParamDiff(undefined, dp2, onlyDiff);
+                if (result.state != State.NONE && !(onlyDiff && result.state == State.EQ)) {
+                    lDirs_2.push(result.lDiv);
+                    rDirs_2.push(result.rDiv);
+                    if (result.state == State.EQ)
+                        eqCount_2++;
+                    count_6++;
+                }
+            });
+            if (count_6 == eqCount_2 && d1.isEnabled == d2.isEnabled) {
+                r.state = State.EQ;
+                r.lDiv.className = "child eq";
+                r.rDiv.className = "child eq";
+                r.lDiv.innerHTML = "<div class='line'>= <b>".concat(d1.name, ":</b><span>").concat(d1.isEnabled, "</span></div>");
+                r.rDiv.innerHTML = "<div class='line'>= <b>".concat(d2.name, ":</b><span>").concat(d2.isEnabled, "</span></div>");
+            }
+            else {
+                r.state = State.EDIT;
+                r.lDiv.className = "child edit";
+                r.rDiv.className = "child edit";
+                r.lDiv.innerHTML = "<div class='line'>~ <b>".concat(d1.name, ":</b><span>").concat(d1.isEnabled, "</span></div>");
+                r.rDiv.innerHTML = "<div class='line'>~ <b>".concat(d2.name, ":</b><span>").concat(d2.isEnabled, "</span></div>");
+            }
+            lDirs_2.forEach(function (e) {
+                r.lDiv.appendChild(e);
+            });
+            rDirs_2.forEach(function (e) {
+                r.rDiv.appendChild(e);
+            });
+        }
+        return r;
+    }
+    function deviceParamDiff(dp1, dp2, onlyDiff) {
+        var r = new Result;
+        if (dp1 == undefined && dp2 == undefined) {
+            return r;
+        }
+        if (dp1 == undefined) {
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>".concat(dp2.key, ":</b></div>");
+            var result = void 0;
+            if (dp2.type == "comboParam") {
+                result = comboParamDiff(undefined, dp2.comboParam, onlyDiff);
+            }
+            else {
+                result = arrayParamDiff(undefined, dp2.arrayParam, onlyDiff);
+            }
+            if (result.state != State.NONE) {
+                r.lDiv.appendChild(result.lDiv);
+                r.rDiv.appendChild(result.rDiv);
+            }
+        }
+        else if (dp2 == undefined) {
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>".concat(dp1.key, ":</b></div>");
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            var result = void 0;
+            if (dp1.type == "comboParam") {
+                result = comboParamDiff(dp1.comboParam, undefined, onlyDiff);
+            }
+            else {
+                result = arrayParamDiff(dp1.arrayParam, undefined, onlyDiff);
+            }
+            if (result.state != State.NONE) {
+                r.lDiv.appendChild(result.lDiv);
+                r.rDiv.appendChild(result.rDiv);
+            }
+        }
+        else {
+            var result = void 0;
+            if (dp1.type == "comboParam") {
+                result = comboParamDiff(dp1.comboParam, dp2.comboParam, onlyDiff);
+            }
+            else {
+                result = arrayParamDiff(dp1.arrayParam, dp2.arrayParam, onlyDiff);
+            }
+            if (result.state != State.NONE) {
+                if (result.state == State.EDIT) {
+                    r.state = State.EDIT;
+                    r.lDiv.className = "child edit";
+                    r.rDiv.className = "child edit";
+                    r.lDiv.innerHTML = "<div class='line'>~ <b>".concat(dp1.key, ":</b></div>");
+                    r.rDiv.innerHTML = "<div class='line'>~ <b>".concat(dp2.key, ":</b></div>");
+                }
+                else {
+                    r.state = State.EQ;
+                    r.lDiv.className = "child eq";
+                    r.rDiv.className = "child eq";
+                    r.lDiv.innerHTML = "<div class='line'>= <b>".concat(dp1.key, ":</b></div>");
+                    r.rDiv.innerHTML = "<div class='line'>= <b>".concat(dp2.key, ":</b></div>");
+                }
+                if (!(onlyDiff && result.state == State.EQ)) {
+                    r.lDiv.appendChild(result.lDiv);
+                    r.rDiv.appendChild(result.rDiv);
+                }
+            }
+        }
+        return r;
+    }
+    function comboParamDiff(cp1, cp2, onlyDiff) {
+        var r = new Result;
+        if (cp1 == undefined && cp2 == undefined)
+            return r;
+        if (cp1 == undefined) {
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>ComboParam:</b><span>".concat(cp2.childKey, "</span></div>");
+            for (var i = 0; i < cp2.childParams.length; i++) {
+                var p = cp2.childParams[i];
+                if (p.key == cp2.childKey) {
+                    paramDiff([], p.params, onlyDiff).forEach(function (r2) {
+                        r.lDiv.appendChild(r2.lDiv);
+                        r.rDiv.appendChild(r2.rDiv);
+                    });
+                    break;
+                }
+            }
+        }
+        else if (cp2 == undefined) {
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>ComboParam:</b><span>".concat(cp1.childKey, "</span></div>");
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            for (var i = 0; i < cp1.childParams.length; i++) {
+                var p = cp1.childParams[i];
+                if (p.key == cp1.childKey) {
+                    paramDiff(p.params, [], onlyDiff).forEach(function (r2) {
+                        r.lDiv.appendChild(r2.lDiv);
+                        r.rDiv.appendChild(r2.rDiv);
+                    });
+                    break;
+                }
+            }
+        }
+        else {
+            if (cp1.childKey == cp2.childKey) {
+                var p1 = [];
+                var p2 = [];
+                for (var i = 0; i < cp1.childParams.length; i++) {
+                    var p = cp1.childParams[i];
+                    if (p.key == cp1.childKey) {
+                        p1 = p.params;
+                        break;
+                    }
+                }
+                for (var i = 0; i < cp2.childParams.length; i++) {
+                    var p = cp2.childParams[i];
+                    if (p.key == cp2.childKey) {
+                        p2 = p.params;
+                        break;
+                    }
+                }
+                var rs = paramDiff(p1, p2, onlyDiff);
+                var eqCount_3 = 0;
+                rs.forEach(function (r2) {
+                    if (r2.state == State.EQ) {
+                        eqCount_3++;
+                    }
+                });
+                if (rs.length == eqCount_3) {
+                    r.state = State.EQ;
+                    r.lDiv.className = "child eq";
+                    r.rDiv.className = "child eq";
+                    r.lDiv.innerHTML = "<div class='line'>= <b>ComboParam:</b><span>".concat(cp1.childKey, "</span></div>");
+                    r.rDiv.innerHTML = "<div class='line'>= <b>ComboParam:</b><span>".concat(cp2.childKey, "</span></div>");
+                    if (!onlyDiff) {
+                        rs.forEach(function (r2) {
+                            r.lDiv.appendChild(r2.lDiv);
+                            r.rDiv.appendChild(r2.rDiv);
+                        });
+                    }
+                }
+                else {
+                    r.state = State.EDIT;
+                    r.lDiv.className = "child edit";
+                    r.rDiv.className = "child edit";
+                    r.lDiv.innerHTML = "<div class='line'>~ <b>ComboParam:</b><span>".concat(cp1.childKey, "</span></div>");
+                    r.rDiv.innerHTML = "<div class='line'>~ <b>ComboParam:</b><span>".concat(cp2.childKey, "</span></div>");
+                    rs.forEach(function (r2) {
+                        r.lDiv.appendChild(r2.lDiv);
+                        r.rDiv.appendChild(r2.rDiv);
+                    });
+                }
+            }
+            else {
+                r.state = State.EDIT;
+                r.lDiv.className = "child edit";
+                r.rDiv.className = "child edit";
+                r.lDiv.innerHTML = "<div class='line'>~ <b>ComboParam:</b><span>".concat(cp1.childKey, "</span></div>");
+                r.rDiv.innerHTML = "<div class='line'>~ <b>ComboParam:</b><span>".concat(cp2.childKey, "</span></div>");
+                var p1 = [];
+                var p2 = [];
+                for (var i = 0; i < cp1.childParams.length; i++) {
+                    var p = cp1.childParams[i];
+                    if (p.key == cp1.childKey) {
+                        p1 = p.params;
+                        break;
+                    }
+                }
+                for (var i = 0; i < cp2.childParams.length; i++) {
+                    var p = cp2.childParams[i];
+                    if (p.key == cp2.childKey) {
+                        p2 = p.params;
+                        break;
+                    }
+                }
+                paramDiff(p1, [], onlyDiff).forEach(function (r2) {
+                    r.lDiv.appendChild(r2.lDiv);
+                    r.rDiv.appendChild(r2.rDiv);
+                });
+                paramDiff([], p2, onlyDiff).forEach(function (r2) {
+                    r.lDiv.appendChild(r2.lDiv);
+                    r.rDiv.appendChild(r2.rDiv);
+                });
+            }
+        }
+        return r;
+    }
+    function arrayParamDiff(ap1, ap2, onlyDiff) {
+        var r = new Result;
+        if (ap1 == undefined && ap2 == undefined) {
+            return r;
+        }
+        if (ap1 == undefined) {
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>ArrayParam:</b></div>";
+            paramDiff([], ap2.params, onlyDiff).forEach(function (r2) {
+                r.lDiv.appendChild(r2.lDiv);
+                r.rDiv.appendChild(r2.rDiv);
+            });
+        }
+        else if (ap2 == undefined) {
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>ArrayParam:</b></div>";
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            paramDiff(ap1.params, [], onlyDiff).forEach(function (r2) {
+                r.lDiv.appendChild(r2.lDiv);
+                r.rDiv.appendChild(r2.rDiv);
+            });
+        }
+        else {
+            var rs = paramDiff(ap1.params, ap2.params, onlyDiff);
+            var eqCount_4 = 0;
+            rs.forEach(function (r2) {
+                if (r2.state == State.EQ) {
+                    eqCount_4++;
+                }
+            });
+            if (rs.length == eqCount_4) {
+                r.state = State.EQ;
+                r.lDiv.className = "child eq";
+                r.rDiv.className = "child eq";
+                r.lDiv.innerHTML = "<div class='line'>= <b>ArrayParam:</b></div>";
+                r.rDiv.innerHTML = "<div class='line'>= <b>ArrayParam:</b></div>";
+                if (!onlyDiff) {
+                    rs.forEach(function (r2) {
+                        r.lDiv.appendChild(r2.lDiv);
+                        r.rDiv.appendChild(r2.rDiv);
+                    });
+                }
+            }
+            else {
+                r.state = State.EDIT;
+                r.lDiv.className = "child edit";
+                r.rDiv.className = "child edit";
+                r.lDiv.innerHTML = "<div class='line'>~ <b>ArrayParam:</b></div>";
+                r.rDiv.innerHTML = "<div class='line'>~ <b>ArrayParam:</b></div>";
+                rs.forEach(function (r2) {
+                    r.lDiv.appendChild(r2.lDiv);
+                    r.rDiv.appendChild(r2.rDiv);
+                });
+            }
+        }
+        return r;
+    }
+    function paramDiff(ps1, ps2, onlyDiff) {
+        var rs = [];
+        ps1.forEach(function (p1) {
+            var r = new Result;
+            for (var i = 0; i < ps2.length; i++) {
+                var temp = ps2[i];
+                if (p1.key == temp.key) {
+                    var p2 = ps2.splice(i, 1)[0];
+                    var v1 = getStringValue(p1);
+                    var v2 = getStringValue(p2);
+                    if (v1 == v2) {
+                        r.state = State.EQ;
+                        r.lDiv.className = "child eq";
+                        r.rDiv.className = "child eq";
+                        r.lDiv.innerHTML = "<div class='line'>= <b>".concat(p1.key, ":</b><span>").concat(v1, "</span></div>");
+                        r.rDiv.innerHTML = "<div class='line'>= <b>".concat(p2.key, ":</b><span>").concat(v2, "</span></div>");
+                    }
+                    else {
+                        r.state = State.EDIT;
+                        r.lDiv.className = "child edit";
+                        r.rDiv.className = "child edit";
+                        r.lDiv.innerHTML = "<div class='line'>~ <b>".concat(p1.key, ":</b><span>").concat(v1, "</span></div>");
+                        r.rDiv.innerHTML = "<div class='line'>~ <b>".concat(p2.key, ":</b><span>").concat(v2, "</span></div>");
+                    }
+                    rs.push(r);
+                    return;
+                }
+            }
+            r.state = State.DEL;
+            r.lDiv.className = "child del";
+            r.rDiv.className = "child del";
+            r.lDiv.innerHTML = "<div class='line'>- <b>".concat(p1.key, ":</b><span>").concat(getStringValue(p1), "</span></div>");
+            r.rDiv.innerHTML = "<div class='line'>- </div>";
+            rs.push(r);
+            return;
+        });
+        ps2.forEach(function (p2) {
+            var r = new Result;
+            r.state = State.NEW;
+            r.lDiv.className = "child new";
+            r.rDiv.className = "child new";
+            r.lDiv.innerHTML = "<div class='line'>+ </div>";
+            r.rDiv.innerHTML = "<div class='line'>+ <b>".concat(p2.key, ":</b><span>").concat(getStringValue(p2), "</span></div>");
+            rs.push(r);
+        });
+        return rs;
+    }
+    function getStringValue(p) {
+        switch (p.type) {
+            case "string":
+                return p.stringValue;
+            case "bool":
+                return "".concat(p.boolValue);
+            case "int32":
+                return "".concat(p.int32Value);
+            case "uint32":
+                return "".concat(p.uint32Value);
+            case "int64":
+                return "".concat(p.int64Value);
+            case "uint64":
+                return "".concat(p.uint64Value);
+            case "float":
+                return "".concat(p.floatValue);
+            case "double":
+                return "".concat(p.doubleValue);
+            case "bytes":
+                return "".concat(p.bytesValue);
+        }
+        return "";
+    }
+
+</script>
+<style>
+    .scroll-container {
+        display: flex;
+    }
+
+    .content {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        overflow-x: auto;
+        scroll-snap-type: y mandatory;
+    }
+
+    div {
+        text-wrap: nowrap;
+        padding: 2px 10px 2px 10px;
+        margin: 0px 2px 0px 2px;
+    }
+
+    div b {
+        color: #cf8e6d;
+        padding-right: 10px;
+    }
+
+    div span {
+        color: #2aacb8;
+    }
+
+    .child {
+        /* margin-left: 10px; */
+        border: #555555 solid 1px;
+    }
+
+    .line {
+        /* border-left: none; */
+        margin-left: 10px;
+        /* border-bottom: #bbb solid 1px; */
+    }
+
+    .new {
+        background-color: #447152;
+    }
+
+    .del {
+        background-color: #656e76;
+    }
+
+    .edit {
+        background-color: #43698d;
+    }
+
+    .eq {
+        background-color: #fff;
+        /* display: none; */
+    }
+</style>
+
+</html>

@@ -1,0 +1,158 @@
+{
+    "MAC": "3600CFD33FCB",
+    "VERSION_LIST": {
+        "arm-patch": "0.1.3"
+    },
+    "WLANMAC": "48E7DA77E9B1",
+    "ap_addr": "",
+    "architecture": "arm64",
+    "calibrated": false,
+    "create_on": "2022-09-09T19:41:38.562Z",
+    "current_ip": "192.168.192.5",
+    "current_map": "CNC",
+    "current_map_entries": [
+    ],
+    "current_map_md5": "2e82b37daf6b3d2ec6fa51bd64912ca1",
+    "dsp_version": "v0.0.7.0-v5-T",
+    "echoid": "f23095ab-417e639f-66a33542-bb5c40f2",
+    "echoid_type": "",
+    "features": [
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_diff"
+        },
+        {
+            "active": false,
+            "name": "rbk_omni"
+        },
+        {
+            "active": false,
+            "name": "rbk_steer"
+        },
+        {
+            "active": false,
+            "name": "rbk_multisteer"
+        },
+        {
+            "active": false,
+            "name": "rbk_dualdiff"
+        },
+        {
+            "active": false,
+            "name": "rbk_rgv"
+        },
+        {
+            "active": false,
+            "name": "rbk_fork"
+        },
+        {
+            "active": false,
+            "name": "rbk_pallet"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_pgv_loc"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_pgv_nav"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_spin"
+        },
+        {
+            "active": false,
+            "name": "rbk_reflector"
+        },
+        {
+            "active": false,
+            "name": "rbk_3dcamera"
+        },
+        {
+            "active": false,
+            "name": "rbk_dynamic_nav"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_roaming"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_script"
+        },
+        {
+            "active": false,
+            "name": "rbk_tagrecognize"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_shapedetect"
+        },
+        {
+            "active": true,
+            "expiry_date": "never-expire",
+            "name": "rbk_laser_loc"
+        },
+        {
+            "active": false,
+            "name": "rbk_charger"
+        }
+    ],
+    "gyro_version": "m40-1.4.4",
+    "hardware": {
+        "cpus": [
+        ]
+    },
+    "id": "7021551",
+    "ip": "192.168.191.82",
+    "map_version": "v1.0.7",
+    "modbus_version": "v2.1.0",
+    "model": "AMB-800K-S-50-PDO-xinhao",
+    "model_md5": "f3729fadc64713ea35bbc70c8cb79200",
+    "model_version": "v3.0.2",
+    "netprotocol_version": "v3.0.0",
+    "network_controllers": [
+        {
+            "description": "Wireless interface",
+            "driver": "mwifiex_pcie",
+            "driverversion": "unknown",
+            "logicalname": "wlp1s0",
+            "product": "Marvell Technology Group Ltd.",
+            "serial": "48:e7:da:77:e9:b1",
+            "vendor": "Marvell Technology Group Ltd."
+        },
+        {
+            "description": "Ethernet interface",
+            "driver": "fec",
+            "driverversion": "Revision: 1.0",
+            "logicalname": "eth0",
+            "product": "unknown",
+            "serial": "00:14:2d:6b:23:ef",
+            "vendor": "unknown"
+        },
+        {
+            "description": "Ethernet interface",
+            "driver": "fec",
+            "driverversion": "Revision: 1.0",
+            "logicalname": "eth1",
+            "product": "unknown",
+            "serial": "36:00:cf:d3:3f:cb",
+            "vendor": "unknown"
+        }
+    ],
+    "ret_code": 0,
+    "roboshop_min_version_required": "v2.3.2.0",
+    "robot_note": "AMB-82",
+    "rssi": 0,
+    "ssid": "",
+    "vehicle_id": "AMB-82",
+    "version": "v3.3.5.64"
+}

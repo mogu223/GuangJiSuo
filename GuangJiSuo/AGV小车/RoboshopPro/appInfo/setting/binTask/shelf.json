@@ -1,0 +1,25 @@
+{
+    "load": {
+        "operation": "Script",
+        "script_args": {
+            "lift": 0.8,
+            "operation": "load",
+            "recAdjust": 1,
+            "rotate": -1.57
+        },
+        "script_name": "containerRobot.py"
+    },
+    "locHeight": 0.5,
+    "rotate": -90,
+    "startHeight": 0.3,
+    "unload": {
+        "operation": "Script",
+        "script_args": {
+            "lift": 0.9,
+            "operation": "unload",
+            "recAdjust": 1,
+            "rotate": -1.57
+        },
+        "script_name": "containerRobot.py"
+    }
+}

@@ -1,0 +1,1544 @@
+{
+	"Message_BinMonitor": {
+		"properties": {
+			"binJson": {
+				"required": true,
+				"tip": {
+					"en": "binInfo",
+					"zh": "binInfo"
+				},
+				"type": "string",
+				"value": "[{\"binareaname\":\"bin\", \"binaddress\":0, \"binholderaddress\":1, \"binname\":\"bin-01\"}]"
+			},
+			"funCode": {
+				"ranges": [
+					0,
+					65535
+				],
+				"required": true,
+				"tip": {
+					"en": "1-4",
+					"zh": "modbusFunCode"
+				},
+				"type": "uint32",
+				"value": 1
+			},
+			"proxyName": {
+				"required": true,
+				"tip": {
+					"en": "proxyOne",
+					"zh": "agentName"
+				},
+				"type": "string",
+				"value": "proxyOne"
+			},
+			"reverse": {
+				"required": true,
+				"tip": {
+					"en": "",
+					"zh": "reverse"
+				},
+				"type": "bool",
+				"value": false
+			}
+		}
+	},
+	"Message_BlockGroup": {
+		"properties": {
+			"type": {
+				"ranges": {
+					"AvoidObsRegion": {
+						"properties": {
+							"robotGroup": {
+								"order": 1,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "机器人组名称"
+								},
+								"type": "string",
+								"value": "new"
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "可绕行区，里面只能包含区域，不能包含逻辑线路和点"
+						},
+						"type": "string"
+					},
+					"CountGroup": {
+						"tip": {
+							"en": "",
+							"zh": "机器人计数组"
+						},
+						"type": "string"
+					},
+					"FireAlarm": {
+						"tip": {
+							"en": "",
+							"zh": "火警禁停区域"
+						},
+						"type": "string"
+					},
+					"MAPF": {
+						"properties": {
+							"delaySecond": {
+								"order": 6,
+								"ranges": [
+									0,
+									999
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "小车通过的时间延迟"
+								},
+								"type": "double",
+								"value": 0
+							},
+							"extraRadius": {
+								"order": 3,
+								"ranges": [
+									0,
+									99
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "组内小车的额外半径"
+								},
+								"type": "double",
+								"value": 0
+							},
+							"indepVision": {
+								"order": 4,
+								"ranges": [
+									0,
+									99
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "组内小车的独立视野"
+								},
+								"type": "double",
+								"value": 0
+							},
+							"maxRobotNum": {
+								"order": 1,
+								"ranges": [
+									1,
+									999
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "组内最多机器人数量"
+								},
+								"type": "int32",
+								"value": 999
+							},
+							"minDistance": {
+								"order": 2,
+								"ranges": [
+									0,
+									99
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "组内的任意最小距离"
+								},
+								"type": "double",
+								"value": 0
+							},
+							"mutexExpand": {
+								"order": 5,
+								"ranges": [
+									0,
+									999
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "扩张互斥的点位数量"
+								},
+								"type": "int32",
+								"value": 0
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "自动解决冲突区域，需要指定最多可以进入的机器人数量"
+						},
+						"type": "string"
+					},
+					"MAPFProperties": {
+						"properties": {
+							"defect": {
+								"order": 1,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "禁止避让"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"fluent": {
+								"order": 2,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "禁止停靠"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"forced": {
+								"order": 4,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "强制解锁"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"leaves": {
+								"order": 3,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "缩小模型"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"observe": {
+								"order": 5,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "效率统计"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"queuing": {
+								"order": 6,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "强制队列"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"release": {
+								"order": 7,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "自由点位"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"station": {
+								"order": 8,
+								"ranges": [
+									false,
+									true
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "优先中转"
+								},
+								"type": "bool",
+								"value": false
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "配置 MAPF 相关点位属性"
+						},
+						"type": "string"
+					},
+					"Mutex": {
+						"properties": {
+							"registers": {
+								"required": true,
+								"type": "string",
+								"value": "[12,14,16]"
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "互斥区"
+						},
+						"type": "string"
+					},
+					"MutexByOtherSys": {
+						"properties": {
+							"acquireRequestPath": {
+								"order": 2,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "获取互斥组的api路径"
+								},
+								"type": "string",
+								"value": "/acquireBlockGroup"
+							},
+							"acquireSchemeHostPort": {
+								"order": 1,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "获取互斥组服务器地址和端口号"
+								},
+								"type": "string",
+								"value": "http://127.0.0.1:8080"
+							},
+							"releaseRequestPath": {
+								"order": 4,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "释放互斥组的api路径"
+								},
+								"type": "string",
+								"value": "/releaseBlockGroup"
+							},
+							"releaseSchemeHostPort": {
+								"order": 3,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "释放互斥组服务器地址和端口号"
+								},
+								"type": "string",
+								"value": "http://127.0.0.1:8080"
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "外部系统管理的互斥组"
+						},
+						"type": "string"
+					},
+					"PathProperties": {
+						"properties": {
+							"planStep": {
+								"order": 1,
+								"ranges": [
+									0.1,
+									10
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "任务线路的最小长度"
+								},
+								"type": "double",
+								"value": 1
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "线路属性，只处理组内的线路"
+						},
+						"type": "string"
+					},
+					"PrePark": {
+						"properties": {
+							"dotask": {
+								"order": 2,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "关键接单点位"
+								},
+								"type": "bool",
+								"value": false
+							},
+							"normal": {
+								"order": 1,
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "普通排队点位"
+								},
+								"type": "bool",
+								"value": false
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "预停靠接单排队区域"
+						},
+						"type": "string"
+					},
+					"SRDMutex": {
+						"properties": {
+							"greenLight": {
+								"order": 3,
+								"ranges": [
+									0,
+									512
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "绿灯地址"
+								},
+								"type": "int32",
+								"value": 102
+							},
+							"redLight": {
+								"order": 1,
+								"ranges": [
+									0,
+									512
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "红灯地址"
+								},
+								"type": "int32",
+								"value": 100
+							},
+							"switch": {
+								"order": 4,
+								"ranges": [
+									0,
+									512
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "开关地址"
+								},
+								"type": "int32",
+								"value": 103
+							},
+							"yellowLight": {
+								"order": 2,
+								"ranges": [
+									0,
+									512
+								],
+								"required": true,
+								"tag": "",
+								"tip": {
+									"en": "",
+									"zh": "黄灯地址"
+								},
+								"type": "int32",
+								"value": 101
+							}
+						},
+						"tip": {
+							"en": "",
+							"zh": "适配 SRD 的互斥组"
+						},
+						"type": "string"
+					},
+					"SameCharger": {
+						"tip": {
+							"en": "",
+							"zh": "相同充电桩点位"
+						},
+						"type": "string"
+					},
+					"Unidirection": {
+						"tip": {
+							"en": "",
+							"zh": "单向互斥区，不支持区域"
+						},
+						"type": "string"
+					}
+				},
+				"required": true,
+				"type": "complexGroup",
+				"value": "Mutex"
+			}
+		}
+	},
+	"Message_Door": {
+		"properties": {
+			"commandPeriod": {
+				"ranges": [
+					0,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "Control command issuing cycle"
+				},
+				"type": "double",
+				"unit": "s",
+				"value": 1
+			},
+			"simulate": {
+				"order": 1,
+				"required": true,
+				"tag": "",
+				"tip": {
+					"en": "",
+					"zh": "仿真门"
+				},
+				"type": "bool",
+				"value": false
+			},
+			"triggerType": {
+				"ranges": {
+					"edge": {
+						"properties": {
+							"keep": {
+								"required": true,
+								"tip": {
+									"en": "100",
+									"zh": "keep time in ms"
+								},
+								"type": "int",
+								"value": 100
+							}
+						}
+					},
+					"level": null
+				},
+				"required": true,
+				"type": "complexGroup",
+				"value": "level"
+			},
+			"type": {
+				"ranges": {
+					"HTTPProxy": {
+						"properties": {
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "http-proxy-1",
+									"zh": "proxyName"
+								},
+								"type": "string",
+								"value": "http-proxy-1"
+							}
+						}
+					},
+					"ModbusTCPProxy": {
+						"properties": {
+							"close": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "closeDoorConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":16,\"addressType\":5,\"value\":0}"
+							},
+							"open": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "openDoorConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":16,\"addressType\":5,\"value\":1}"
+							},
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxyOne",
+									"zh": "agentName"
+								},
+								"type": "string",
+								"value": "proxyone"
+							},
+							"status": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "doorInplaceConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":1,\"value\":1}"
+							}
+						}
+					},
+					"ModbusTCPProxy2": {
+						"properties": {
+							"closeList": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "closeDoorList"
+								},
+								"type": "string",
+								"value": "[{\"address\":16,\"addressType\":5,\"value\":1},{\"address\":20,\"addressType\":5,\"value\":1}]"
+							},
+							"openList": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "openDoorList"
+								},
+								"type": "string",
+								"value": "[{\"address\":16,\"addressType\":5,\"value\":1},{\"address\":20,\"addressType\":5,\"value\":1}]"
+							},
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxy one",
+									"zh": "proxy name"
+								},
+								"type": "string",
+								"value": "proxyone"
+							},
+							"status": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "doorInplaceConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":1,\"value\":1}"
+							}
+						}
+					}
+				},
+				"required": true,
+				"type": "complexGroup",
+				"value": "proxy"
+			}
+		}
+	},
+	"Message_Lift": {
+		"properties": {
+			"areaFloorTable": {
+				"required": true,
+				"tip": {
+					"en": "",
+					"zh": "Corresponding floor table of hoist"
+				},
+				"type": "string",
+				"value": "{\"area\":\"areafloor\"}"
+			},
+			"commandPeriod": {
+				"ranges": [
+					0,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "Control command issuing cycle"
+				},
+				"type": "double",
+				"unit": "s",
+				"value": 1
+			},
+			"door": {
+				"order": 1,
+				"required": true,
+				"tag": "",
+				"tip": {
+					"en": "",
+					"zh": "Is there a door"
+				},
+				"type": "bool",
+				"value": false
+			},
+			"simulate": {
+				"order": 1,
+				"required": true,
+				"tag": "",
+				"tip": {
+					"en": "",
+					"zh": "simulate lift"
+				},
+				"type": "bool",
+				"value": false
+			},
+			"type": {
+				"ranges": {
+					"WangLong": {
+						"properties": {
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxyOne",
+									"zh": "agentName"
+								},
+								"type": "string",
+								"value": "proxyOne"
+							}
+						}
+					},
+					"jinBo": {
+						"properties": {
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxyOne",
+									"zh": "agentName"
+								},
+								"type": "string",
+								"value": "proxyOne"
+							}
+						}
+					},
+					"proxy": {
+						"properties": {
+							"liftCurrFloor": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":4}"
+							},
+							"liftDoorStatus": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":4,\"addressType\":4}"
+							},
+							"liftStatus": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":2,\"addressType\":4}"
+							},
+							"liftTargetFloor": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":16}"
+							},
+							"liftUrgentStatus": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":6,\"addressType\":4}"
+							},
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxyOne",
+									"zh": "agentName"
+								},
+								"type": "string",
+								"value": "proxyOne"
+							}
+						}
+					},
+					"proxyNew": {
+						"properties": {
+							"liftCurrFloor": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":4}"
+							},
+							"liftDoorStatus": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":4,\"addressType\":4,\"value\":1}"
+							},
+							"liftStatus": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":2,\"addressType\":4,\"value\":1}"
+							},
+							"liftTargetFloor": {
+								"required": true,
+								"tip": {
+									"en": "ConfigInfo",
+									"zh": "modbusTcpConfigInfo"
+								},
+								"type": "string",
+								"value": "{\"address\":0,\"addressType\":16}"
+							},
+							"proxyName": {
+								"required": true,
+								"tip": {
+									"en": "proxyOne",
+									"zh": "agentName"
+								},
+								"type": "string",
+								"value": "proxyOne"
+							}
+						}
+					}
+				},
+				"required": true,
+				"type": "complexGroup",
+				"value": "proxy"
+			}
+		}
+	},
+	"Message_LogicalMap": {
+		"advanced_blocks": {
+			"MutexRegion": null
+		},
+		"advanced_points": {
+			"ActionPoint": {
+				"properties": {
+					"delayFinishTime": {
+						"ranges": [
+							0,
+							100
+						],
+						"singlestep": 1,
+						"tip": {
+							"en": "",
+							"zh": "任务终点停顿时间"
+						},
+						"type": "double",
+						"unit": "s",
+						"value": 0
+					},
+					"parkPoint": {
+						"order": 1,
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "可停靠"
+						},
+						"type": "bool",
+						"value": true
+					},
+					"stopForBlockGroup": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "到点停下申请互斥区"
+						},
+						"type": "bool",
+						"value": false
+					},
+					"waitForDistribute": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "等待执行分拨单"
+						},
+						"type": "bool",
+						"value": false
+					}
+				}
+			},
+			"ChargePoint": {
+				"properties": {
+					"chargePoint": {
+						"order": 1,
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "可充电"
+						},
+						"type": "bool",
+						"value": true
+					},
+					"stopForBlockGroup": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "到点停下申请互斥区"
+						},
+						"type": "bool",
+						"value": false
+					},
+					"waitForDistribute": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "等待执行分拨单"
+						},
+						"type": "bool",
+						"value": false
+					}
+				}
+			},
+			"LocationMark": {
+				"properties": {
+					"delayFinishTime": {
+						"ranges": [
+							0,
+							100
+						],
+						"singlestep": 1,
+						"tip": {
+							"en": "",
+							"zh": "任务终点停顿时间"
+						},
+						"type": "double",
+						"unit": "s",
+						"value": 0
+					},
+					"parkPoint": {
+						"order": 1,
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "可停靠"
+						},
+						"type": "bool",
+						"value": true
+					},
+					"stopForBlockGroup": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "到点停下申请互斥区"
+						},
+						"type": "bool",
+						"value": false
+					},
+					"waitForDistribute": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "等待执行分拨单"
+						},
+						"type": "bool",
+						"value": false
+					}
+				}
+			},
+			"ParkPoint": {
+				"properties": {
+					"parkPoint": {
+						"order": 1,
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "可停靠"
+						},
+						"type": "bool",
+						"value": true
+					},
+					"stopForBlockGroup": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "到点停下申请互斥区"
+						},
+						"type": "bool",
+						"value": false
+					},
+					"waitForDistribute": {
+						"tag": "",
+						"tip": {
+							"en": "",
+							"zh": "等待执行分拨单"
+						},
+						"type": "bool",
+						"value": false
+					}
+				}
+			},
+			"cleanArea": {
+				"properties": {
+					"startSite": {
+						"order": 0,
+						"required": true,
+						"tag": "",
+						"tip": {
+							"en": "Start Site",
+							"zh": "起始站点"
+						},
+						"type": "string",
+						"value": ""
+					},
+					"endSite": {
+						"order": 1,
+						"required": true,
+						"tag": "",
+						"tip": {
+							"en": "End Site",
+							"zh": "结束站点"
+						},
+						"type": "string",
+						"value": ""
+					}
+				}
+			}
+		}
+	},
+	"Message_Robot": {
+		"SimRobot": {
+			"properties": {
+				"dir": {
+					"ranges": [-360,
+						360
+					],
+					"required": true,
+					"tip": {
+						"en": "",
+						"zh": "机器人的朝向"
+					},
+					"type": "double",
+					"unit": "degree",
+					"value": 0
+				},
+				"endPosition": {
+					"required": true,
+					"tip": {
+						"en": "",
+						"zh": "机器人初始化线路的终点"
+					},
+					"type": "string",
+					"value": ""
+				},
+				"initialArea": {
+					"required": true,
+					"tip": {
+						"en": "",
+						"zh": "机器人初始区域"
+					},
+					"type": "string",
+					"value": ""
+				},
+				"initialPosition": {
+					"required": true,
+					"tip": {
+						"en": "",
+						"zh": "机器人初始站点"
+					},
+					"type": "string",
+					"value": ""
+				},
+				"percentage": {
+					"ranges": [
+						0,
+						1
+					],
+					"required": true,
+					"tip": {
+						"en": "",
+						"zh": "机器人初始化线路的百分比"
+					},
+					"type": "double",
+					"value": 0
+				}
+			}
+		},
+		"properties": {
+			"chargeNeed": {
+				"ranges": [-1,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "自动充电可接单阈值"
+				},
+				"type": "int32",
+				"unit": "%",
+				"value": -1
+			},
+			"chargeOnly": {
+				"ranges": [-1,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "自动充电不可接单阈值"
+				},
+				"type": "int32",
+				"unit": "%",
+				"value": -1
+			},
+			"chargedFull": {
+				"ranges": [
+					1,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "充电完成自动去停靠点阈值"
+				},
+				"type": "int32",
+				"unit": "%",
+				"value": 90
+			},
+			"chargedOk": {
+				"ranges": [
+					1,
+					100
+				],
+				"required": true,
+				"singlestep": 1,
+				"tip": {
+					"en": "",
+					"zh": "充电时可接单阈值"
+				},
+				"type": "int32",
+				"unit": "%",
+				"value": 50
+			}
+		}
+	},
+	"Message_RobotGroup": {
+		"properties": {
+			"isPooling": {
+				"order": 1,
+				"required": true,
+				"tag": "",
+				"tip": {
+					"en": "",
+					"zh": "是否可拼单"
+				},
+				"type": "bool",
+				"value": false
+			}
+		}
+	},
+	"Message_Terminal": {
+		"Rollor": {
+			"properties": {
+				"isConfigParameter": {
+					"order": 1,
+					"required": true,
+					"tag": "",
+					"tip": {
+						"en": "",
+						"zh": "Is it a configuration parameter"
+					},
+					"type": "bool",
+					"value": false
+				},
+				"type": {
+					"ranges": {
+						"extendedProxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3,\"number\":10}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6,\"number\":10}"
+								}
+							}
+						},
+						"proxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						},
+						"simulate": {
+							"properties": null
+						},
+						"slave": {
+							"properties": {
+								"port": {
+									"required": true,
+									"tip": {
+										"en": "",
+										"zh": "slave port"
+									},
+									"type": "uint32",
+									"value": 1503
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						}
+					},
+					"required": true,
+					"type": "complexGroup",
+					"value": "proxy"
+				}
+			}
+		},
+		"Door": {
+			"properties": {
+				"isConfigParameter": {
+					"order": 1,
+					"required": true,
+					"tag": "",
+					"tip": {
+						"en": "",
+						"zh": "Is it a configuration parameter"
+					},
+					"type": "bool",
+					"value": false
+				},
+				"type": {
+					"ranges": {
+						"extendedProxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3,\"number\":10}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6,\"number\":10}"
+								}
+							}
+						},
+						"proxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						},
+						"simulate": {
+							"properties": null
+						},
+						"slave": {
+							"properties": {
+								"port": {
+									"required": true,
+									"tip": {
+										"en": "",
+										"zh": "slave port"
+									},
+									"type": "uint32",
+									"value": 1503
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						}
+					},
+					"required": true,
+					"type": "complexGroup",
+					"value": "proxy"
+				}
+			}
+		},
+		"WindShower": {
+			"properties": {
+				"isConfigParameter": {
+					"order": 1,
+					"required": true,
+					"tag": "",
+					"tip": {
+						"en": "",
+						"zh": "Is it a configuration parameter"
+					},
+					"type": "bool",
+					"value": false
+				},
+				"type": {
+					"ranges": {
+						"extendedProxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3,\"number\":10}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6,\"number\":10}"
+								}
+							}
+						},
+						"proxy": {
+							"properties": {
+								"proxyName": {
+									"required": true,
+									"tip": {
+										"en": "proxyOne",
+										"zh": "agentName"
+									},
+									"type": "string",
+									"value": "proxyOne"
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						},
+						"simulate": {
+							"properties": null
+						},
+						"slave": {
+							"properties": {
+								"port": {
+									"required": true,
+									"tip": {
+										"en": "",
+										"zh": "slave port"
+									},
+									"type": "uint32",
+									"value": 1503
+								},
+								"registerOne": {
+									"required": true,
+									"tip": {
+										"en": "read",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":2,\"addressType\":3}"
+								},
+								"registerTwo": {
+									"required": true,
+									"tip": {
+										"en": "write",
+										"zh": "END"
+									},
+									"type": "string",
+									"value": "{\"address\":3,\"addressType\":6}"
+								}
+							}
+						}
+					},
+					"required": true,
+					"type": "complexGroup",
+					"value": "proxy"
+				}
+			}
+		}
+	}
+}

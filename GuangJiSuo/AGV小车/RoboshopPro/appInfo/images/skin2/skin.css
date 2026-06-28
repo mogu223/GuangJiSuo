@@ -1,0 +1,1242 @@
+/***************************************
+*************白色***********************
+****************************************
+****************************************/
+
+/*****************************************
+**** 全局
+*****************************************/
+*{
+font: 9pt ;
+/*color:rgb(77,88,115);*/
+}
+
+/*****************************************
+**** QWidget
+*****************************************/
+/*所有QWidget*/
+.QWidget#centralwidget{
+background: rgba(255, 255, 255,255);
+border-right:1px solid rgb(216,216,216);
+border-left:1px solid rgb(216,216,216);
+}
+QWidget#CustomChildBaseDialog{
+background: rgba(249, 249, 249,255);
+}
+QWidget#DragTabChildDialog_2{
+background: rgba(249, 249, 249,255);
+}
+.QWidget{
+	background: rgb(255, 255,255);
+}
+/*QLineEdit,QTextEdit{
+	background:rgb(255,255,255);
+	color:rgb(0,0,0);
+}
+
+QPlainTextEdit {
+	background:none;
+}*/
+.QWidget#widget_cell_title{
+	background: rgb(235, 235, 235);
+}
+QWidget#widget_title{					/*自定义标题栏*/
+height:32px;
+border-bottom:1px solid rgb(137, 137, 137);
+background: rgb(243, 243,243);
+}
+
+QWidget#widget_title[type = "normal"]{	/*normal*/
+border-bottom:1px solid rgb(137, 137, 137);
+background: rgb(137, 137, 137);
+}
+
+QWidget#widget_title[type = "hover"]{	/*hover*/
+border-bottom:1px solid rgba(147,203,249,200);
+
+}
+
+QWidget#widget_title[type = "selected"]{/*pressed*/
+border-bottom:1px solid rgb(147,203,249);
+background:rgb(147,203,249);
+}
+QWidget#RobomapPropertyWidget{			/*地图属性窗*/
+	font: 8pt bold ;
+	background:rgb(255,255,255);
+}
+QWidget#WidgetBasePPTW{					/*属性窗基类*/
+	font: 8pt bold ;
+}
+QWidget#widget_view{					/*属性窗基类*/
+	background: transparent;
+}
+QWidget#RoStatusConfigTreeCell{
+	border:1px solid rgb(0, 0, 0);
+}
+QWidget#WaittingMaskWidget{
+background-color: rgba(255, 255,255,50);
+}
+QWidget#WaittingPopWidget{
+background-color: rgba(0, 0, 0,0);
+}
+QWidget#WaitingSpinnerWidget{
+	qproperty-color:rgb(0,0,0);
+}
+QWidget#SCSplashScreen{
+	background-color: rgb(255, 255,255);
+}
+
+/**********菜单栏**********/
+QMenuBar {
+background-color: none;
+border:0px;
+}
+QMenuBar::item {
+border: 2px solid transparent;
+padding: 5px 10px 5px 10px;
+background: transparent;
+}
+
+QMenuBar::item:enabled:selected {
+color: rgb(0,0,0);
+border-bottom-color: rgb(18,150,219);
+}
+/*****************************************
+**** QLabel
+*****************************************/
+QLabel#label_title{
+	color:rgb(0,0,0);
+}
+QLabel#label_icon{
+min-width:24px;
+max-width:24px;
+min-height:24px;
+max-height:24px;
+border-image:url(appImages/robot_36);
+}
+QLabel#label_version{
+	color:rgb(154,158,161);
+	font: 12pt ;
+}
+QLabel#label_compatibility{
+	color:rgb(154,158,161);
+	font: 12pt ;
+}
+QLabel#label_text{
+color:rgb(0,0,0);
+border:0px;
+}
+
+/**警告提示***/
+QLabel#label_warningToolTip,
+QLabel#label_warningToolTip_2,
+QLabel#label_warningToolTip_3,
+QLabel#label_warningToolTip_4,
+QLabel#label_warningToolTip_5,
+QLabel#label_warningToolTip_6{
+	color: rgb(0, 170, 240);
+}
+
+QLabel#label_hint{
+	color: rgb(0, 170, 240);
+}
+QLabel#SCToastr,
+QLabel#SCToastr[type = "E_info"]{
+	font: 12pt ;
+    background:rgba(170,170,170,240);
+    color:#1296db;
+    border-radius:3px;
+}
+QLabel#SCToastr[type = "E_Waitting"]{
+    color:#1296db;
+}
+QLabel#SCToastr[type = "E_Warning"]{
+    color:yellow;
+}
+QLabel#SCToastr[type = "E_Error"]{
+    color:red;
+}
+
+QLabel#label_robotLabel{
+border:1px solid #12B5FF; 
+color:#12B5FF;
+font: 12px ;
+}
+/*****************************************
+**** QFrame
+*****************************************/
+
+QFrame#line{
+	border-bottom:1px solid rgb(137, 137, 137);
+}
+QFrame#RobotListWidgetFrame[status = "enable"]{
+border: 1px solid rgb(185, 185, 185);
+background-color:rgb(255,255,255);
+}
+
+QFrame#RobotListWidgetFrame[status = "selected"]{
+border: 1px solid rgb(185, 185, 185);/*153, 209, 255*/
+background-color:rgb(220, 220, 220);/*204, 232, 255*/
+}
+QFrame#RobotListWidgetFrame[status = "hover"]{
+border: 1px solid rgb(185, 185, 185);
+/*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 rgb(230, 240, 250), stop: 0.5 rgb(220, 235, 255), stop: 1.0 rgb(210, 
+230, 255));*/
+background-color:rgb(235,235,235);
+}
+QFrame#frame_aboutUs{
+	background-color: rgba(255, 255,255,255);
+}
+.QFrame#waitting_frame{
+	
+	background-color:rgba(246,246,246,200);
+}
+.QFrame#frame_task_actionGroup{
+	background-color: rgb(201, 209, 212,100);
+}
+QFrame#waitting_frame QLabel{
+	font: 11pt ;
+	color: rgb(0,170,240);
+}
+
+.QFrame#frame_center{
+background-color:rgb(61,61,61);
+}
+
+.QFrame#frame_title{
+
+border:1px solid rgb(79,79,79);
+}
+.QFrame#frame_group{
+background-color:rgb(242,243,245);
+border-top:1px solid rgba(0,0,0,0);
+border-left:1px solid rgb(79,79,79);
+border-right:1px solid rgb(79,79,79);
+border-bottom:1px solid rgb(79,79,79);
+}
+
+StylePropertyWidget{   				/*定义StylePropertyWidget*/
+qproperty-treeDescriptionColor:rgb(0,0,0);
+qproperty-treeDescriptionFont: 11pt ;
+qproperty-itemNormalPosColor:rgb(0,0,0);
+qproperty-itemNormalBkColor:rgb(249,249,249,255);
+}
+
+/*****************************************
+**** QDialog
+*****************************************/
+QDialog#CheckInfoListWidget{
+	font: 8pt bold ;
+}
+
+/*****************************************
+**** QCheckBox
+*****************************************/
+
+
+
+/*****************************************
+**** QPushButton
+*****************************************/
+
+/*关闭按钮*/
+QPushButton#pushButton_titleSetting,
+QPushButton#pushButton_close,
+QPushButton#pushButton_max,
+QPushButton#pushButton_mini{
+width:48px;
+height:28px;
+padding:0,0,0,0;
+border:0px;
+border-radius:0px;
+background:none;
+}
+
+QPushButton#pushButton_max[windowMaxsized="true"]{
+	border-image: url(appInfo/images/skin2/images/btn_max);
+}
+QPushButton#pushButton_max:hover[windowMaxsized="true"]{
+background:rgb(229,229,229);
+}
+QPushButton#pushButton_max:pressed[windowMaxsized="true"]{
+background:rgb(202,202,202);
+}
+QPushButton#pushButton_max,QPushButton#pushButton_max[windowMaxsized="false"]{
+	border-image: url(appInfo/images/skin2/images/btn_max_normal);
+}
+QPushButton#pushButton_max:hover,QPushButton#pushButton_max:hover[windowMaxsized="false"]{
+background:rgb(229,229,229);
+}
+QPushButton#pushButton_max:pressed,QPushButton#pushButton_max:pressed[windowMaxsized="false"]{
+background:rgb(202,202,202);
+}
+
+QPushButton#pushButton_close{
+border-image: url(appInfo/images/skin2/images/btn_close);
+}
+QPushButton#pushButton_close:hover{
+background:rgb(232,17,35);
+}
+QPushButton#pushButton_close:pressed{
+background:rgb(241,112,122);
+}
+QPushButton#pushButton_close:disabled{
+background:rgb(137,137,137);
+}
+
+QPushButton#pushButton_mini{
+border-image: url(appInfo/images/skin2/images/btn_mini);
+}
+QPushButton#pushButton_mini:hover{
+background:rgb(229,229,229);
+}
+QPushButton#pushButton_mini:pressed{
+background:rgb(202,202,202);
+}
+QPushButton#pushButton_titleSetting{
+border-image: url(appInfo/images/skin2/images/title_setting);
+}
+QPushButton#pushButton_titleSetting:hover{
+background:rgb(229,229,229);
+}
+QPushButton#pushButton_titleSetting:pressed{
+background:rgb(202,202,202);
+}
+
+QPushButton#pushButton_bottomForm{ 				/*隐藏底部窗口*/
+	border:0px;
+	border-radius:0px;
+	background:rgb(173,173,173);
+	border-image:url(appInfo/images/skin2/images/bottom_on_normal);
+}
+QPushButton#pushButton_bottomForm:hover{
+	background:rgb(102,102,102);
+}
+QPushButton#pushButton_bottomForm:pressed{
+	background:rgb(173,173,173);
+}
+QPushButton#pushButton_bottomForm:checked{
+	background:rgb(91,91,91);
+}
+
+QPushButton#pushButton_rightForm{				/*隐藏右边窗口*/
+	border:0px;
+	border-radius:0px;
+	background:rgb(173,173,173);
+	border-image:url(appInfo/images/skin2/images/right_on_normal);
+}
+QPushButton#pushButton_rightForm:hover{
+	background:rgb(102,102,102);
+}
+QPushButton#pushButton_rightForm:pressed{
+	background:rgb(173,173,173);
+}
+QPushButton#pushButton_rightForm:checked{
+		background:rgb(91,91,91);
+}
+QPushButton#pushButton_connect[isConnect = "false"]{
+
+}
+QPushButton#pushButton_connect[isConnect = "true"]{
+
+}
+
+QPushButton#pushButton_GoForward,
+QPushButton#pushButton_TurnLeft,
+QPushButton#pushButton_GoBack,
+QPushButton#pushButton_GoLeft,
+QPushButton#pushButton_GoRight,
+QPushButton#pushButton_TurnRight,
+QPushButton#pushButton_GoStop,
+QPushButton#pushButton_setting{   				/*控制盘*/
+padding:0,0,0,0;
+min-width:24px;
+max-width:24px;
+min-height:24px;
+max-height:24px;
+background:transparent;
+}
+QPushButton#btnZero{
+
+width:24px;
+height:24px;
+border:0px;
+padding:0px;
+margin:0px;
+border-radius:12px;
+background:rgb(18,150,215,160);
+color:rgb(255,255,255);
+}
+QPushButton#btnZero:hover{
+background:rgb(230,109,93);
+}
+QPushButton#pushButton_GoForward{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/up_normal);
+}
+QPushButton#pushButton_GoForward:hover,QPushButton#pushButton_GoForward:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/up_hover);
+}
+QPushButton#pushButton_GoForward:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/up_hover);
+}
+QPushButton#pushButton_TurnLeft{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnLeft_normal);
+}
+QPushButton#pushButton_TurnLeft:hover,QPushButton#pushButton_TurnLeft:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnLeft_hover);
+}
+QPushButton#pushButton_TurnLeft:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnLeft_hover);
+}
+QPushButton#pushButton_GoBack{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/down_normal);
+}
+QPushButton#pushButton_GoBack:hover,QPushButton#pushButton_GoBack:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/down_hover);
+}
+QPushButton#pushButton_GoBack:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/down_hover);
+}
+
+QPushButton#pushButton_GoLeft{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goLeft_normal);
+}
+QPushButton#pushButton_GoLeft:hover,QPushButton#pushButton_GoLeft:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goLeft_hover);
+}
+QPushButton#pushButton_GoLeft:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goLeft_hover);
+}
+QPushButton#pushButton_GoRight{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goRight_normal);
+}
+QPushButton#pushButton_GoRight:hover,QPushButton#pushButton_GoRight:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goRight_hover);
+}
+QPushButton#pushButton_GoRight:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/goRight_hover);
+}
+
+QPushButton#pushButton_TurnRight{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnRight_normal);
+}
+QPushButton#pushButton_TurnRight:hover,QPushButton#pushButton_TurnRight:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnRight_hover);
+}
+QPushButton#pushButton_TurnRight:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/turnRight_hover);
+}
+QPushButton#pushButton_GoStop{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/stop_normal);
+}
+QPushButton#pushButton_GoStop:hover,QPushButton#pushButton_GoStop:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/stop_hover);
+}
+QPushButton#pushButton_GoStop:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/stop_hover);
+}
+QPushButton#pushButton_setting{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/setting_normal);
+}
+QPushButton#pushButton_setting:hover,QPushButton#pushButton_setting:checked{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/setting_hover);
+}
+QPushButton#pushButton_setting:disabled{
+border-image:url(appInfo/images/skin2/images/RobotLibrary/setting_hover);
+}
+QPushButton#pushButton_update{
+background:none;
+qproperty-text:'';/*文字清空*/
+border:0px;
+image: url(appInfo/images/skin2/images/refresh_normal);
+text-align:right;
+width:85px;
+}
+QPushButton#pushButton_update:disabled{
+background:none;
+qproperty-text:'';/*文字清空*/
+border:0px;
+image:url(appInfo/images/skin2/images/refresh_disabled);
+text-align:right;
+width:85px;
+}
+QPushButton#pushButton_update:hover{
+background:none;
+margin:-1,-1,-1,-1;
+}
+QPushButton#pushButton_update:pressed{
+background:none;
+margin:1,1,1,1;
+}
+QPushButton#pushButton_checkable{
+border:0px;
+border-radius:0px;
+min-width:48px;
+min-height:20px;
+max-width:48px;
+max-height:20px;
+border-image:url(appInfo/images/skin2/images/btncheckoff);
+}
+QPushButton#pushButton_checkable:checked{
+border:0px;
+border-radius:0px;
+border-image:url(appInfo/images/skin2/images/btncheckon);
+}
+
+QPushButton#pushButton_delete_outline,
+QPushButton#pushButton_delete_outline:hover,
+QPushButton#pushButton_delete_outline:pressed,
+QPushButton#pushButton_delete_total,
+QPushButton#pushButton_delete_total:pressed,
+QPushButton#pushButton_delete,
+QPushButton#pushButton_delete:pressed{
+	border:0px;
+	qproperty-text:'';/*文字清空*/
+	border-radius:0px;
+	image:url(appInfo/images/skin2/images/delete_normal);
+}	
+
+QPushButton#pushButton_delete_total:hover
+QPushButton#pushButton_delete:hover{
+	image:url(appInfo/images/skin2/images/delete_hover);
+}
+
+QPushButton#pushButton_robod,
+QPushButton#pushButton_robod_2,
+QPushButton#pushButton_robod[isBonjourRobod = "false"]
+{
+min-width:none;
+border:0px;
+qproperty-text:'';/*文字清空*/
+border-radius:0px;
+background-color:none;
+image:url(appInfo/images/skin2/images/robod);
+}
+QPushButton#pushButton_robod:hover,
+QPushButton#pushButton_robod[isBonjourRobod = "true"]{
+image:url(appInfo/images/skin2/images/robod);
+}
+QPushButton#pushButton_robod_2:hover{
+	image:url(appInfo/images/skin2/images/robod_hover);
+}
+QPushButton#pushButton_robod:disabled{
+image:url(appInfo/images/skin2/images/robod);
+}
+QPushButton#pushButton_website{
+	border:0px;
+	background:none;
+	border-bottom:1px none;
+	color:rgb(0, 165, 235);
+	font: 12pt ;
+}
+QPushButton#pushButton_website:hover{
+
+	border-bottom:1px solid rgb(0, 165, 235);
+
+}
+QPushButton#btn_select_all,
+QPushButton#btn_select_ob,
+QPushButton#btn_select_cancel{
+	width:48px;
+	height:18px;
+	padding:0,0,0,0;
+	border:1px;
+	border-radius:1px;
+	background:rgb(204, 204, 204);
+}
+QPushButton#pushButton_teach{
+min-width:none;
+border:0px;
+qproperty-text:'';/*文字清空*/
+border-radius:0px;
+background-color:none;
+image:url(appInfo/images/skin2/images/btn_teach);
+}
+QPushButton#pushButton_teach:hover{
+image:url(appInfo/images/skin2/images/btn_teach_hover);
+}
+QPushButton#pushbutton_return{
+min-width:45px;
+min-height:45px;
+border:0px;
+qproperty-text:'';/*文字清空*/
+border-radius:0px;
+background-color:none;
+image:url(appInfo/images/skin2/images/AdvanceConfig/return);
+}
+QPushButton#pushbutton_return:enabled:hover {
+image:url(appInfo/images/skin2/images/AdvanceConfig/return_hover);
+}
+
+/*机械臂按钮图标*/
+QWidget#RoArmDlg QPushButton#pushButton_x_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/X+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_x_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_x_up:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_x_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/X-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_x_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_x_down:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_y_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/Y+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_y_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_y_up:checked{
+	background:rgb(138,138,138);
+}
+
+QWidget#RoArmDlg QPushButton#pushButton_y_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/Y-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_y_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_y_down:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_z_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/Z+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_z_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_z_up:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_z_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/Z-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_z_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_z_down:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rx_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RX+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rx_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_rx_up:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rx_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RX-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rx_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_rx_down:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_ry_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RY+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_ry_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_ry_up:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_ry_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RY-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_ry_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_ry_down:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rz_up{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RZ+);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rz_up:pressed,QWidget#RoArmDlg QPushButton#pushButton_rz_up:checked{
+	background:rgb(138,138,138);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rz_down{
+	border:0px;
+	background:none;
+	border-image:url(appInfo/images/skin2/images/RobotLibrary/arm/RZ-);
+}
+QWidget#RoArmDlg QPushButton#pushButton_rz_down:pressed,QWidget#RoArmDlg QPushButton#pushButton_rz_down:checked{
+	background:rgb(138,138,138);
+}
+/*****************************************
+**** QToolButton
+*****************************************/
+
+QToolButton[popupMode="2"] { /* only for InstantPopup */
+padding-right: 20px;         /* make way for the popup button */
+}
+
+QToolButton#toolButton_menu{
+border: none;
+background-color:none;
+}
+
+QToolButton#toolButton_menu:hover{
+border: 1px solid rgb(153, 209, 255);
+background-color:rgb(204, 232, 255);
+}
+QToolButton#toolButton_menu:pressed{
+border: 1px solid rgb(204, 232, 255);
+/*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 rgb(230, 240, 250), stop: 0.5 rgb(220, 235, 255), stop: 1.0 rgb(210, 
+230, 255));*/
+background-color:rgb(229,243,255);
+}
+QToolButton#toolButton_login{
+border:0px;
+}
+QToolButton#toolButton_solution{
+border:none;
+qproperty-text:'';
+border-image:url(appInfo/images/skin2/images/solution_normal);
+}
+QToolButton#toolButton_solution:hover{
+border:none;
+qproperty-text:'';
+border-image:url(appInfo/images/skin2/images/solution_hover);
+}
+QToolButton#toolButton_download{
+border:none;
+qproperty-text:'';
+border-image:url(appInfo/images/skin2/images/download);
+icon-size:14px;
+}
+QToolButton#toolButton_menuIcon{
+border:none;
+qproperty-text:'';
+border-image:url(appInfo/images/skin2/images/menu_icon);
+icon-size:14px;
+}
+
+QToolButton#toolButton_upload{
+border:none;
+qproperty-text:'';
+border-image:url(appInfo/images/skin2/images/upload);
+icon-size:14px;
+}
+QToolButton#toolButton_copy{
+border:none;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_copy);
+icon-size:14px;
+}
+QToolButton#toolButton_more{
+border:none;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_more);
+/*icon-size:14px;*/
+}
+QToolButton#toolButton_paste{
+border:none;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_paste);
+icon-size:14px;
+}
+QToolButton#toolButtonResources{
+border:0px;
+border-left:3px none;
+min-height:35px;
+}
+QToolButton#toolButtonResources:checked{
+background-color:rgb(61,61,61);
+border-left:3px solid rgb(18,150,219);
+}
+QToolButton#toolButton_expand{
+border:0px;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_expand);
+icon-size:8px;
+}
+QToolButton#toolButton_expand:checked{
+border:0px;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_collapse);
+icon-size:8px;
+}
+QToolButton#toolButton_search{
+	border:0px;
+	background:none;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/search_normal);
+/*icon-size:14px;*/
+}
+QToolButton#toolButton_search:hover{
+image:url(appInfo/images/skin2/images/search_hover);
+}
+QToolButton#toolButton_search:pressed{
+image:url(appInfo/images/skin2/images/search_normal);
+}
+QToolButton#toolButton_collapse{
+border:0px;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_collapse);
+icon-size:8px;
+}
+QToolButton#toolButton_collapse:checked{
+border:0px;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_expand);
+icon-size:8px;
+}
+
+QToolButton#toolButton_teach{
+border:none;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_teach);
+/*icon-size:14px;*/
+}
+
+
+QToolButton#toolButton_play{
+border:0px;
+qproperty-text:'';
+/*background:transparent;*/
+image:url(appInfo/images/skin2/images/btn_play);
+
+}
+
+QToolButton#toolButton_stop{
+border:0px;
+qproperty-text:'';
+image:url(appInfo/images/skin2/images/btn_stop);
+
+}
+QToolButton#toolButton_delete{
+border: none;
+qproperty-text:'';
+image:url(appInfo/images/skin1/images/RoboTaskChian/delete_hover);
+/*icon-size:14px;*/
+}
+QToolButton#toolButton_delete:hover{
+image:url(appInfo/images/skin1/images/RoboTaskChian/delete_hover);
+}
+/*****************************************
+**** QTableView
+*****************************************/
+QTableView {
+outline:none;
+show-decoration-selected: 1;
+qproperty-alternatingRowColors:true;
+background-color:rgb(255,255,255);
+}
+
+QTableView::pane {
+outline:none;
+border:1px solid rgb(204,204,204);
+background-color:none;
+top:-1px;
+}
+
+QTableView#tableWidget_permanent{
+	border:none;
+}
+/************************
+********QHeaderView******
+*************************/
+QHeaderView{
+border: none;
+min-height: 28px;
+}
+QHeaderView::section {
+border:0px;
+padding-left:0px;
+/*border-left:1px solid rgb(209, 209, 209);*/
+border-radius:0px;
+
+}
+QTableView QTableCornerButton::section {
+border-radius:0px;
+border:0px;
+border-left:none;
+border-bottom: 2px solid rgb(18,150,219);
+background-color: rgb(240,240,240);
+}
+QHeaderView::section:first
+{
+border:0px;
+}
+QHeaderView::section:vertical
+{
+border:0px;
+
+border-bottom:1px sold rgb(216,216,216);
+border-left:1px sold rgb(216,216,216);
+}
+QHeaderView::section:horizontal
+{
+
+color: rgb(0,0,0);
+border-bottom: 2px solid rgb(18,150,219);
+/*border: 1px solid rgb(67, 67, 67);*/
+}
+QHeaderView::section:horizontal:hover {
+color: rgb(18,150,219);
+}
+QHeaderView::section:horizontal:pressed {
+color: rgb(18,150,219);
+}
+
+/*****************************************
+**** QTreeView
+*****************************************/
+
+QTreeView{
+background-color:rgb(255,255,255);
+show-decoration-selected: 1;
+qproperty-alternatingRowColors:true;
+gridline-color: rgba(65, 65, 65,100);
+font: 10pt ;
+/*alternate-background-color:rgba(220,220,220,255);/*备用背景色，用于各行显示*/
+}
+QTreeView::item{
+margin-left:-2;
+}
+QTreeView#RobotTaskTagTreeView{
+	border:0px;
+}
+
+
+/*****************************************
+**** QListView
+*****************************************/
+
+QListView{
+qproperty-alternatingRowColors:true;
+font: 10pt ;
+outline:none;
+}
+QListView#listWidget_nav{
+qproperty-alternatingRowColors:false;
+}
+QListView::item{
+/*使用系统默认的*/
+}
+
+/*****************************************
+**** QToolBar
+*****************************************/
+
+QToolBar {
+	spacing: 0px;
+	/*border-bottom:1px solid rgb(45,45,45);*/
+	padding:0px,0px,0px,0px;
+	margin:0px,0px,0px,0px;
+	/* background:transparent; */
+}
+
+/*****************************************
+**** QTabBar
+*****************************************/
+QTabBar{
+	background:transparent;
+}
+QTabBar::tab{
+outline: none;
+/*border:0px;*/
+color:rgb(91,91,91);
+border-image:none;
+/*min-width:85px;*/
+background:transparent;
+margin:0px 0px 0px 0px;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:5px;
+padding-right:5px;
+border-right:1px solid rgb(204,204,204);
+border-top:1px solid rgb(204,204,204);
+border-bottom:1px solid rgb(204, 204, 204);
+border-left:1px solid rgb(204, 204, 204);
+/*font:10pt ;*/
+}
+QTabBar::tab:first{
+border-left:1px solid rgb(204, 204, 204);
+}
+QTabBar::tab:disabled{
+color:rgb(90,90,90);
+}
+QTabBar::close-button {
+subcontrol-position: right;
+image: url(appInfo/images/skin2/images/tabClose_normal);
+}
+
+QTabBar::close-button:hover {
+image: url(appInfo/images/skin2/images/tabClose_hover);
+}
+QTabBar::close-button:pressed {
+image: url(appInfo/images/skin2/images/tabClose_normal);
+}
+QTabBar::tab:hover{
+color:rgb(0,0,0);
+/*border-top:1px solid rgb(204,204,204);
+border-left:1px solid rgb(204,204,204);
+border-right:1px solid rgb(204,204,204);*/
+background-color:rgb(245,245,245);
+border-bottom:1px none;
+}
+QTabBar::tab:selected{
+color:rgb(0,0,0);
+border-right:1px solid rgb(204, 204, 204);
+background-color:rgb(255,255,255);
+border-bottom:1px rgb(0,170,255);
+}
+
+QTabBar#tabBar_west{
+	background:rgb(255,255,255);
+}
+QTabBar#tabBar_west::tab{
+outline: none;
+/*border:0px;
+color:rgba(220,220,220,220);*/
+border-image:none;
+/*min-width:85px;*/
+background:transparent;
+margin:0px 0px 0px 0px;
+padding-top:5px;
+padding-bottom:5px;
+padding-left:5px;
+padding-right:5px;
+border-left:1px solid transparent;
+border-right:1px solid rgb(204, 204, 204);
+border-top:1px solid transparent;
+border-bottom:1px solid transparent;
+/*font:10pt ;*/
+}
+QTabBar#tabBar_west::tab:first{
+
+}
+QTabBar#tabBar_west::tab:disabled{
+color:rgb(138,138,138);
+}
+QTabBar#tabBar_west::close-button {
+subcontrol-position: top;
+image: url(appInfo/images/skin2/images/tabClose_normal);
+}
+
+QTabBar#tabBar_west::close-button:hover {
+image: url(appInfo/images/skin2/images/tabClose_hover);
+}
+QTabBar#tabBar_west::close-button:pressed {
+image: url(appInfo/images/skin2/images/tabClose_normal);
+}
+QTabBar#tabBar_west::tab:hover{
+/*color:rgba(220,220,220,255);*/
+border-right:1px solid rgba(18,150,219,150);
+}
+
+QTabBar#tabBar_west::tab:selected{
+/*color:rgba(255,255,255,255);
+background-color:rgb(51,51,51);*/
+border-left:1px solid rgb(204,204,204);
+border-top:1px solid rgb(204,204,204);
+border-bottom:1px solid rgb(204,204,204);
+border-right:1px solid transparent;
+
+}
+/*QTabBar#tabBar_west::tab:selected:hover{
+border-right:1px solid rgba(18,150,219,150);
+}*/
+/*****************************************
+**** QTabWidget
+*****************************************/
+QTabWidget::pane {
+border:1px solid rgb(204, 204, 204);
+background-color:none;
+top:-1px;
+}
+QTabWidget#tabWidget_west::pane {
+	border-right:1px solid rgb(204,204,204);
+border-top:1px solid rgb(204,204,204);
+border-bottom:1px solid rgb(204,204,204);
+border-left:1px solid rgb(204,204,204);
+background-color:none;
+left:-1px;
+top:0px;
+}
+
+/*****************************************
+**** 4.0 RoTabWidget
+*****************************************/
+QTabBar#tabBar_center::tab{
+        font: 10pt ;
+        width:90;
+        height:26;
+        margin-top:5px;
+        margin-right:1px;
+        margin-left:1px;
+        margin-bottom:0px;
+        border-top: 1px solid rgb(200,200,255);
+        border-bottom: 1px solid rgb(200,200,255);
+}
+/*最左边标签未选中时显示（因为需要左边打圆角，所以和其他背景图片不一样，注意字体颜色）*/
+QTabBar#tabBar_center::tab:first{
+border-left: 1px solid rgb(200,200,255);
+ border-top-left-radius:10px;
+ border-bottom-left-radius:10px;
+}
+/*最左边标签被选中*/
+QTabBar#tabBar_center::tab:first:selected {
+         border-top-left-radius:10px;
+ border-bottom-left-radius:10px;
+        background-color: rgb(0, 170, 255);
+}
+/*最右边标签未选中时显示（因为需要右边打圆角，所以和其他背景图片不一样）*/
+QTabBar#tabBar_center::tab:last{
+border-right: 1px solid rgb(200,200,255);
+                 border-top-right-radius:10px;
+ border-bottom-right-radius:10px;
+}
+/*最右边标签被选中*/
+QTabBar#tabBar_center::tab:last:selected {
+                 border-top-right-radius:10px;
+ border-bottom-right-radius:10px;
+                background-color: rgb(0, 170, 255);
+}
+/*中间的标签未被选择的显示*/
+QTabBar#tabBar_center::tab:!selected {
+
+}
+/*中间标签选中显示的图片*/
+QTabBar#tabBar_center::tab:selected {
+                background-color: rgb(0, 170, 255);
+}
+/*close button*/
+QTabBar#tabBar_center::close-button {
+    image: null
+}
+QTabBar#tabBar_center::close-button:selected {
+    image: url(appInfo/images/skin2/images/tabClose_normal.svg)
+}
+QTabBar#tabBar_center::close-button:selected:hover {
+    image: url(appInfo/images/skin2/images/tabClose_hover.svg)
+}
+/*tab 标签居中*/
+QTabWidget#tabWidget_center::tab-bar {
+        alignment: center;
+}
+QTabWidget#tabWidget_center::pane {
+border: 0px solid rgb(200,200, 255);
+}
+
+/*****************************************
+**** QGroupBox
+*****************************************/
+/**********分组框**********/
+QGroupBox {
+/* margin-top:12px; */
+}
+QGroupBox::title {
+/* top: 12px;
+left: 9px; */
+font-size: 9px;
+}
+QGroupBox#groupBox_fontSize{
+font-size: 14px;
+}
+QGroupBox#groupBox_TopTitle{
+	margin-top:12px;
+}
+QGroupBox#groupBox_TopTitle::title{
+	top: -12px;
+	left: 9px;
+}
+/*****************************************
+**** QScrollBar
+*****************************************/
+QScrollBar:horizontal {					/*水平*/
+
+	padding-left:12px;
+	padding-right: 12px;
+	}
+	
+QScrollBar::handle:horizontal {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	min-width: 20px;
+	}
+
+QScrollBar:vertical {					/*垂直*/
+
+		padding-top:12px;
+		padding-bottom: 12px;
+		}
+		
+QScrollBar::handle:vertical {
+		margin-left: 0px;
+		margin-right: 0px;
+		min-width: 20px;
+		}
+	
+
+/*****************************************
+**** QListWidget
+*****************************************/
+
+QListWidget#lw_check_info
+{
+	font: 9pt bold ;
+}
+
+/*****************************************
+**** QStatusBar
+*****************************************/
+
+QStatusBar
+{
+	max-height:25px;
+	border-top:1px solid rgb(185,185,185);
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+
+
+/*****************************************
+**** QScrollArea
+*****************************************/
+QScrollArea
+{
+	font: 9pt bold ;
+	background:rgb(255,255,255);
+	border:0px;
+}
+QWidget#scrollAreaWidgetContents{
+		background:rgb(255,255,255);
+}
+
+
+/*****************************************
+**** QGraphicsView
+*****************************************/
+QGraphicsView#graphicsView_robot
+{
+	border:1px solid rgb(185,185,185);
+}
+/***********NavToolBtnWidget***************/
+.QWidget#widget_nav{
+background:rgb(240,240,240);
+}
+QWidget#NavToolBtnWidget QFrame{
+background:rgb(0,170,255);
+}
+QWidget#NavToolBtnWidget QToolButton{
+border:0px;
+padding-top:10px;
+padding-bottom:10px;
+padding-left:10px;
+padding-right:10px;
+background-color: rgb(240,240,240);
+color: rgb(39, 39, 39);
+}
+QWidget#NavToolBtnWidget QToolButton:hover{
+background-color: rgb(255,255,255);
+}
+QWidget#NavToolBtnWidget QToolButton:checked{
+background-color: rgb(249, 249, 249);
+}

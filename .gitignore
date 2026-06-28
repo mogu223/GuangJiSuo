@@ -1,0 +1,91 @@
+# 系统文件
+__MACOSX/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+*.lnk
+
+# Reasonix
+.reasonix/
+
+# IDE / 构建产物
+.vs/
+*.vs
+Debug/
+Release/
+x64/
+x86/
+*.sdf
+*.ipch
+*.ncb
+*.pch
+*.obj
+*.o
+*.pdb
+
+# 二进制库 / 可执行文件
+*.exe
+*.dll
+*.lib
+*.so
+*.a
+*.dylib
+*.pyd
+*.pyc
+*.pyo
+
+# 压缩包
+*.rar
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.iso
+*.bin
+*.msi
+*.whl
+*.deb
+*.rpm
+
+# 图片
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.bmp
+
+# 文档二进制
+*.pdf
+*.pptx
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.chm
+
+# 数据库
+*.db
+*.s3db
+
+# 媒体
+*.webm
+*.mp4
+*.avi
+*.mov
+*.wav
+
+# 其他二进制
+*.pak
+*.dat
+*.pcd
+
+# 日志
+*.log
+
+# 嵌入的 Git 仓库
+GuangJiSuo/LRU

@@ -1,0 +1,210 @@
+[
+
+    {
+        "plugin_name": "MoveFactory",
+        "plugin_text": "Robot Control",
+        "actions": [
+            {
+                "action_name": "move_action",
+                "action_text": "Navigation",
+                "has_parameters": true,
+                "parameters": [
+                    {
+						"action_name": "GotoSpecifiedPose",
+						"action_text": "Path Nav",
+						"has_parameters": true,
+						"parameters":[]
+                    },
+                    {
+						"action_name": "Translate",
+						"action_text": "Translation",
+						"has_parameters": true,
+						"parameters":[]
+                    },
+                    {
+						"action_name": "Turn",
+						"action_text": "Rotation",
+						"has_parameters": true,
+						"parameters":[]
+                    },
+                    {
+						"action_name": "GotoSpecifiedPoseLoad",
+						"action_text": "Fork Load",
+						"has_parameters": true,
+						"parameters":[
+                            {
+                                "text": "",
+                                "key": "actiontype",
+                                "value": "load"
+                            },
+                            {
+                                "text": "",
+                                "key": "actionnumber",
+                                "value": 0
+                            }
+                        ]
+                    },
+                    {
+						"action_name": "GotoSpecifiedPoseUnload",
+						"action_text": "Fork Unload",
+						"has_parameters": true,
+						"parameters":[
+                            {
+                                "text": "",
+                                "key": "actiontype",
+                                "value": "unload"
+                            },
+                            {
+                                "text": "",
+                                "key": "actionnumber",
+                                "value": 0
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "plugin_name": "TaskManager",
+        "plugin_text": "Task Manager",
+        "actions": [
+            {
+                "action_name": "action_waitDI",
+                "action_text": "Wait DI Trigger",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "",
+                        "key": "index",
+                        "value": 4
+                    },
+                    {
+                        "text": "",
+                        "key": "value",
+                        "value": true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "plugin_name": "DSPChassis",
+        "plugin_text": "Chassis Control",
+        "actions": [
+            {
+                "action_name": "action_setDO",
+                "action_text": "Set DO",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "",
+                        "key": "index",
+                        "value": 0
+                    },
+                    {
+                        "text": "",
+                        "key": "value",
+                        "value": false
+                    }
+                ]
+            },
+            {
+                "action_name": "action_setForkHeight",
+                "action_text": "Fork Lift",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "Height",
+                        "key": "value",
+                        "value": 0
+                    }
+                ]
+            },
+            {
+                "action_name": "action_setLiftSpeed",
+                "action_text": "Tray Lift",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "Speed",
+                        "key": "value",
+                        "value": 0
+                    }
+                ]
+            },
+            {
+                "action_name": "action_setLiftSpinDegree",
+                "action_text": "Tray Spin",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "degree",
+                        "key": "value",
+                        "value": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "plugin_name": "SeerRoller",
+        "plugin_text": "Roller(Belt)/Jack Control",
+        "actions": [
+            {
+                "action_name": "leftLoad",
+                "action_text": "Roller(Belt) Left Load",
+                "has_parameters": false,
+                "parameters": []
+            },
+            {
+                "action_name": "leftUnload",
+                "action_text": "Roller(Belt) Left Unload",
+                "has_parameters": false,
+                "parameters": []
+            },
+            {
+                "action_name": "rightLoad",
+                "action_text": "Roller(Belt) Right Load",
+                "has_parameters": false,
+                "parameters": []
+            },
+            {
+                "action_name": "rightUnload",
+                "action_text": "Roller(Belt) Right Unload",
+                "has_parameters": false,
+                "parameters": []
+            },
+            {
+                "action_name": "jackLoad",
+                "action_text": "Jack Load",
+                "has_parameters": false,
+                "parameters": []
+            },
+            {
+                "action_name": "jackUnload",
+                "action_text": "Jack Unload",
+                "has_parameters": false,
+                "parameters": []
+            }
+        ]
+    },
+    {
+        "plugin_name": "SoundPlayer",
+        "plugin_text": "Audio Control",
+        "actions": [
+            {
+                "action_name": "playSoundFile",
+                "action_text": "Play Audio",
+                "has_parameters": true,
+                "parameters": [
+                    {
+                        "text": "",
+                        "key": "name",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    }
+]

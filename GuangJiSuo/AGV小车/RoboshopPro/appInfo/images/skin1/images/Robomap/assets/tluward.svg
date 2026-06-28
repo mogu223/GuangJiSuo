@@ -1,0 +1,18 @@
+<svg width="580" height="450" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="452" width="582" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <line transform="rotate(0.20240898430347443 295.3333740234315,103.281249999992) " stroke="#1296db" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_1" y2="101.78125" x2="551.833344" y1="104.78125" x1="38.833341" stroke-width="40.5" fill="none"/>
+  <line stroke="#1296db" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_2" y2="396.781259" x2="51.833352" y1="100.781245" x1="542.833346" fill-opacity="null" stroke-width="40.5" fill="none"/>
+  <line stroke="#1296db" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_3" y2="393.78125" x2="513.833338" y1="395.78125" x1="42.833343" fill-opacity="null" stroke-width="40.5" fill="none"/>
+  <line stroke="#1296db" transform="rotate(176.40908813476562 124.83334350585939,148.78125) " stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_4" y2="201.049133" x2="218.211641" y1="96.513358" x1="31.45505" fill-opacity="null" stroke-width="40.5" fill="none"/>
+  <line stroke="#1296db" transform="rotate(-15.359781265258789 122.7377929687501,60.33679199218754) " stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_5" y2="85.336806" x2="18.476617" y1="35.3368" x1="226.998963" fill-opacity="null" stroke-width="40.5" fill="none"/>
+ </g>
+</svg>

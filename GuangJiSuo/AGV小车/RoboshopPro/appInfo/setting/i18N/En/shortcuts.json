@@ -1,0 +1,179 @@
+{
+    "roboshop_shortcuts": [
+                {
+                    "module_name":    "Global",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "Ctrl+1",
+                                        "desc":           "The first Tab"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+2",
+                                        "desc":           "Second Tab"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+3",
+                                        "desc":           "The third Tab"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+H",
+                                        "desc":           "Back to home"
+                                    },
+                                    {
+                                        "keys":           "......",
+                                        "desc":           "......"
+                                    }
+                    ]
+                },
+                {
+                    "module_name":    "Map Editor",
+                    "shortcuts"  :[  
+					                {
+                                        "keys":           "Ctrl+E",
+                                        "desc":           "On/OFF Editor"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "Save Map"
+                                    },
+									{
+                                        "keys":           "Ctrl+Z",
+                                        "desc":           "Undo"
+                                    },
+									{
+                                        "keys":           "Ctrl+Y",
+                                        "desc":           "Redo"
+                                    },
+									{
+                                        "keys":           "Ctrl+A",
+                                        "desc":           "Select all map elements"
+                                    },
+									{
+                                        "keys":           "Ctrl+F",
+                                        "desc":           "Search map elements"
+                                    },
+									{
+                                        "keys":           "Ctrl+Mouse wheel",
+                                        "desc":           "Zoom"
+                                    },
+									{
+                                        "keys":           "Middle mouse button",
+                                        "desc":           "Drag the map"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+Left button and drag",
+                                        "desc":           "Partial enlarged"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+Shift+Left button and drag",
+                                        "desc":           "Measuring ruler"
+                                    },
+                                    {
+                                        "keys":           "Esc",
+                                        "desc":           "Arrow"
+                                    },
+                                    {
+                                        "keys":           "E",
+                                        "desc":           "Eraser"
+                                    },
+                                    {
+                                        "keys":           "L",
+                                        "desc":           "Line"
+                                    },
+                                    {
+                                        "keys":           "M",
+                                        "desc":           "Mark"
+                                    },
+                                    {
+                                        "keys":           "P",
+                                        "desc":           "Path"
+                                    },
+                                    {
+                                        "keys":           "A",
+                                        "desc":           "Area"
+                                    },
+                                    {
+                                        "keys":           "C",
+                                        "desc":           "Cablibration"
+                                    },
+                                    {
+                                        "keys":           "T",
+                                        "desc":           "Transform"
+                                    }
+                                ]
+                },
+                {
+                    "module_name":    "Robot Control",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "W",
+                                        "desc":           "Forward"
+                                    },
+                                    {
+                                        "keys":           "S",
+                                        "desc":           "Backward"
+                                    },
+									{
+                                        "keys":           "A",
+                                        "desc":           "Turnleft"
+                                    },
+                                    {
+                                        "keys":           "D",
+                                        "desc":           "Turnright"
+                                    },
+									{
+                                        "keys":           "Q",
+                                        "desc":           "Emergency stop:Immediate braking"
+                                    },
+                                    {
+                                        "keys":           "E",
+                                        "desc":           "Shiftleft"
+                                    },
+									{
+                                        "keys":           "R",
+                                        "desc":           "Shiftright"
+                                    },
+                                    {
+                                        "keys":           "Alt+C",
+                                        "desc":           "Connect/Disconnect"
+                                    }
+                                ]
+                },
+				{
+                    "module_name":    "Model Editor",
+                    "shortcuts"  :[
+
+									{
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "Save the model file"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+Z",
+                                        "desc":           "Undo"
+                                    },
+									{
+                                        "keys":           "Ctrl+Y",
+                                        "desc":           "Redo"
+                                    }
+
+                                ]
+                },
+				{
+                    "module_name":    "Taskchain",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "Ctrl+C",
+                                        "desc":           "Copy tasks, groups"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+V",
+                                        "desc":           "Paste tasks, groups"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "Save taskchain"
+                                    }
+                                ]
+                }
+            ]
+}

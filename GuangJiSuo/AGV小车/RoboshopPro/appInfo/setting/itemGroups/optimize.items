@@ -1,0 +1,42 @@
+[
+    {
+        "centerPos": {
+            "x": 906.5717294735337,
+            "y": 685.2869182179403
+        },
+        "itemType": 1232,
+        "json": "{\n    \"className\":\"LocationMark\",\n    \"instanceName\":\"LM5\",\n    \"pos\":{\n        \"x\":9.065717294735336,\n        \"y\":6.852869182179403\n    },\n    \"property\":[\n        {\n            \"key\":\"spin\",\n            \"type\":\"bool\",\n            \"value\":\"ZmFsc2U=\",\n            \"boolValue\":false\n        }\n    ],\n    \"ignoreDir\":true\n}"
+    },
+    {
+        "centerPos": {
+            "x": 911.7773557854058,
+            "y": 649.4434769041401
+        },
+        "itemType": 1232,
+        "json": "{\n    \"className\":\"LocationMark\",\n    \"instanceName\":\"LM6\",\n    \"pos\":{\n        \"x\":9.117773557854058,\n        \"y\":6.494434769041401\n    },\n    \"property\":[\n        {\n            \"key\":\"spin\",\n            \"type\":\"bool\",\n            \"value\":\"ZmFsc2U=\",\n            \"boolValue\":false\n        }\n    ],\n    \"ignoreDir\":true\n}"
+    },
+    {
+        "centerPos": {
+            "x": 0,
+            "y": 0
+        },
+        "itemType": 1234,
+        "json": "{\n    \"curve\":\"DegenerateBezier\",\n    \"data0\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM1-LM5\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM1\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":3.6,\\n            \\\"y\\\":7.06\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM5\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.065717294735336,\\n            \\\"y\\\":6.852869182179403\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":5.755,\\n        \\\"y\\\":6.978\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":7.91,\\n        \\\"y\\\":6.897\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"data1\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM5-LM1\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM5\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.065717294735336,\\n            \\\"y\\\":6.852869182179403\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM1\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":3.6,\\n            \\\"y\\\":7.06\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":7.91,\\n        \\\"y\\\":6.897\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":5.755,\\n        \\\"y\\\":6.978\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"direction\":2\n}"
+    },
+    {
+        "centerPos": {
+            "x": 0,
+            "y": 0
+        },
+        "itemType": 1234,
+        "json": "{\n    \"curve\":\"DegenerateBezier\",\n    \"data0\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM6-LM3\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM6\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.117773557854058,\\n            \\\"y\\\":6.494434769041401\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM3\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":5.417,\\n            \\\"y\\\":5.242\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":8.516,\\n        \\\"y\\\":6.291\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":6.966,\\n        \\\"y\\\":5.767\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"data1\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM3-LM6\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM3\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":5.417,\\n            \\\"y\\\":5.242\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM6\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.117773557854058,\\n            \\\"y\\\":6.494434769041401\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":6.966,\\n        \\\"y\\\":5.767\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":8.516,\\n        \\\"y\\\":6.291\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"direction\":2\n}"
+    },
+    {
+        "centerPos": {
+            "x": 0,
+            "y": 0
+        },
+        "itemType": 1234,
+        "json": "{\n    \"curve\":\"DegenerateBezier\",\n    \"data0\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM6-LM5\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM5\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.065717294735336,\\n            \\\"y\\\":6.852869182179403\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM6\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.117773557854058,\\n            \\\"y\\\":6.494434769041401\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":9.24324339573739,\\n        \\\"y\\\":6.8461415882512515\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":9.28586475405435,\\n        \\\"y\\\":6.5513210538140045\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"data1\":\"{\\n    \\\"className\\\":\\\"DegenerateBezier\\\",\\n    \\\"instanceName\\\":\\\"LM2-LM1\\\",\\n    \\\"startPos\\\":{\\n        \\\"instanceName\\\":\\\"LM6\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.117773557854058,\\n            \\\"y\\\":6.494434769041401\\n        }\\n    },\\n    \\\"endPos\\\":{\\n        \\\"instanceName\\\":\\\"LM5\\\",\\n        \\\"pos\\\":{\\n            \\\"x\\\":9.065717294735336,\\n            \\\"y\\\":6.852869182179403\\n        }\\n    },\\n    \\\"controlPos1\\\":{\\n        \\\"x\\\":9.28586475405435,\\n        \\\"y\\\":6.5513210538140045\\n    },\\n    \\\"controlPos2\\\":{\\n        \\\"x\\\":9.24324339573739,\\n        \\\"y\\\":6.8461415882512515\\n    },\\n    \\\"property\\\":[\\n        {\\n            \\\"key\\\":\\\"direction\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        },\\n        {\\n            \\\"key\\\":\\\"movestyle\\\",\\n            \\\"type\\\":\\\"int\\\",\\n            \\\"value\\\":\\\"MA==\\\",\\n            \\\"int32Value\\\":0\\n        }\\n    ]\\n}\",\n    \"direction\":2\n}"
+    }
+]

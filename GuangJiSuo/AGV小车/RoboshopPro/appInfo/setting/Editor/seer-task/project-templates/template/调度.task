@@ -1,0 +1,1268 @@
+{
+    "id": "4tRDYFijxbZDNoZJcfTPZT",
+    "text": "调度",
+    "blocks": [
+        {
+            "id": "4FPt7MjX39csqE3seu9A3Y",
+            "url": "/seer/base/note",
+            "parameters": [
+                {
+                    "id": "rP5Wnbc9wYyFRYzZsxAgnt",
+                    "name": "content",
+                    "exp": null,
+                    "type": 1,
+                    "in": true,
+                    "value": "通过RDS Core去调度机器人，发送两个订单",
+                    "required": true,
+                    "isExp": false,
+                    "spread": true,
+                    "text": "内容"
+                }
+            ],
+            "blocks": {},
+            "breaks": [],
+            "annotation": false
+        },
+        {
+            "id": "rLFFLRJY692upVFL8hbyFq",
+            "url": "/seer/rds-core/connect",
+            "parameters": [
+                {
+                    "id": "iV3q8dMnVeStZMpAY2FXrq",
+                    "name": "ip",
+                    "exp": null,
+                    "type": 1,
+                    "in": true,
+                    "value": "192.168.1.101",
+                    "required": true,
+                    "isExp": false,
+                    "valid": true,
+                    "spread": true,
+                    "text": "RDSCore的服务器ip"
+                },
+                {
+                    "id": "jqQkuPLwtWDydZWtNzGLNY",
+                    "name": "port",
+                    "exp": null,
+                    "type": 2,
+                    "in": true,
+                    "value": 8088,
+                    "required": true,
+                    "isExp": false,
+                    "spread": true,
+                    "text": "端口"
+                },
+                {
+                    "id": "8EMP2AgjN6vbagkgcrr7WK",
+                    "name": "ssl",
+                    "exp": null,
+                    "type": 3,
+                    "in": true,
+                    "value": false,
+                    "required": true,
+                    "isExp": false,
+                    "spread": true,
+                    "text": "ssl"
+                },
+                {
+                    "id": "qQfMbt7etkJxaqDD9Hs5Df",
+                    "name": "action",
+                    "exp": null,
+                    "type": 10,
+                    "value": null,
+                    "isExp": false,
+                    "spread": true,
+                    "text": "连接成功后"
+                },
+                {
+                    "id": "srHsdHGBa5tY5M3adrvThZ",
+                    "name": "rds_core",
+                    "exp": null,
+                    "type": 7,
+                    "customType": "/seer/rds_core",
+                    "out": true,
+                    "value": null,
+                    "var": "rds_core",
+                    "isExp": false,
+                    "spread": true,
+                    "text": "RDSCore"
+                }
+            ],
+            "blocks": {
+                "qQfMbt7etkJxaqDD9Hs5Df": [
+                    {
+                        "id": "jaGzc5mUAoCDywapMc1nsL",
+                        "url": "/seer/rds_core/orderDetail",
+                        "parameters": [
+                            {
+                                "id": "p7DX3TwTjVktasQbWPXxzZ",
+                                "name": "rds_core",
+                                "exp": "rds_core",
+                                "type": 7,
+                                "customType": "/seer/rds_core",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "RDSCore"
+                            },
+                            {
+                                "id": "n5hH665rbvhryJwJKGGqr8",
+                                "name": "id",
+                                "exp": "\"e93800ae-4c75-4b39-8ab7-b3d3f701f690\"",
+                                "type": 1,
+                                "in": true,
+                                "value": "e93800ae-4c75-4b39-8ab7-b3d3f701f690",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "运单id"
+                            },
+                            {
+                                "id": "fhKWz61iXSXaB8NxngSTS7",
+                                "name": "orderDetail",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "qkjV4owo78bqLfLHdtJVjA",
+                                        "name": "id",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单 id"
+                                    },
+                                    {
+                                        "id": "4Wf1X4H9TXcQLHx1gJW1RE",
+                                        "name": "vehicle",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "机器人"
+                                    },
+                                    {
+                                        "id": "rrRXiWCTHyboLSbG1NLchh",
+                                        "name": "createTime",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单创建的时间戳"
+                                    },
+                                    {
+                                        "id": "6ockZAJisZuryrJdxF1DT7",
+                                        "name": "terminalTime",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单结束的时间戳"
+                                    },
+                                    {
+                                        "id": "57wE932fkyMLGz42tFWtHC",
+                                        "name": "state",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单状态"
+                                    },
+                                    {
+                                        "id": "pfSYH3uq8CSPtQ1v7uU1Mo",
+                                        "name": "group",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "接单机器人的机器人组"
+                                    },
+                                    {
+                                        "id": "b8DVgjkUshdTLR7Y4ybK7v",
+                                        "name": "priority",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单优先级，数字越大越优先"
+                                    },
+                                    {
+                                        "id": "7hjKXmKuQX8b8f2pHpwkey",
+                                        "name": "complete",
+                                        "exp": null,
+                                        "type": 3,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单是否封口的标示位"
+                                    },
+                                    {
+                                        "id": "gLCgkW38wPFtY4HMrNrjYx",
+                                        "name": "msg",
+                                        "exp": null,
+                                        "type": 1,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单信息"
+                                    },
+                                    {
+                                        "id": "rnhA8aTyXHz15DsG1iTfAc",
+                                        "name": "startOdo",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "开始执行运单时机器人的里程"
+                                    },
+                                    {
+                                        "id": "qbhyHCbwWsua6PSevvuXs8",
+                                        "name": "finishOdo",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单到终态时机器人的里程"
+                                    },
+                                    {
+                                        "id": "mjhrmPkzhKx5EBMAR9dGph",
+                                        "name": "orderOdo",
+                                        "exp": null,
+                                        "type": 4,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": ""
+                                    },
+                                    {
+                                        "id": "qsR5PGgQmL4gnQuNQXn9xc",
+                                        "name": "blocks",
+                                        "exp": null,
+                                        "type": 9,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "动作块"
+                                    }
+                                ],
+                                "required": true,
+                                "var": "orderDetail",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "运单详细"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "rJZaTfmJ2PCfsGQ476kSBB",
+                        "url": "/seer/base/debug",
+                        "parameters": [
+                            {
+                                "id": "dt6Eq28MHmUgvzzWjkuEBW",
+                                "name": "data",
+                                "exp": "orderDetail",
+                                "express": {
+                                    "operator": "root",
+                                    "childs": [
+                                        {
+                                            "operator": "variable",
+                                            "value": "orderDetail",
+                                            "childs": []
+                                        }
+                                    ]
+                                },
+                                "type": 12,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "spread": true,
+                                "text": "信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "nqXCcUo5aPCDvmDhonKX4F",
+                        "url": "/seer/rds_core/orders",
+                        "parameters": [
+                            {
+                                "id": "iQVWsQAdrPXe8cbymEW7in",
+                                "name": "rds_core",
+                                "exp": "rds_core",
+                                "type": 7,
+                                "customType": "/seer/rds_core",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "RDSCore"
+                            },
+                            {
+                                "id": "kiofjgYZWLPuBAWhwgt3qW",
+                                "name": "page",
+                                "exp": null,
+                                "type": 2,
+                                "in": true,
+                                "value": 1,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "页码数"
+                            },
+                            {
+                                "id": "21tJaGtgVQ19WWDMMPF9rP",
+                                "name": "size",
+                                "exp": null,
+                                "type": 2,
+                                "in": true,
+                                "value": 20,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "数量"
+                            },
+                            {
+                                "id": "uQ5CiNkHffKV3sMBeAxExV",
+                                "name": "orderBy",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "排序"
+                            },
+                            {
+                                "id": "8r1BhdZYmwh5NS4q8C5aR5",
+                                "name": "orderMethod",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "descending",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "排序方法"
+                            },
+                            {
+                                "id": "3qpaRiYCn5MGqoiqWtKC3G",
+                                "name": "where",
+                                "exp": null,
+                                "type": 13,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "过滤条件"
+                            },
+                            {
+                                "id": "ftpoe4fKB22bsBwCFee2W7",
+                                "name": "orderDetails",
+                                "exp": null,
+                                "type": 6,
+                                "out": true,
+                                "value": null,
+                                "props": [
+                                    {
+                                        "id": "wX9ayXx1N52sScLSVV77dh",
+                                        "name": "page",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "页码数"
+                                    },
+                                    {
+                                        "id": "e13LoesiP6AXePkEYCqi4d",
+                                        "name": "size",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "每页条数"
+                                    },
+                                    {
+                                        "id": "eqmerCyRB99TDvBSuE1VBh",
+                                        "name": "total",
+                                        "exp": null,
+                                        "type": 2,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "总数"
+                                    },
+                                    {
+                                        "id": "r3rnvzymdKYKehvh8ZP6ui",
+                                        "name": "list",
+                                        "exp": null,
+                                        "type": 9,
+                                        "value": null,
+                                        "isExp": false,
+                                        "spread": true,
+                                        "text": "运单信息"
+                                    }
+                                ],
+                                "required": true,
+                                "var": "orderDetails",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "运单详细"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "jRXzEsGYUG5epivBtUbNW7",
+                        "url": "/seer/base/debug",
+                        "parameters": [
+                            {
+                                "id": "u6yDe1BPdRhErz38wd26x1",
+                                "name": "data",
+                                "exp": "orderDetails",
+                                "express": {
+                                    "operator": "root",
+                                    "childs": [
+                                        {
+                                            "operator": "variable",
+                                            "value": "orderDetails",
+                                            "childs": []
+                                        }
+                                    ]
+                                },
+                                "type": 12,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "spread": true,
+                                "text": "信息"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "iQDnbrWoZ8ZA4iDySHnrM3",
+                        "url": "/seer/base/delay",
+                        "parameters": [
+                            {
+                                "id": "bidSK6NxRxEZoK919zYz8J",
+                                "name": "sleep",
+                                "exp": null,
+                                "type": 4,
+                                "in": true,
+                                "value": 1,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "时间"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "nuyZHebor2AVciHFsH6Bah",
+                        "url": "/seer/rds_core/setOrder",
+                        "parameters": [
+                            {
+                                "id": "gpnBRiy5iy5QJrSSzBxjg3",
+                                "name": "rds_core",
+                                "exp": "rds_core",
+                                "type": 7,
+                                "customType": "/seer/rds_core",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "RDSCore"
+                            },
+                            {
+                                "id": "st9BB8fVBdCAhqwyBwedrk",
+                                "name": "id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "valid": true,
+                                "spread": true,
+                                "text": "任务运单ID"
+                            },
+                            {
+                                "id": "kjV8oGQS2iuofTsnkzeL6p",
+                                "name": "order",
+                                "exp": null,
+                                "type": 7,
+                                "customType": "/seer/rds_core/order",
+                                "out": true,
+                                "value": null,
+                                "required": true,
+                                "var": "order",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "创建的任务运单"
+                            },
+                            {
+                                "id": "pSs3d74UtjcNaz892KrdBR",
+                                "name": "externalId",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "外部单号"
+                            },
+                            {
+                                "id": "c79rHwzwCeuCaE3NLr4N5s",
+                                "name": "vehicle",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "sim_01",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "pBw59YaNN6s4XAju4nWBuc",
+                                "name": "group",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人组"
+                            },
+                            {
+                                "id": "1ZRtQoCKfN1F4gubXbY88m",
+                                "name": "label",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人标签"
+                            },
+                            {
+                                "id": "cmxo6tZs1eEqXHVXtGv1ct",
+                                "name": "keyRoute",
+                                "exp": null,
+                                "type": 8,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "关键点"
+                            },
+                            {
+                                "id": "i1L1XoajPfVo5cuuEvKhbk",
+                                "name": "priority",
+                                "exp": null,
+                                "type": 2,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "优先级"
+                            },
+                            {
+                                "id": "amDAPkbfniYDnWMCPxhKp9",
+                                "name": "action",
+                                "exp": null,
+                                "type": 10,
+                                "value": null,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "选择成功后"
+                            }
+                        ],
+                        "blocks": {
+                            "amDAPkbfniYDnWMCPxhKp9": [
+                                {
+                                    "id": "u8vtZJfvWceoGjyNUhb1Z2",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "xrxaiHTnrepJHgZM8suRgu",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "huD6f69qPXsu32Xx8eDFBP",
+                                            "name": "id",
+                                            "exp": "order",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "8UaRHLE3uiUKS4ZYV1F2wq",
+                                            "name": "blockId",
+                                            "exp": "",
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "xe16W5LUxnpQAJtRs2fDZd",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "LM30",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "j6qdGr3AjtmrgLCRBqCaCL",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "gXu32pBFL1T7UMib491Nsj",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "cQMHSpyeQQystzi1Rv2WaE",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "gXu8djgGCE8onHYUA7xSBB",
+                                            "name": "id",
+                                            "exp": "order",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "mVPgGhscBRzYZc3BvuUsAM",
+                                            "name": "blockId",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "nnmWjzg65JyJniTcJz4vJY",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "LM28",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "aiEdch5CRtoq1f5tUuGxjy",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "pFv5gFNDL6qboaC3CeJic8",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "1vPSKYaXAae3cQ7fedzqfx",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "efF49C6GKMMmLFXL7Jek1W",
+                                            "name": "id",
+                                            "exp": "order",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "brurSMeSxcnUKnYhVNPqLG",
+                                            "name": "blockId",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "j7Aumx4rMqamJZ74aaY9ki",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "LM16",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "xu9sxmACd8AwLnasSwi8dV",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "tRLEG9jDWm8dDrNzcQigSL",
+                                    "url": "/seer/base/delay",
+                                    "parameters": [
+                                        {
+                                            "id": "bU4MhtvxPQKh3X1wNhE5Dv",
+                                            "name": "sleep",
+                                            "exp": null,
+                                            "type": 4,
+                                            "in": true,
+                                            "value": 1,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "时间"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                }
+                            ]
+                        },
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "6XncTtT2xhVcovWAn7dJ5J",
+                        "url": "/seer/rds_core/setOrder",
+                        "parameters": [
+                            {
+                                "id": "eQ5WQTgK1euuAjzUjEJfp7",
+                                "name": "rds_core",
+                                "exp": "rds_core",
+                                "type": 7,
+                                "customType": "/seer/rds_core",
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": true,
+                                "valid": true,
+                                "spread": true,
+                                "text": "RDSCore"
+                            },
+                            {
+                                "id": "mABFyuBw3Qf3LnLgEWpaW8",
+                                "name": "id",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "valid": true,
+                                "spread": true,
+                                "text": "任务运单ID"
+                            },
+                            {
+                                "id": "buHVk7oshg25HeFg1cgQ3G",
+                                "name": "order",
+                                "exp": null,
+                                "type": 7,
+                                "customType": "/seer/rds_core/order",
+                                "out": true,
+                                "value": null,
+                                "required": true,
+                                "var": "order1",
+                                "isExp": false,
+                                "spread": true,
+                                "text": "创建的任务运单"
+                            },
+                            {
+                                "id": "sHfeAXM3HG6k1sfe7LLbTc",
+                                "name": "externalId",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "外部单号"
+                            },
+                            {
+                                "id": "bHKjiv3pEnLRpNdbrEa74B",
+                                "name": "vehicle",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": "sim_02",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人"
+                            },
+                            {
+                                "id": "vbeUb7c5duSrBvdjKmbQET",
+                                "name": "group",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人组"
+                            },
+                            {
+                                "id": "onTF6mp4XzLM7yvaBaBge3",
+                                "name": "label",
+                                "exp": null,
+                                "type": 1,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "机器人标签"
+                            },
+                            {
+                                "id": "mV4XbEHJmzt4UW59J6f3fy",
+                                "name": "keyRoute",
+                                "exp": null,
+                                "type": 8,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "关键点"
+                            },
+                            {
+                                "id": "2bybwMzGksCE9oYZf6i69s",
+                                "name": "priority",
+                                "exp": null,
+                                "type": 2,
+                                "in": true,
+                                "value": null,
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "优先级"
+                            },
+                            {
+                                "id": "i6zEW2cBPqn1e4C1UZ8yVQ",
+                                "name": "action",
+                                "exp": null,
+                                "type": 10,
+                                "value": null,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "选择成功后"
+                            }
+                        ],
+                        "blocks": {
+                            "i6zEW2cBPqn1e4C1UZ8yVQ": [
+                                {
+                                    "id": "xfvUGSooqjCAvMeYmjfQPt",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "mWCy8G231VW8NR5WKYy1i5",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "wwj3jbbem2GqkdGGCaakpd",
+                                            "name": "id",
+                                            "exp": "order1",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "54CmwjD2RMV8GKmmN2XoRH",
+                                            "name": "blockId",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "qydJkKTLYXhJ5cfjnBrE8m",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "LM105",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "eKSR5yyCoGctAVxYg9fxMs",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [
+                                        "xfvUGSooqjCAvMeYmjfQPt"
+                                    ],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "7YcL46vZ1Mb1KQArGXWvj5",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "1op2Ci1G1y79nN4wYtuhnJ",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "f8aeGwpiPpSMAUX2rZyZR8",
+                                            "name": "id",
+                                            "exp": "order1",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "j6e4WMtQAEpPiMwyBpGyhu",
+                                            "name": "blockId",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "1jCDuexKsLifKkQepGQyKN",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "CP113",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "dzEvAHSXkNtEoZvn9NcKz2",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "85vNfDAvzWqyzmmVWUX63z",
+                                    "url": "/seer/rds_core/setOrder_block",
+                                    "parameters": [
+                                        {
+                                            "id": "piCmggSnohDYFApisEuyJe",
+                                            "name": "rds_core",
+                                            "exp": "rds_core",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "valid": true,
+                                            "spread": true,
+                                            "text": "RDSCore"
+                                        },
+                                        {
+                                            "id": "eeTreoqNRtRxCMuAGzEXwK",
+                                            "name": "id",
+                                            "exp": "order1",
+                                            "type": 7,
+                                            "customType": "/seer/rds_core/order",
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": true,
+                                            "spread": true,
+                                            "text": "任务运单ID"
+                                        },
+                                        {
+                                            "id": "cMp7GLeTcfVvishj8BunEA",
+                                            "name": "blockId",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "动作块ID"
+                                        },
+                                        {
+                                            "id": "iCd24pxkisEBz31D17odtH",
+                                            "name": "location",
+                                            "exp": null,
+                                            "type": 1,
+                                            "in": true,
+                                            "value": "AP111",
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "目的地名称"
+                                        },
+                                        {
+                                            "id": "2arpLp6PiQ6Qf3d23haFKQ",
+                                            "name": "postAction",
+                                            "exp": null,
+                                            "type": 6,
+                                            "in": true,
+                                            "value": null,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "状态回调"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                },
+                                {
+                                    "id": "3AVN2JrDvXhQ3zP4jTyt8q",
+                                    "url": "/seer/base/delay",
+                                    "parameters": [
+                                        {
+                                            "id": "mfQ8Dygyb4hfb5RctMywjy",
+                                            "name": "sleep",
+                                            "exp": null,
+                                            "type": 4,
+                                            "in": true,
+                                            "value": 1,
+                                            "required": true,
+                                            "isExp": false,
+                                            "spread": true,
+                                            "text": "时间"
+                                        }
+                                    ],
+                                    "blocks": {},
+                                    "breaks": [],
+                                    "annotation": false
+                                }
+                            ]
+                        },
+                        "breaks": [],
+                        "annotation": false
+                    },
+                    {
+                        "id": "dzT6SfjE2SQhzpkW4zjBrj",
+                        "url": "/seer/flow/print",
+                        "parameters": [
+                            {
+                                "id": "fmQwfHix9UVh1pP4ftXK7o",
+                                "name": "content",
+                                "exp": null,
+                                "type": 12,
+                                "in": true,
+                                "value": "over",
+                                "required": true,
+                                "isExp": false,
+                                "spread": true,
+                                "text": "内容"
+                            }
+                        ],
+                        "blocks": {},
+                        "breaks": [],
+                        "annotation": false
+                    }
+                ]
+            },
+            "breaks": [],
+            "annotation": false
+        }
+    ],
+    "args": []
+}

@@ -1,0 +1,20 @@
+{
+	"glossaryV2Docs": "https://seer-group.yuque.com/api/v2/repos/ui8dn8/was78x/docs/tfq9rg",
+	"robocareHelp": "https://seer-group.yuque.com/pf4yvd/gc5xr2",
+	"robotkit3Api": "https://seer-group.yuque.com/pf4yvd/ruzsiq#",
+	"translateTokenApi": "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",
+	"translateApi": "https://open.feishu.cn/open-apis/translation/v1/text/translate",
+	"translateDetectApi": "https://open.feishu.cn/open-apis/translation/v1/text/detect",
+	"seerToolSource": "https://github.com/seer-robotics/SeerTCPTest",
+	"simulationIP": "192.168.192.5\n58.34.177.162\n58.34.177.164",
+	"roboshopChHelp": "https://seer-group.feishu.cn/wiki/ZFXlw6SLei2vLDkZXu3cSOBSn9c",
+	"roboshopEnHelp": "https://seer-group.feishu.cn/wiki/RyQ8wJvftiiMpqkMb5ock2o6nbe",
+	"getIpLocation": "https://sbs360-api.seer-group.com/api/v1/channel-control/report-country-location",
+	"getPublicIp": "http://ip.42.pl/raw",
+	"getPublicIpLocation": "http://opendata.baidu.com/api.php",
+	"roboshopUpgrade": "https://update-1304552240.cos.ap-shanghai.myqcloud.com/roboshop/windows/repository",
+	"roboshopUpgradeVersion": "https://update-1304552240.cos.ap-shanghai.myqcloud.com/roboshop/version.json",
+	"srcLicenceList": "https://api.jiandaoyun.com/api/v5/app/entry/data/list",
+	"identificationDoc": "https://shimo.im/docs/5rk9dELM5ztY0Kqx",
+	"uploadFileToCloud": "https://collection-1304552240.cos.ap-shanghai.myqcloud.com"
+}

@@ -1,0 +1,7 @@
+fatal
+error
+warning
+notice
+Task start
+Task finished
+Service

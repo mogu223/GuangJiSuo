@@ -1,0 +1,447 @@
+{
+
+	"ExternalDevice": [{
+		"className": "camera",
+		"toolTips": "camera",
+		"property": [{
+				"key": "basic",
+				"params": [{
+						"key": "serverIP",
+						"type": "ip",
+						"defaultValue": "192.168.4.136"
+					},
+					{
+						"key": "id",
+						"type": "uint32",
+						"defaultValue": 0,
+						"minValue": 0,
+						"maxValue": 999999,
+						"singleStep": 1
+					},
+					{
+						"key": "account",
+						"type": "string",
+						"defaultValue": "admin"
+					},
+					{
+						"key": "password",
+						"type": "string",
+						"defaultValue": "seer1234"
+					},
+					{
+						"key": "ip",
+						"type": "ip",
+						"defaultValue": "192.168.192.150"
+					},
+					{
+						"key": "port",
+						"type": "uint32",
+						"defaultValue": 80,
+						"minValue": 1,
+						"maxValue": 65535,
+						"singleStep": 1
+					}
+				]
+
+			},
+			{
+				"key": "installInfo",
+				"params": [{
+						"key": "x",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "y",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "z",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "roll",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "pitch",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "yaw",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					}
+				]
+			},
+			{
+				"key": "cameraInfo",
+				"params": [{
+						"key": "fx",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "fy",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "cx",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "cy",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "k1",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "k2",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "k3",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "p1",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "p2",
+						"type": "double",
+						"defaultValue": 0.0
+
+					}
+				]
+			},
+			{
+				"key": "brand",
+				"params": [{
+					"key": "brand",
+					"type": "stringList",
+					"defaultValue": [
+						"IFM-O3X100-TCP",
+						"HK-DS-RTSP",
+						"RealSense-435-USB",
+						"Percipio-FM851-TCP",
+						"Percipio-FM830-USB",
+						"Percipio:PM801",
+						"Livox:Mid-70",
+						"Mech-Mind:Deep"
+					]
+				}]
+			}
+		]
+	},
+	{
+		"className": "camera3d",
+		"toolTips": "camera3d",
+		"property": [{
+				"key": "basic",
+				"params": [{
+						"key": "serverIP",
+						"type": "ip",
+						"defaultValue": "192.168.4.136"
+					},
+					{
+						"key": "id",
+						"type": "uint32",
+						"defaultValue": 0,
+						"minValue": 0,
+						"maxValue": 999999,
+						"singleStep": 1
+					},
+					{
+						"key": "account",
+						"type": "string",
+						"defaultValue": "admin"
+					},
+					{
+						"key": "password",
+						"type": "string",
+						"defaultValue": "seer1234"
+					},
+					{
+						"key": "ip",
+						"type": "ip",
+						"defaultValue": "192.168.192.150"
+					},
+					{
+						"key": "port",
+						"type": "uint32",
+						"defaultValue": 80,
+						"minValue": 1,
+						"maxValue": 65535,
+						"singleStep": 1
+					}
+				]
+
+			},
+			{
+				"key": "installInfo",
+				"params": [{
+						"key": "x",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "y",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "z",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "roll",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "pitch",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "yaw",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					}
+				]
+			},
+			{
+				"key": "brand",
+				"params": [{
+					"key": "brand",
+					"type": "stringList",
+					"defaultValue": [
+						"Percipio:PM801",
+						"Livox:Mid-70"
+					]
+				}]
+			}
+		]
+	},
+	{
+		"className": "usbcamera",
+		"toolTips": "USBCamera",
+		"property": [{
+				"key": "basic",
+				"params": [
+					{
+						"key": "id",
+						"type": "uint32",
+						"defaultValue": 0,
+						"minValue": 0,
+						"maxValue": 999999,
+						"singleStep": 1
+					},
+					{
+						"key": "videoPort",
+						"type": "uint32",
+						"defaultValue": 0,
+						"minValue": 1,
+						"maxValue": 65535,
+						"singleStep": 1
+					}
+				]
+
+			},
+			{
+				"key": "installInfo",
+				"params": [{
+						"key": "x",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "y",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "z",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "m"
+					},
+					{
+						"key": "roll",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "pitch",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					},
+					{
+						"key": "yaw",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					}
+				]
+			},
+			{
+				"key": "cameraInfo",
+				"params": [{
+						"key": "fx",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "fy",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "cx",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "cy",
+						"type": "double",
+						"defaultValue": 0.0
+					},
+					{
+						"key": "k1",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "k2",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "k3",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "p1",
+						"type": "double",
+						"defaultValue": 0.0
+
+					},
+					{
+						"key": "p2",
+						"type": "double",
+						"defaultValue": 0.0
+
+					}
+				]
+			},
+			{
+				"key": "brand",
+				"params": [{
+					"key": "brand",
+					"type": "stringList",
+					"defaultValue": [
+						"HF890-USB"
+					]
+				}]
+			}
+		]
+	},
+	{
+		"className": "GNSSBase",
+		"toolTips": "GNSSBase",
+		"property": [
+			{
+				"key": "ref",
+				"params": [{
+						"key": "init_longitude",
+						"type": "double",
+						"defaultValue": "121.619690945",
+						"unit": "°",
+						"decimals":9,
+						"minValue": -180.0,
+						"maxValue": 180.0
+					},
+					{
+						"key": "init_latitude",
+						"type": "double",
+						"defaultValue": "31.246203490",
+						"unit": "°",
+						"decimals":9,
+						"minValue": -180.0,
+						"maxValue": 180.0
+					},
+					{
+						"key": "init_altitude",
+						"type": "double",
+						"defaultValue": 70.222,
+						"unit": "m",
+						"decimals":9,
+						"minValue": -2000.0,
+						"maxValue": 10000.0
+					}
+				]
+			},
+			{
+				"key": "transform_gb2m",
+				"params": [{
+						"key": "x",
+						"type": "double",
+						"defaultValue": 0,
+						"unit": "m"
+					},
+					{
+						"key": "y",
+						"type": "double",
+						"defaultValue": 0,
+						"unit": "m"
+					},
+					{
+						"key": "yaw",
+						"type": "double",
+						"defaultValue": 0.0,
+						"unit": "deg"
+					}
+				]
+			}
+		]
+	}]
+}

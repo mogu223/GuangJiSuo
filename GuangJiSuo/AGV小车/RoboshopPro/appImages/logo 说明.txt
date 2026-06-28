@@ -1,0 +1,13 @@
+﻿
+app.ini 文件中选择需要修改的配置
+
+1. 启动界面 screen.png   //isShowSplashScreen = true
+2. 关于我们 robot.png    //isShowAboutUs = true
+3. 软件在 Windows 菜单栏中的图标 robot.ico, 需要 ico 格式
+4. 菜单栏图标 robot36.png
+5. 模型文件中新建模板图标 model.png
+
+*图片分辨率大小不变
+*替换时, 所有文件名及文件类型须保持不变
+
+

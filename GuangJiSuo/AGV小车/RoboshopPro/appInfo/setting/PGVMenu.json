@@ -1,0 +1,28 @@
+{
+    "menu": [
+        {
+            "key": "devices",
+            "name": "Devices"
+        },
+        {
+            "childs": [
+                {
+                    "key": "objects",
+                    "name": "Identification Files"
+                }
+            ],
+            "key": "resource",
+            "name": "Resource"
+        },
+        {
+            "childs": [
+                {
+                    "key": "pgv",
+                    "name": "PGV"
+                }
+            ],
+            "key": "apps",
+            "name": "Apps"
+        }
+    ]
+}

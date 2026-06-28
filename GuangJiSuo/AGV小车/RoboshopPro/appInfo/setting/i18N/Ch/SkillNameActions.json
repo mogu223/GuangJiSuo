@@ -1,0 +1,113 @@
+[{
+		"action_text": "高级纯固定路径导航",
+		"parameter": {
+			"id": "LM1",
+			"angle": 1.57,
+			"method": "backward",
+			"max_speed": 0.2,
+			"max_wspeed": 0.2,
+			"max_acc": 0.1,
+			"max_wacc": 0.1,
+			"duration": 100,
+			"orientation": 90,
+			"spin": true
+		}
+	}, {
+		"action_text": "固定路径导航PGV二次定位调整",
+		"parameter": {
+			"id": "AP1",
+			"use_pgv": true,
+			"pgv_adjust_dist": 0.3,
+			"pgv_adjust_cx": -0.3,
+			"pgv_adjust_cy": 0
+		}
+	}, {
+		"action_text": "顶升设备",
+		"parameter": {
+			"id": "AP1",
+			"operation": "JackLoad",
+			"recognize": true,
+			"use_pgv": true
+		}
+	}, {
+		"action_text": "货叉设备",
+		"parameter": {
+			"id": "AP1",
+			"operation": "ForkLoad",
+			"start_height": 0.1,
+			"end_height": 1.0,
+			"recognize": true
+		}
+	}, {
+		"action_text": "牵引设备",
+		"parameter": {
+			"id": "AP1",
+			"operation": "HookLoad",
+			"recognize": true
+		}
+	},
+	{
+		"action_text": "音频设备",
+		"parameter": {
+			"id": "AP1",
+			"operation": "sound",
+			"sounds_args": {
+				"name": "navigation",
+				"loop": 1
+			}
+		}
+
+	},
+	{
+		"action_text": "等待DI触发",
+		"parameter": {
+			"id": "AP1",
+			"operation": "WaitDI",
+			"args": {
+				"DI": [{
+					"id": 1,
+					"status": true
+				}, {
+					"id": 2,
+					"status": false
+				}],
+				"timeout": 10
+			}
+		}
+
+	}, {
+		"action_text": "控制DO开关",
+		"parameter": {
+			"id": "AP1",
+			"operation": "SetDO",
+			"args": {
+				"DO": [{
+					"id": 1,
+					"status": true
+				}, {
+					"id": 2,
+					"status": false
+				}]
+			}
+		}
+	}, {
+		"action_text": "触发脚本动作",
+		"parameter": {
+			"script_name": "syspy/triggleScript.py",
+			"script_args": {},
+			"operation": "Script",
+			"id": "AP1"
+		}
+	}, {
+		"action_text": "切换地图",
+		"parameter": {
+			"id":"SELF_POSITION",
+			"script_name": "syspy/switchMap.py",
+			"script_args": {
+				"map": "1.smap",
+				"switchPoint": "LM1"
+			},
+			"operation": "Script"
+		}
+	}
+]

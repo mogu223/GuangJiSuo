@@ -1,0 +1,35 @@
+{
+    "architecture": "x86_64",
+    "bonjourAppName": "Robokit",
+    "create_on": "2022-12-06T19:30:34.046Z",
+    "current_map": "",
+    "current_map_md5": "",
+    "dsp_version": "RDS core",
+    "echoid": "1c930f68-5a913493-35a0b7e2-11e9e04f-1",
+    "echoid_type": "0x2",
+    "features": [
+        {
+            "active": false,
+            "name": "core"
+        },
+        {
+            "active": false,
+            "name": "rds_custom"
+        },
+        {
+            "active": false,
+            "name": "rds_operator"
+        }
+    ],
+    "gyro_version": "RDS core",
+    "id": "1c930f68-5a913493-35a0b7e2-11e9e04f-1",
+    "ip": "0.0.0.0",
+    "model": "AMB-150",
+    "model_md5": "3f670040a129c4d6431ff0e3a1da6b3d",
+    "product": "RDSCore",
+    "ret_code": 0,
+    "roboshop_min_version_required": "v2.3.2.6",
+    "robot_note": "RDSCore",
+    "vehicle_id": "RDS core",
+    "version": "0.1.8.221116"
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "centerPos": {
+            "x": 761.5999999999999,
+            "y": -23.7
+        },
+        "itemType": 1232,
+        "json": "{\"className\":\"LocationMark\",\"instanceName\":\"LM2\",\"pos\":{\"x\":7.616,\"y\":-0.237},\"property\":[{\"key\":\"spin\",\"type\":\"bool\",\"value\":\"ZmFsc2U=\",\"boolValue\":false}],\"ignoreDir\":true}"
+    },
+    {
+        "centerPos": {
+            "x": 0,
+            "y": 0
+        },
+        "itemType": 1234,
+        "json": "{\"curve\":\"DegenerateBezier\",\"data0\":\"{\\\"className\\\":\\\"DegenerateBezier\\\",\\\"instanceName\\\":\\\"LM3-LM2\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM3\\\",\\\"pos\\\":{\\\"x\\\":11.045,\\\"y\\\":-1.006}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM2\\\",\\\"pos\\\":{\\\"x\\\":7.616,\\\"y\\\":-0.237}},\\\"controlPos1\\\":{\\\"x\\\":9.823,\\\"y\\\":0.791},\\\"controlPos2\\\":{\\\"x\\\":8.757,\\\"y\\\":0.963},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0}]}\",\"data1\":\"{\\\"className\\\":\\\"DegenerateBezier\\\",\\\"instanceName\\\":\\\"LM2-LM3\\\",\\\"startPos\\\":{\\\"instanceName\\\":\\\"LM2\\\",\\\"pos\\\":{\\\"x\\\":7.616,\\\"y\\\":-0.237}},\\\"endPos\\\":{\\\"instanceName\\\":\\\"LM3\\\",\\\"pos\\\":{\\\"x\\\":11.045,\\\"y\\\":-1.006}},\\\"controlPos1\\\":{\\\"x\\\":8.757,\\\"y\\\":0.963},\\\"controlPos2\\\":{\\\"x\\\":9.823,\\\"y\\\":0.791},\\\"property\\\":[{\\\"key\\\":\\\"direction\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0},{\\\"key\\\":\\\"movestyle\\\",\\\"type\\\":\\\"int\\\",\\\"value\\\":\\\"MA==\\\",\\\"int32Value\\\":0}]}\",\"direction\":2}"
+    },
+    {
+        "centerPos": {
+            "x": 1104.5,
+            "y": -100.6
+        },
+        "itemType": 1232,
+        "json": "{\"className\":\"LocationMark\",\"instanceName\":\"LM3\",\"pos\":{\"x\":11.045,\"y\":-1.006},\"property\":[{\"key\":\"spin\",\"type\":\"bool\",\"value\":\"ZmFsc2U=\",\"boolValue\":false}],\"ignoreDir\":true}"
+    }
+]

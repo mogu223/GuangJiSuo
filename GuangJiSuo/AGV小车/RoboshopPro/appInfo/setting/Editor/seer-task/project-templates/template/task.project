@@ -1,0 +1,29 @@
+{
+    "id": "2faTzHyU6aToDyraKEuMYB",
+    "text": "任务",
+    "dir": "E:\\seer-code\\seer-task\\project/任务",
+    "createDate": 1656052567929,
+    "items": [
+        {
+            "id": "dtzxGiUmhA5pxwzqUrFcYP",
+            "type": 0,
+            "text": "机器人",
+            "spread": false,
+            "childs": []
+        },
+        {
+            "id": "4tRDYFijxbZDNoZJcfTPZT",
+            "type": 0,
+            "text": "调度",
+            "spread": false,
+            "childs": []
+        },
+        {
+            "id": "gF83Bmk4EYYfzb48KdXXXb",
+            "type": 3,
+            "text": "设计说明",
+            "spread": false,
+            "childs": []
+        }
+    ]
+}

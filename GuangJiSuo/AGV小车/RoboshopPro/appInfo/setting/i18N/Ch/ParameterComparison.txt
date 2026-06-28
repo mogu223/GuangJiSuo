@@ -1,0 +1,16 @@
+Navigation = 导航
+Safety = 安全性
+Differential = 差动机器人
+Steer = 舵轮机器人
+Omni = 全向机器人
+Network = 网络
+Localization = 定位
+Laser = 激光
+Joystick = 手柄
+Chassis = 底盘配置
+SensorFuser = 传感器融合
+Vision = 视觉
+Calibration = 标定
+Simulation = 仿真
+Peripheral = 外设
+Ungrouped = 其他

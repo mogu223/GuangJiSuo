@@ -1,0 +1,1179 @@
+{
+  "LocationEachFrame": {
+    "type": "LocationEachFrame",
+    "content": [
+      { "index": 0, "name": "x", "type": "double", "description": "定位的x", "unit":"m" },
+      { "index": 1, "name": "y", "type": "double", "description": "定位的y", "unit": "m" },
+      { "index": 2, "name": "theta", "type": "double", "description": "定位的角度", "unit":"degree" },
+      { "index": 3, "name": "confidence", "type": "double",  "description": "置信度", "unit":""},
+      { "index": 4, "name": "current_t", "type": "int64",  "description": "发布时间", "unit":""},
+      { "index": 5, "name": "timestamp", "type": "int64",  "description": "定位时间戳", "unit":"" },
+      { "index": 6, "name": "covariance_10", "type": "double",  "description": "协方差", "unit":""},
+      { "index": 7, "name": "covariance_11", "type": "double",  "description": "协方差", "unit":""}
+    ]
+  },
+  "Vel": {
+    "type": "Vel",
+    "content": [
+      { "index": 0, "name": "getvx", "type": "double", "description": "接收到的x速度", "unit":"m/s" },
+      { "index": 1, "name": "getvy", "type": "double", "description": "接收到的y速度", "unit":"m/s" },
+      { "index": 2, "name": "getvw", "type": "rad", "description": "接收的角速度", "unit":"degree/s" },
+      { "index": 3, "name": "getsteer", "type": "rad", "description": "接收的舵角", "unit":"degree"},
+      { "index": 4, "name": "sendvx", "type": "int64", "description": "下发的x速度", "unit":"m/s" },
+      { "index": 5, "name": "sendvy", "type": "int64", "description": "下发的y速度", "unit":"m/s" },
+      { "index": 6, "name": "sendvw", "type": "rad", "description": "下发的角速度", "unit":"degree/s" },
+      { "index": 7, "name": "sendsteer", "type": "rad","description": "下发的舵角", "unit":"degree" }
+    ]
+  },
+  "IMU": {
+    "type": "IMU",
+    "content": [
+      { "index": 0, "name": "yaw", "type": "rad","description": "陀螺仪的测量的agv朝向", "unit":"degree" },
+      { "index": 1, "name": "pitch", "type": "rad", "description": "陀螺仪测量的agv倾斜角", "unit":"degree" },
+      { "index": 2, "name": "roll", "type": "rad", "description": "陀螺仪测量的agv倾斜角", "unit":"degree" },
+      { "index": 3, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 4, "name": "ax", "type": "double", "description": "陀螺仪x轴加速度", "unit":"m/s^2"},
+      { "index": 5, "name": "ay", "type": "double", "description": "陀螺仪y轴加速度", "unit":"m/s^2" },
+      { "index": 6, "name": "az", "type": "double", "description": "陀螺仪z轴加速度", "unit":"m/s^2" },
+      { "index": 7, "name": "gx", "type": "LSB", "description": "陀螺仪x轴角速度", "unit":"degree/s" },
+      { "index": 8, "name": "gy", "type": "LSB", "description": "陀螺仪y轴角速度", "unit":"degree/s" },
+      { "index": 9, "name": "gz", "type": "LSB", "description": "陀螺仪z轴角速度", "unit":"degree/s" },
+      { "index": 10, "name": "offx", "type": "LSB", "description": "陀螺仪gx零位偏置", "unit":"degree/s" },
+      { "index": 11, "name": "offy", "type": "LSB", "description": "陀螺仪gy零位偏置", "unit":"degree/s" },
+      { "index": 12, "name": "offz", "type": "LSB", "description": "陀螺仪gz零位偏置", "unit":"degree/s"  }
+    ]
+  },
+  "MotorInfo5": {
+    "type": "MotorInfo5",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "double", "description": "位置", "unit":"" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "MotorInfo4": {
+    "type": "MotorInfo4",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "double", "description": "位置", "unit":"" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "MotorInfo3": {
+    "type": "MotorInfo3",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "rad", "description": "位置", "unit":"degree" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "MotorInfo2": {
+    "type": "MotorInfo2",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "double", "description": "位置", "unit":"" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "MotorInfo1": {
+    "type": "MotorInfo1",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "double", "description": "位置", "unit":"" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "MotorInfo0": {
+    "type": "MotorInfo0",
+    "content": [
+      { "index": 0, "name": "timestamp", "type": "int64","description": "时间戳", "unit":"" },
+      { "index": 1, "name": "pos", "type": "double", "description": "位置", "unit":"" },
+      { "index": 2, "name": "speed", "type": "double", "description": "速度", "unit":"" },
+      { "index": 3, "name": "current", "type": "double","description": "电流", "unit":"" },
+      { "index": 4, "name": "voltage", "type": "double", "description": "电压", "unit":""},
+      { "index": 5, "name": "stop", "type": "bool", "description": "是否停止", "unit":"" },
+      { "index": 6, "name": "err", "type": "bool", "description": "是否有错", "unit":"" },
+      { "index": 7, "name": "emc", "type": "bool", "description": "是否急停", "unit":"d" },
+      { "index": 8, "name": "temperatrue", "type": "double", "description": "温度", "unit":"" },
+      { "index": 9, "name": "encoder", "type": "int64", "description": "编码器数值", "unit":"" }    ]
+  },
+  "SwitchDO": {
+    "type": "SwitchDO",
+    "content": [
+      { "index": 0, "name": "size", "type": "double"},
+      { "index": 1, "name": "times", "type": "double"},
+      { "index": 2, "name": "duration", "type": "double"}
+    ]
+  },
+  "Odometer": {
+    "type": "Odometer",
+    "content": [
+      { "index": 0, "name": "count", "type": "int64", "description": "里程计数", "unit":""  },
+      { "index": 1, "name": "timestamp", "type": "int64", "description": "里程时间戳", "unit":""  },
+      { "index": 2, "name": "x", "type": "double", "description": "里程x", "unit":"m" },
+      { "index": 3, "name": "y", "type": "double", "description": "里程y", "unit":"m"  },
+      { "index": 4, "name": "theta", "type": "rad", "description": "里程角度", "unit":"degree"  },
+      { "index": 5, "name": "stopped", "type": "bool", "description": "agv是否停止", "unit":""  },
+      { "index": 6, "name": "all_Stopped", "type": "bool", "description": "agv全停止", "unit":""  },
+      { "index": 7, "name": "vel_x", "type": "double", "description": "里程x速度", "unit":"m/s"  },
+      { "index": 8, "name": "vel_y", "type": "double", "description": "里程y速度", "unit":"m/s"  },
+      { "index": 9, "name": "vel_rotate", "type": "rad", "description": "里程角速度", "unit":"degree/s"  },
+      { "index": 10, "name": "steer_angle", "type": "rad", "description": "舵角值", "unit":"degree"  },
+      { "index": 11, "name": "spin_angle", "type": "rad", "description": "随动托盘角度", "unit":"degree"  },
+      { "index": 12, "name": "encode0", "type": "int64", "description": "0号编码器", "unit":""  },
+      { "index": 13, "name": "encode1", "type": "int64", "description": "1号编码器", "unit":""  },
+      { "index": 14, "name": "encode2", "type": "int64", "description": "2号编码器", "unit":"" },
+      { "index": 15, "name": "encode3", "type": "int64", "description": "3号编码器", "unit":"" },
+      { "index": 16, "name": "encode4", "type": "int64", "description": "4号编码器", "unit":"" }
+    ]
+  },
+  "SensorFuserPoints":{
+    "type":"SensorFuserPoints",
+    "content":[
+      { "index":0, "name":"localnum", "type":"double", "description": "局部障碍物点数目", "unit":"" },
+      { "index":1, "name":"globalnum", "type":"double", "description": "全局障碍物点数目", "unit":"" }
+    ]
+  },
+  "LaserOdo":{
+    "type":"LaserOdo",
+    "content":[
+      { "index":0, "name":"timestamp", "type":"int64", "description": "激光里程时间戳", "unit":"" },
+      { "index":1, "name":"x", "type":"double", "description": "激光x方向里程", "unit":"m" },
+      { "index":2, "name":"y", "type":"double", "description": "激光y方向里程", "unit":"m" },
+      { "index":3, "name":"theta", "type":"double", "description": "激光里程角度", "unit":"degree" }
+    ]
+  },
+  "GoodsPos":{
+    "type":"GoodsPos",
+    "content":[
+      {"index":0, "name":"x","type":"double"},
+      {"index":1, "name":"y","type":"double"},
+      {"index":2, "name":"theta","type":"rad"}
+    ]
+  },
+  "Manual": {
+    "type": "Manual",
+    "content": [
+      { "index": 0, "name": "last_vx", "type": "double" },
+      { "index": 1, "name": "last_vy", "type": "double" },
+      { "index": 2, "name": "last_vw", "type": "rad" },
+      { "index": 3, "name": "manual_vx", "type": "double" },
+      { "index": 4, "name": "manual_vy", "type": "double" },
+      { "index": 5, "name": "manual_vw", "type": "rad"},    
+      { "index": 6, "name": "nav_vx", "type": "double" },
+      { "index": 7, "name": "nav_vy", "type": "double" },
+      { "index": 8, "name": "nav_vw", "type": "rad"}
+    ]
+  },
+  "Speed2DSP": {
+    "type": "Speed2DSP",
+    "content": [
+      { "index": 0, "name": "vx", "type": "double", "description": "DSP接收到的vx", "unit":"m/s" },
+      { "index": 1, "name": "vy", "type": "double", "description": "DSP接收到的vy", "unit":"m/s"  },
+      { "index": 2, "name": "vw", "type": "rad", "description": "DSP接收到的vw", "unit":"degree/s"  },
+      { "index": 3, "name": "steer_angle", "type": "rad", "description": "DSP接收到的舵角", "unit":"degree"  },
+      { "index": 4, "name": "spin_speed", "type": "rad", "description": "DSP接收到托盘速度", "unit":"degree/s"  },
+      { "index": 5, "name": "jack_speed", "type": "double", "description": "DSP接收到顶升速度", "unit":"m/s"  }
+    ]
+  },
+  "GDNavSpeed": {
+    "type": "GDNavSpeed",
+    "content": [
+      { "index": 0, "name": "vx", "type": "double", "description": "底层下发的vx", "unit":"m/s" },
+      { "index": 1, "name": "vy", "type": "double", "description": "底层下发的vy", "unit":"m/s"  },
+      { "index": 2, "name": "vw", "type": "rad", "description": "底层下发的vw", "unit":"degree/s"  },
+      { "index": 3, "name": "steer_angle", "type": "rad", "description": "底层下发的舵角", "unit":"degree"  },
+      { "index": 4, "name": "spin_speed", "type": "rad", "description": "底层下发的托盘速度", "unit":"degree/s"  },
+      { "index": 5, "name": "jack_speed", "type": "double", "description": "底层下发的顶升速度", "unit":"m/s"  }
+    ]
+  },
+  "Collision": {
+    "type": "Collision",
+    "content": [
+      { "index": 0, "name": "blocked", "type": "bool", "description": "是否碰到障碍物", "unit":""  },
+      { "index": 1, "name": "x", "type": "double", "description": "障碍物位置x", "unit":"m"   },
+      { "index": 2, "name": "y", "type": "double", "description": "障碍物位置y", "unit":"m"   },
+      { "index": 3, "name": "reason", "type": "double", "description": "障碍物类型", "unit":""   },
+      { "index": 4, "name": "ultra_id", "type": "double", "description": "超声障碍物id", "unit":""},
+      { "index": 5, "name": "block_di", "type": "double", "description": "DI障碍物id", "unit":""   }
+    ]
+  },
+  "Battery": {
+    "type": "Battery",
+    "content": [
+      { "index": 0, "name": "percentage", "type": "double", "description": "电池电量", "unit":""  },
+      { "index": 1, "name": "current", "type": "double", "description": "电池电流", "unit":"A"  },
+      { "index": 2, "name": "voltage", "type": "double", "description": "电池电压", "unit":"V"  },
+      { "index": 3, "name": "ischarging", "type": "bool", "description": "是否在充电", "unit":""  },
+      { "index": 4, "name": "temperature", "type": "double", "description": "电池温度", "unit":""  },
+      { "index": 5, "name": "cycle", "type": "double", "description": "充电次数", "unit":""  }
+    ]
+  },
+  "RollerStatus": {
+    "type": "RollerStatus",
+    "content": [
+      { "index": 0, "name": "state", "type": "double" },
+      { "index": 1, "name": "errorcode", "type": "double"},
+      { "index": 2, "name": "mode", "type": "bool"},
+      { "index": 3, "name": "enable", "type": "bool"},
+      { "index": 4, "name": "isfull", "type": "bool"},
+      { "index": 5, "name": "speed", "type": "double"},
+      { "index": 6, "name": "emc", "type": "false"}
+    ]
+  },
+  "Controller": {
+    "type": "Controller",
+    "content": [
+      { "index": 0, "name": "temperature", "type": "double" , "description": "控制器温度", "unit":"" },
+      { "index": 1, "name": "humi", "type": "double", "description": "控制器humi", "unit":""  },
+      { "index": 2, "name": "voltage", "type": "double", "description": "控制器电压", "unit":"V"  },
+      { "index": 3, "name": "emc", "type": "bool", "description": "控制器是否急停", "unit":""  },
+      { "index": 4, "name": "brake", "type": "bool", "description": "控制器是否急刹", "unit":""  },
+      { "index": 5, "name": "driveremc", "type": "bool", "description": "控制器是否driveremc", "unit":""  },
+      { "index": 6, "name": "manualcharge", "type": "bool", "description": "是否手动充电", "unit":""  },
+      { "index": 7, "name": "autocharge", "type": "bool", "description": "是否自动充电", "unit":""  },
+      { "index": 8, "name": "electric", "type": "bool", "description": "electric", "unit":""  },
+      { "index": 9, "name": "noName", "type": "bool", "description": "", "unit":""  },
+      { "index": 10, "name": "external", "type": "bool", "description": "是否在外部控制模式", "unit":""  },
+      { "index": 11, "name": "imuCalib", "type": "bool", "description": "imu是否在标零", "unit":""}
+    ]
+  },
+  "StopPoints": {
+    "type": "StopPoints",
+    "content": [
+      { "index": 0, "name": "x", "type": "double","description": "障碍物位置x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double","description": "障碍物位置y", "unit":"m"  },
+      { "index": 2, "name": "category", "type": "int64","description": "障碍物类型", "unit":""  },
+      { "index": 3, "name": "ultra_id", "type": "int64","description": "障碍物id", "unit":""  },
+      { "index": 4, "name": "dist", "type": "double","description": "障碍物距离", "unit":"m"  }
+    ]
+  },
+  "SlowDownPoints": {
+    "type": "SlowDownPoints",
+    "content": [
+      { "index": 0, "name": "x", "type": "double","description": "减速障碍物位置x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double","description": "减速障碍物位置y", "unit":""  },
+      { "index": 2, "name": "category", "type": "int64","description": "减速障碍物类别", "unit":""  },
+      { "index": 3, "name": "ultra_id", "type": "int64","description": "减速障碍物id", "unit":""  },
+      { "index": 4, "name": "dist", "type": "double","description": "减速障碍物距离", "unit":"m"  }
+    ]
+  },
+  "LQR": {
+    "type": "LQR",
+    "content": [
+      { "index": 0, "name": "dir_d2g", "type": "double","description": "agv到终点投影距离", "unit":"m"  },
+      { "index": 1, "name": "dsa", "type": "rad", "description": "agv与起步角度的差值", "unit":"degree"  },
+      { "index": 2, "name": "dga", "type": "rad","description": "agv与终点角度的差值", "unit":"degree"  },
+      { "index": 3, "name": "d2g", "type": "double","description": "agv到终点的线路距离", "unit":"m"  },
+      { "index": 4, "name": "ind", "type": "double","description": "agv在线路上的ind号点", "unit":""  },
+      { "index": 5, "name": "state", "type": "double","description": "agv运动的状态", "unit":""  },
+      { "index": 6, "name": "psize", "type": "double","description": "agv线路总点数", "unit":""  },
+      { "index": 7, "name": "gv", "type": "double","description": "当前到达目标标点速度", "unit":"m/s"  },
+      { "index": 8, "name": "vmax", "type": "double","description": "agv最大速度", "unit":"m/s"  },
+      { "index": 9, "name": "vwmax", "type": "rad","description": "agv最大角速度", "unit":"degree/s"  },
+      { "index": 10, "name": "m_pet", "type": "m"},
+      { "index": 11, "name": "m_et", "type": "m"}
+    ]
+  },
+  "LQR1": {
+    "type": "LQR1",
+    "content": [
+      { "index": 0, "name": "vw", "type": "double" },
+      { "index": 1, "name": "vx", "type": "double"  },
+      { "index": 2, "name": "vw0", "type": "double"},
+      { "index": 3, "name": "dvw", "type": "double" },
+      { "index": 4, "name": "u00", "type": "double" },
+      { "index": 5, "name": "m_e", "type": "double"},
+      { "index": 6, "name": "m_pe", "type": "double"},
+      { "index": 7, "name": "th_e", "type": "double"},
+      { "index": 8, "name": "m_pthe", "type": "double" },
+      { "index": 9, "name": "cur_vx", "type": "double" },
+      { "index": 10, "name": "speed", "type": "double" },
+      { "index": 11, "name": "step_t", "type": "double" },
+      { "index": 12, "name": "Q", "type": "double" }
+    ]
+  },
+  "BiLQR1": {
+    "type": "BiLQR1",
+    "content": [
+      { "index": 0, "name": "vl", "type": "double" },
+      { "index": 1, "name": "vt", "type": "double"  },
+      { "index": 2, "name": "vw", "type": "double"},
+      { "index": 3, "name": "met", "type": "double" },
+      { "index": 4, "name": "dmet", "type": "double" },
+      { "index": 5, "name": "the", "type": "double"},
+      { "index": 6, "name": "dthe", "type": "double"},
+      { "index": 7, "name": "vKp", "type": "double"},
+      { "index": 8, "name": "vKd", "type": "double" },
+      { "index": 9, "name": "wKp", "type": "double" },
+      { "index": 10, "name": "wKd", "type": "double" }
+    ]
+  },
+  "DLQR1": {
+    "type": "DLQR",
+    "content": [
+      { "index": 0, "name": "vw", "type": "double" },
+      { "index": 1, "name": "vx", "type": "double"  },
+      { "index": 2, "name": "vw0", "type": "double"},
+      { "index": 3, "name": "dvw", "type": "double" },
+      { "index": 4, "name": "u00", "type": "double" },
+      { "index": 5, "name": "m_e", "type": "double"},
+      { "index": 6, "name": "de", "type": "double"},
+      { "index": 7, "name": "th_e", "type": "double"},
+      { "index": 8, "name": "dthe", "type": "double" },
+      { "index": 9, "name": "cur_vx", "type": "double" },
+      { "index": 10, "name": "speed", "type": "double" },
+      { "index": 11, "name": "step_t", "type": "double" },
+      { "index": 12, "name": "Q", "type": "double" }
+    ]
+  },
+  "SLQR": {
+    "type": "SLQR",
+    "content": [
+      { "index": 0, "name": "vw0", "type": "double" },
+      { "index": 1, "name": "dvw", "type": "double"  },
+      { "index": 2, "name": "u00", "type": "double"},
+      { "index": 3, "name": "m_e", "type": "double" },
+      { "index": 4, "name": "dm_e", "type": "double" },
+      { "index": 5, "name": "the", "type": "double"},
+      { "index": 6, "name": "dthe", "type": "double"},
+      { "index": 7, "name": "cur_vx", "type": "double"},
+      { "index": 8, "name": "speed", "type": "double" },
+      { "index": 9, "name": "aheadDist", "type": "double" },
+      { "index": 10, "name": "Q", "type": "double" },
+      { "index": 11, "name": "delay_dist", "type": "double" },
+      { "index": 12, "name": "f_ind", "type": "double" }
+    ]
+  },
+  "DPID": {
+    "type": "DPID",
+    "content": [
+      { "index": 0, "name": "vw", "type": "double" },
+      { "index": 1, "name": "vx", "type": "double"  },
+      { "index": 2, "name": "vw0", "type": "double"},
+      { "index": 3, "name": "dvw", "type": "double" },
+      { "index": 4, "name": "ax", "type": "double" },
+      { "index": 5, "name": "m_e", "type": "double"},
+      { "index": 6, "name": "de", "type": "double"},
+      { "index": 7, "name": "th_e", "type": "double"},
+      { "index": 8, "name": "dthe", "type": "double" },
+      { "index": 9, "name": "speed", "type": "double" },
+      { "index": 10, "name": "aheadDist", "type": "double" },
+      { "index": 11, "name": "wKp", "type": "double" },
+      { "index": 12, "name": "wKd", "type": "double" }
+    ]
+  },
+  "SPID": {
+    "type": "SPID",
+    "content": [
+      { "index": 0, "name": "vw0", "type": "double"},
+      { "index": 1, "name": "dvw", "type": "double" },
+      { "index": 2, "name": "ax", "type": "double" },
+      { "index": 3, "name": "m_e", "type": "double"},
+      { "index": 4, "name": "de", "type": "double"},
+      { "index": 5, "name": "th_e", "type": "double"},
+      { "index": 6, "name": "lqr_mode", "type": "double" },
+      { "index": 7, "name": "speed", "type": "double" },
+      { "index": 8, "name": "aheadDist", "type": "double" },
+      { "index": 9, "name": "wKp", "type": "double" },
+      { "index": 10, "name": "wKd", "type": "double" },
+      { "index": 11, "name": "delay_dist", "type": "double" },
+      { "index": 12, "name": "fid", "type": "double" }
+    ]
+  },
+  "NearInd": {
+    "type": "NearInd",
+    "content": [
+      { "index": 0, "name": "dx", "type": "double" },
+      { "index": 1, "name": "dy", "type": "double"  },
+      { "index": 2, "name": "th_e", "type": "double"},
+      { "index": 3, "name": "len", "type": "double" },
+      { "index": 4, "name": "near_ind", "type": "double" },
+      { "index": 5, "name": "angle", "type": "double"},
+      { "index": 6, "name": "near_dist", "type": "double"},
+      { "index": 7, "name": "px", "type": "double"},
+      { "index": 8, "name": "py", "type": "double"}
+    ]
+  },
+  "SNearInd": {
+    "type": "SNearInd",
+    "content": [
+      { "index": 0, "name": "dx", "type": "double" },
+      { "index": 1, "name": "dy", "type": "double"  },
+      { "index": 2, "name": "len", "type": "double"},
+      { "index": 3, "name": "near_ind", "type": "double" },
+      { "index": 4, "name": "angle", "type": "double" },
+      { "index": 5, "name": "near_dist", "type": "double"},
+      { "index": 6, "name": "px", "type": "double"},
+      { "index": 7, "name": "py", "type": "double"},
+      { "index": 8, "name": "off_back", "type": "double"},
+      { "index": 9, "name": "off_forward", "type": "double"}
+    ]
+  },
+  "BiNearInd": {
+    "type": "BiNearInd",
+    "content": [
+      { "index": 0, "name": "dx", "type": "double" },
+      { "index": 1, "name": "dy", "type": "double"  },
+      { "index": 2, "name": "ld", "type": "double"},
+      { "index": 3, "name": "td", "type": "double" },
+      { "index": 4, "name": "nind", "type": "double" },
+      { "index": 5, "name": "px", "type": "double"},
+      { "index": 6, "name": "py", "type": "double"},
+      { "index": 7, "name": "off_back", "type": "double"},
+      { "index": 8, "name": "off_forward", "type": "double"}
+    ]
+  },
+  "StopRobotPos": {
+    "type": "StopRobotPos",
+    "content": [
+      { "index": 0, "name": "x", "type": "double" },
+      { "index": 1, "name": "y", "type": "double"  },
+      { "index": 2, "name": "theta", "type": "rad"}
+    ]
+  },
+  "Fork": {
+    "type": "Fork",
+    "content": [
+      { "index": 0, "name": "height", "type": "double","description": "货叉当前高度", "unit":"m"  },
+      { "index": 1, "name": "height_in_place", "type": "bool","description": "货叉是否到位", "unit":"m"  }
+    ]
+  },
+  "BackMotionGet": {
+    "type": "BackMotionGet",
+    "content": [
+      { "index": 0, "name": "vc", "type": "double" },
+      { "index": 1, "name": "wc", "type": "rad" },
+      { "index": 2, "name": "steer_p", "type": "rad" },
+      { "index": 3, "name": "steer_n", "type": "rad"  },
+      { "index": 4, "name": "min_steer", "type": "rad"  },
+      { "index": 5, "name": "L", "type": "double" },
+      { "index": 6, "name": "yf", "type": "double"  }
+    ]
+  },
+  "SingleSteer": {
+    "type": "SingleSteer",
+    "content": [
+      { "index": 0, "name": "vx0", "type": "double","description": "接收到的vx", "unit":"m/s"  },
+      { "index": 1, "name": "vw0", "type": "rad","description": "接收到的vw", "unit":"degree/s"  },
+      { "index": 2, "name": "steer0", "type": "rad","description": "接收到的舵角", "unit":"degree" },
+      { "index": 3, "name": "vx", "type": "double","description": "下发vx", "unit":"m/s"  },
+      { "index": 4, "name": "vw", "type": "rad","description": "下发vw", "unit":"degree/s"  },
+      { "index": 5, "name": "steer", "type": "rad","description": "下发舵角", "unit":"degree"  },
+      { "index": 6, "name": "wheel_v", "type": "double","description": "舵角线速度", "unit":"m/s"  },
+      { "index": 7, "name": "steer_active", "type": "bool","description": "舵角值是否采用当前舵角值", "unit":""  }
+    ]
+  },
+  "DoubleSteer": {
+    "type": "DoubleSteer",
+    "content": [
+      { "index": 0, "name": "vxb", "type": "double","description": "下发的vx", "unit":"m/s"  },
+      { "index": 1, "name": "vyb", "type": "double","description": "下发的vy", "unit":"m/s"  },
+      { "index": 2, "name": "vwb", "type": "rad","description": "下发的vw", "unit":"degree/s"  },
+      { "index": 3, "name": "out_vf", "type": "double","description": "下发前舵角速度", "unit":"m/s"  },
+      { "index": 4, "name": "out_vr", "type": "double","description": "下发后舵角速度", "unit":"m/s"  },
+      { "index": 5, "name": "out_delta_f", "type": "rad","description": "下发前舵角角度", "unit":"degree"  },
+      { "index": 6, "name": "out_delta_r", "type": "rad","description": "下发后舵角角度", "unit":"degree"  },
+      { "index": 7, "name": "last_steerv0", "type": "double","description": "接收到的前舵角速度", "unit":"m/s"  },
+      { "index": 8, "name": "last_steerv1", "type": "double","description": "接收到的后舵角速度", "unit":"m/s"  },
+      { "index": 9, "name": "last_steer0", "type": "rad","description": "接收到的前舵舵角", "unit":"degree"  },
+      { "index": 10, "name": "last_steer1", "type": "rad","description": "接收到的后舵角", "unit":"degree"  },
+      { "index": 11, "name": "steer_active", "type": "bool","description": "舵角值是否采用当前舵角值", "unit":""  }
+    ]
+  },
+  "DualDiff": {
+    "type": "DualDiff",
+    "content": [
+      { "index": 0, "name": "vxb", "type": "double","description": "下发的vx", "unit":"m/s"  },
+      { "index": 1, "name": "vyb", "type": "double","description": "下发的vy", "unit":"m/s"  },
+      { "index": 2, "name": "vwb", "type": "rad","description": "下发的vw", "unit":"degree/s"  },
+      { "index": 3, "name": "out_vf", "type": "double","description": "下发前舵角速度", "unit":"m/s"  },
+      { "index": 4, "name": "out_vr", "type": "double","description": "下发后舵角速度", "unit":"m/s"  },
+      { "index": 5, "name": "out_delta_f", "type": "rad","description": "下发前舵角角度", "unit":"degree"  },
+      { "index": 6, "name": "out_delta_r", "type": "rad","description": "下发后舵角角度", "unit":"degree"  },
+      { "index": 7, "name": "last_steerv0", "type": "double","description": "接收到的前舵角速度", "unit":"m/s"  },
+      { "index": 8, "name": "last_steerv1", "type": "double","description": "接收到的后舵角速度", "unit":"m/s"  },
+      { "index": 9, "name": "last_steer0", "type": "rad","description": "接收到的前舵舵角", "unit":"degree"  },
+      { "index": 10, "name": "last_steer1", "type": "rad","description": "接收到的后舵角", "unit":"degree"  },
+      { "index": 11, "name": "steer_active", "type": "bool","description": "舵角值是否采用当前舵角值", "unit":""  }
+    ]
+  },
+  "DualDiffSend": {
+    "type": "DualDiffSend",
+    "content": [
+      { "index": 0, "name": "last_vx", "type": "double" },
+      { "index": 1, "name": "last_vy", "type": "double"},
+      { "index": 2, "name": "last_vw", "type": "double" },
+      { "index": 3, "name": "last_steer_angle1", "type": "double" },
+      { "index": 4, "name": "last_seter_v1", "type": "double" },
+      { "index": 5, "name": "last_steer_vw1", "type": "double" },
+      { "index": 6, "name": "last_steer_angle2", "type": "double" },
+      { "index": 7, "name": "last_steer_v2", "type": "double" },
+      { "index": 8, "name": "last_steer_vw2", "type": "double" },
+      { "index": 9, "name": "last_vL1", "type": "double"},
+      { "index": 10, "name": "last_vR1", "type": "double"},
+      { "index": 11, "name": "last_vL2", "type": "double"},
+      { "index": 12, "name": "last_vR2", "type": "double"},
+      { "index": 13, "name": "vx", "type": "double" },
+      { "index": 14, "name": "vy", "type": "double"},
+      { "index": 15, "name": "vw", "type": "rad" },
+      { "index": 16, "name": "steer_angle1", "type": "rad" },
+      { "index": 17, "name": "seter_v1", "type": "double" },
+      { "index": 18, "name": "steer_vw1", "type": "rad" },
+      { "index": 19, "name": "steer_angle2", "type": "rad" },
+      { "index": 20, "name": "steer_v2", "type": "double" },
+      { "index": 21, "name": "steer_vw2", "type": "rad" },
+      { "index": 22, "name": "vL1", "type": "double"},
+      { "index": 23, "name": "vR1", "type": "double"},
+      { "index": 24, "name": "vL2", "type": "double"},
+      { "index": 25, "name": "vR2", "type": "double"}
+    ]
+  },
+  "DualDiffMid": {
+    "type": "DualDiffMid",
+    "content": [
+      { "index": 0, "name": "ratioL1", "type": "double" },
+      { "index": 1, "name": "ratioR1", "type": "double"},
+      { "index": 2, "name": "ratioL2", "type": "double" },
+      { "index": 3, "name": "ratioR2", "type": "double" },
+      { "index": 4, "name": "dw1", "type": "double" },
+      { "index": 5, "name": "dw2", "type": "double" }
+    ]
+  },
+  "DualDiffGet": {
+    "type": "DualDiffGet",
+    "content": [
+      { "index": 0, "name": "vx", "type": "double" },
+      { "index": 1, "name": "vy", "type": "double"},
+      { "index": 2, "name": "vw", "type": "double" },
+      { "index": 3, "name": "steer_angle1", "type": "double" },
+      { "index": 4, "name": "seter_v1", "type": "double" },
+      { "index": 5, "name": "steer_vw1", "type": "double" },
+      { "index": 6, "name": "steer_angle2", "type": "double" },
+      { "index": 7, "name": "steer_v2", "type": "double" },
+      { "index": 8, "name": "steer_vw2", "type": "double" },
+      { "index": 9, "name": "vL1", "type": "double"},
+      { "index": 10, "name": "vR1", "type": "double"},
+      { "index": 11, "name": "vL2", "type": "double"},
+      { "index": 11, "name": "vR2", "type": "double"}
+    ]
+  },
+  "PGV":{
+    "type": "PGV",
+    "content": [
+      {"index": 0, "name": "x", "type":"double","description": "PGV的反馈的x", "unit":"m"},
+      {"index": 1, "name": "y", "type":"double","description": "PGV的反馈的y", "unit":"m"},
+      {"index": 2, "name": "theta", "type": "rad","description": "PGV的反馈的theta", "unit":"degree"}
+    ]
+  },
+  "code2world":{
+    "type": "code2world",
+    "content": [
+      {"index": 0, "name": "x", "type":"double","description": "二维码在世界坐标系下的位置x", "unit":"m"},
+      {"index": 1, "name": "y", "type":"double","description": "二维码在世界坐标系下的位置y", "unit":"m"},
+      {"index": 2, "name": "theta", "type": "rad","description": "二维码在世界坐标系下的位置theta", "unit":"degree"}
+    ]
+  },
+  "robot2world":{
+    "type": "robot2world",
+    "content": [
+      {"index": 0, "name": "x", "type":"double","description": "agv在世界坐标下的x", "unit":"m"},
+      {"index": 1, "name": "y", "type":"double","description": "agv在世界坐标下的y", "unit":"m"},
+      {"index": 2, "name": "theta", "type": "rad","description": "agv在世界坐标下的theta", "unit":"degree"}
+    ]
+  },
+  "OutputV":{
+    "type": "OutputV",
+    "content": [
+      {"index": 0, "name": "global_spin_anle", "type":"rad","description": "托盘在世界坐标下的目标角度", "unit":"degree"},
+      {"index": 1, "name": "cur_global_angle", "type":"rad","description": "托盘当前在世界坐标系下的角度", "unit":"degree"},
+      {"index": 2, "name": "local_spin_angle", "type": "rad","description": "托盘在agv坐标下的目标角度", "unit":"degree"},
+      {"index": 3, "name": "local_plate_angle", "type": "rad","description": "托盘在agv坐标下的当前角度", "unit":"degree"},
+      {"index": 4, "name": "vx", "type": "double","description": "agv当前下发vx", "unit":"m/s"},
+      {"index": 5, "name": "vw", "type": "rad","description": "agv当前下发vw", "unit":"degree/s"},
+      {"index": 6, "name": "spin_vw", "type": "rad","description": "agv当前下发托盘转速", "unit":"degree/s"}
+    ]
+  },
+  "code2robot":{
+    "type": "code2robot",
+    "content": [
+      { "index": 0, "name": "x", "type": "double","description": "二维码在agv坐标下的x", "unit":"m" },
+      { "index": 1, "name": "y", "type": "double","description": "二维码在agv坐标下的y", "unit":"m" },
+      { "index": 2, "name": "theta", "type": "rad","description": "二维码在agv坐标系下的角度", "unit":"degree" },
+      { "index": 3, "name": "offset", "type": "rad","description": "二维码到agv坐标下零位的偏置", "unit":"degree" }
+    ]
+  },
+  "DI": {
+    "type": "DI",
+    "content": [
+      { "index": 0, "name": "di0", "type": "double", "description": "di0状态", "unit":""  },
+      { "index": 1, "name": "di1", "type": "double", "description": "di1状态", "unit":""  },
+      { "index": 2, "name": "di2", "type": "double", "description": "di2状态", "unit":""  },
+      { "index": 3, "name": "di3", "type": "double", "description": "di3状态", "unit":""  },
+      { "index": 4, "name": "di4", "type": "double", "description": "di4状态", "unit":""  },
+      { "index": 5, "name": "di5", "type": "double", "description": "di5状态", "unit":""  },
+      { "index": 6, "name": "di6", "type": "double", "description": "di6状态", "unit":""  },
+      { "index": 7, "name": "di7", "type": "double", "description": "di7状态", "unit":""  },
+      { "index": 8, "name": "di8", "type": "double", "description": "di8状态", "unit":""  },
+      { "index": 9, "name": "di9", "type": "double", "description": "di9状态", "unit":""  },
+      { "index": 10, "name": "di17", "type": "double", "description": "di17状态", "unit":""  },
+      { "index": 11, "name": "di18", "type": "double", "description": "di18状态", "unit":""  },
+      { "index": 12, "name": "di19", "type": "double", "description": "di19状态", "unit":""  },
+      { "index": 13, "name": "di20", "type": "double", "description": "di20状态", "unit":""  },
+      { "index": 14, "name": "di21", "type": "double", "description": "di21状态", "unit":""  },
+      { "index": 15, "name": "di22", "type": "double", "description": "di22状态", "unit":""  }
+    ]
+  },
+  "DO": {
+    "type": "DO",
+    "content": [
+      { "index": 0, "name": "do0", "type": "double", "description": "do0状态", "unit":""  },
+      { "index": 1, "name": "do1", "type": "double", "description": "do1状态", "unit":""  },
+      { "index": 2, "name": "do2", "type": "double", "description": "do2状态", "unit":""  },
+      { "index": 3, "name": "do3", "type": "double", "description": "do3状态", "unit":""  },
+      { "index": 4, "name": "do4", "type": "double", "description": "do4状态", "unit":""  },
+      { "index": 5, "name": "do5", "type": "double", "description": "do5状态", "unit":""  },
+      { "index": 6, "name": "do6", "type": "double", "description": "do6状态", "unit":""  },
+      { "index": 7, "name": "do7", "type": "double", "description": "do7状态", "unit":""  },
+      { "index": 8, "name": "do8", "type": "double", "description": "do8状态", "unit":""  },
+      { "index": 9, "name": "do9", "type": "double", "description": "do9状态", "unit":""  }
+    ]
+  },
+  "JackStatus": {
+    "type": "JackStatus",
+    "content": [
+      { "index": 0, "name": "state", "type": "double", "description": "顶升状态", "unit":""  },
+      { "index": 1, "name": "errorcode", "type": "double", "description": "顶升错误", "unit":""  },
+      { "index": 2, "name": "mode", "type": "bool", "description": "顶升模式", "unit":""  },
+      { "index": 3, "name": "enable", "type": "bool", "description": "顶升使能", "unit":""  },
+      { "index": 4, "name": "isFull", "type": "bool", "description": "顶升有货物", "unit":""  },
+      { "index": 5, "name": "speed", "type": "double", "description": "顶升速度", "unit":"m/s"  },
+      { "index": 6, "name": "emc", "type": "bool", "description": "顶升是否急停", "unit":""  },
+      { "index": 7, "name": "height", "type": "double", "description": "顶升高度", "unit":"m"  }
+    ]
+  },
+  "JackSpeed": {
+    "type": "JackSpeed",
+    "content": [
+      { "index": 0, "name": "jack_target_height", "type": "double", "description": "顶升原始目标高度", "unit":"m"  },
+      { "index": 1, "name": "jack_height", "type": "double", "description": "顶升当前高度", "unit":"m"  },
+      { "index": 2, "name": "goal_s", "type": "double", "description": "目标高度", "unit":"m"  },
+      { "index": 3, "name": "jack_v", "type": "double" , "description": "顶升下发速度", "unit":"m/s" }
+    ]
+  },
+  "LocalPos": {
+    "type": "LocalPos",
+    "content": [
+      { "index": 0, "name": "x", "type": "double", "description": "局部x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double", "description": "局部y", "unit":"m"  },
+      { "index": 2, "name": "theta", "type": "rad", "description": "角度", "unit":"degree"  }
+    ]
+  },
+  "rec2world": {
+    "type": "rec2world",
+    "content": [
+      { "index": 0, "name": "x", "type": "double", "description": "局部x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double", "description": "局部y", "unit":"m"  },
+      { "index": 2, "name": "theta", "type": "rad", "description": "角度", "unit":"degree"  }
+    ]
+  },
+  "r2base": {
+    "type": "r2base",
+    "content": [
+      { "index": 0, "name": "x", "type": "double", "description": "局部x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double", "description": "局部y", "unit":"m"  },
+      { "index": 2, "name": "theta", "type": "rad", "description": "角度", "unit":"degree"  }
+    ]
+  },
+  "odo2base": {
+    "type": "odo2base",
+    "content": [
+      { "index": 0, "name": "x", "type": "double", "description": "局部x", "unit":"m"  },
+      { "index": 1, "name": "y", "type": "double", "description": "局部y", "unit":"m"  },
+      { "index": 2, "name": "theta", "type": "rad", "description": "角度", "unit":"degree"  }
+    ]
+  },
+  "LqrSpinData": {
+    "type": "LqrSpinData",
+    "content": [
+      { "index": 0, "name": "dw", "type": "rad", "description": "dw", "unit":"degree"  },
+      { "index": 1, "name": "send_w", "type": "rad", "description": "", "unit":"degree"  },
+      { "index": 2, "name": "base_w", "type": "rad", "description": "", "unit":"degree"  },
+      { "index": 3, "name": "theta_e", "type": "rad", "description": "", "unit":"degree"  },
+      { "index": 4, "name": "theta_pe", "type": "rad", "description": "", "unit":"degree"  },
+      { "index": 5, "name": "sum_e", "type": "rad", "description": "", "unit":"degree"  }
+    ]
+  },
+  "MotorCmd": {
+    "type": "MotorCmd",
+    "content": [
+      { "name": "motor", "type": "double", "description": "电机0速度", "unit":"m/s"  },
+      { "name": "motor1", "type": "double", "description": "电机1速度", "unit":"m/s"  },
+      { "name": "motor2", "type": "double" , "description": "电机2速度", "unit":"m/s" }
+    ]
+  },
+  "pgv0": {
+    "type": "pgv0",
+    "content": [
+      { "index": 0, "name": "device_address", "type": "int64", "description": "设备地址", "unit":""  },
+      { "index": 1, "name": "tag_x", "type": "double", "description": "x差值", "unit":""  },
+      { "index": 2, "name": "tag_y", "type": "double", "description": "y差值", "unit":""  },
+      { "index": 3, "name": "tag_angle", "type": "double", "description": "angle差值", "unit":""  },
+      { "index": 4, "name": "tag_value", "type": "int64", "description": "标签数据", "unit":""  },
+      { "index": 5, "name": "is_DMT_detected", "type": "bool", "description": "是否检测到Data Matrix", "unit":""  },
+      { "index": 6, "name": "warning_code", "type": "int64", "description": "报警码", "unit":""  },
+      { "index": 7, "name": "err_code", "type": "int64", "description": "错误码", "unit":""  },
+      { "index": 8, "name": "install_x", "type": "double", "description": "安装x", "unit":""  },
+      { "index": 9, "name": "install_y", "type": "double", "description": "安装y", "unit":""  },
+      { "index": 10, "name": "install_yaw", "type": "double", "description": "安装yaw", "unit":""  }
+    ]
+  },
+  "pgv1": {
+    "type": "pgv1",
+    "content": [
+      { "index": 0, "name": "device_address", "type": "int64", "description": "设备地址", "unit":""  },
+      { "index": 1, "name": "tag_x", "type": "double", "description": "x差值", "unit":""  },
+      { "index": 2, "name": "tag_y", "type": "double", "description": "y差值", "unit":""  },
+      { "index": 3, "name": "tag_angle", "type": "double", "description": "angle差值", "unit":""  },
+      { "index": 4, "name": "tag_value", "type": "int64", "description": "标签数据", "unit":""  },
+      { "index": 5, "name": "is_DMT_detected", "type": "bool", "description": "是否检测到Data Matrix", "unit":""  },
+      { "index": 6, "name": "warning_code", "type": "int64", "description": "报警码", "unit":""  },
+      { "index": 7, "name": "err_code", "type": "int64", "description": "错误码", "unit":""  },
+      { "index": 8, "name": "install_x", "type": "double", "description": "安装x", "unit":""  },
+      { "index": 9, "name": "install_y", "type": "double", "description": "安装y", "unit":""  },
+      { "index": 10, "name": "install_yaw", "type": "double", "description": "安装yaw", "unit":""  }
+    ]
+  },
+  "manualSteer": {
+    "type": "manualSteer",
+    "content": [
+      { "index": 0, "name": "steer", "type": "rad", "description": "设备地址", "unit":"" }
+    ]
+  },
+  "OdoSpin": {
+    "type": "OdoSpin",
+    "content": [
+      { "index": 0, "name": "global_spin_angle", "type": "rad"},
+      { "index": 1, "name": "local_spin_angle", "type": "rad"},
+      { "index": 2, "name": "m_diff_spin_angle", "type": "rad"},
+      { "index": 3, "name": "total_odo_angle", "type": "rad"},
+      { "index": 4, "name": "m_spin_dir", "type": "int"},
+      { "index": 5, "name": "wbest", "type": "rad"}
+    ]
+  },			
+  "JackMotor": {
+    "type": "JackMotor",
+    "content": [
+      { "index": 0, "name": "name", "type": "double"},
+      { "index": 1, "name": "speed", "type": "double"},
+      { "index": 2, "name": "position", "type": "double"},
+      { "index": 3, "name": "value", "type": "double"},
+      { "index": 4, "name": "goal", "type": "double"}
+    ]
+  },
+  "ForkMotors": {
+    "type": "ForkMotors",
+    "content": [
+      { "index": 0, "name": "name", "type": "double"},
+      { "index": 1, "name": "speed", "type": "double"},
+      { "index": 2, "name": "position", "type": "double"},
+      { "index": 3, "name": "value", "type": "double"},
+      { "index": 4, "name": "goal", "type": "double"}
+    ]
+  },
+  "LaserWithRssi": {
+    "type": "LaserWithRssi",
+    "content": [
+      { "index": 0, "name": "0", "type": "double", "description": "设备地址", "unit":""  },
+      { "index": 1, "name": "1", "type": "double", "description": "x差值", "unit":"0.1mm"  },
+      { "index": 2, "name": "2", "type": "double", "description": "y差值", "unit":"0.1mm"  }
+    ]
+  },
+  "ApList": {
+    "type": "ApList",
+    "content": [
+      { "index": 1, "name": "1", "type": "double", "description": "扫描的AP信号强度", "unit":"dBm"  }
+    ]
+  },
+   "CurrentAP": {
+    "type": "CurrentAP",
+    "content": [
+      { "index": 1, "name": "1", "type": "double", "description": "当前AP信号强度", "unit":"dBm"  }
+    ]
+  },
+  "memory": {
+    "type": "memory",
+    "content": [
+      { "index": 0, "name": "used_sys", "type": "double", "description": "已占系统内存", "unit":"MB"  },
+      { "index": 1, "name": "free_sys", "type": "double", "description": "可占系统内存", "unit":"MB"  },
+      { "index": 2, "name": "rbk_phy", "type": "double", "description": "Rbk已占物理内存", "unit":"MB"  },
+	  { "index": 3, "name": "rbk_vir", "type": "double", "description": "Rbk已占虚拟内存", "unit":"MB"  },
+	  { "index": 4, "name": "rbk_max_phy", "type": "double", "description": "Rbk占用MAX物理内存", "unit":"MB"  },
+	  { "index": 5, "name": "rbk_max_vir", "type": "double", "description": "Rbk占用MAX虚拟内存", "unit":"MB"  },
+	  { "index": 6, "name": "rbk_cpu", "type": "double", "description": "Rbk cpu使用率", "unit":"%"  },
+	  { "index": 7, "name": "cpu", "type": "double", "description": "系统 cpu 使用率", "unit":"%"  }
+    ]
+  },
+  "rTopoPos": {
+      "type": "rTopoPos",
+      "content": [
+        { "index": 0, "name": "x","type": "double"},
+        { "index": 1, "name": "y", "type": "double"},
+        { "index": 2, "name": "theta", "type": "rad"},
+        { "index": 3, "name": "size", "type": "bool"},
+        { "index": 4, "name": "sid", "type": "double"},
+        { "index": 5, "name": "eid", "type": "double"},
+        { "index": 6, "name": "percentage", "type": "double"},
+        { "index": 7, "name": "obsStop", "type": "bool"},
+        { "index": 8, "name": "obsSlowDown", "type": "bool"},
+        { "index": 9, "name": "hasError", "type": "bool"},
+        { "index": 10, "name": "status", "type": "double"},
+        { "index": 11, "name": "vel_x", "type": "double"},
+        { "index": 12, "name": "vel_y", "type": "double"},
+        { "index": 13, "name": "veL_rot", "type": "double"},
+        { "index": 14, "name": "stopped", "type": "bool"},
+        { "index": 15, "name": "containerSize", "type": "double"},
+        { "index": 16, "name": "empty_c", "type":"double"},
+        { "index": 17, "name": "load_c", "type": "double"},
+        { "index": 18, "name": "excutorStop", "type": "bool"},
+        { "index": 19, "name": "doingBinTask", "type": "bool"},
+        { "index": 20, "name": "runningTask", "type": "bool"},
+        { "index": 21, "name": "running_or_last_task_id", "type": "str"},
+        { "index": 22, "name": "task_status", "type": "double"},
+        { "index": 23, "name": "occupyScore", "type": "double"},
+        { "index": 24, "name": "topoPoss", "type": "str"}
+      ]
+    },
+    "GET": {
+      "type": "GET",
+      "content": [
+        { "index": 0, "name": "connect", "type": "double"},
+        { "index": 1, "name": "cur_map", "type": "str"},
+        { "index": 2, "name": "reloc", "type": "double"},
+        { "index": 3, "name": "locked", "type": "bool"},
+        { "index": 4, "name": "nick_name", "type": "str"},
+        { "index": 5, "name": "order_state", "type": "double"},
+        { "index": 6, "name": "control", "type": "bool"},
+        { "index": 7, "name": "dispatchable", "type": "double"},
+        { "index": 8, "name": "is_connect", "type": "bool"},
+        { "index": 9, "name": "unlockedByRDS", "type": "double"},
+        { "index": 10, "name": "uncofirm_reloc", "type": "bool"},
+        { "index": 11, "name": "is_charging", "type": "bool"},
+        { "index": 12, "name": "battery_percentage", "type": "double"},
+        { "index": 13, "name": "clearMoveTask", "type": "bool"},
+        { "index": 14, "name": "low_battery", "type": "bool"},
+        { "index": 15, "name": "cu_area_name", "type": "str"},
+        { "index": 16, "name": "same_map_with_scene", "type": "bool"},
+        { "index": 17, "name": "finishedCurrentOrders", "type": "bool"},
+        { "index": 18, "name": "is_suspend", "type": "bool"}
+      ]
+    },
+    "runBlockIn": {
+      "type": "runBlockIn",
+      "content": [
+        { "index": 0, "name": "init", "type": "bool"},
+        { "index": 1, "name": "m_current_order", "type": "double"},
+        { "index": 2, "name": "order_size", "type": "double"}
+      ]
+    },
+    "runBlockOut": {
+      "type": "runBlockOut",
+      "content": [
+        { "index": 0, "name": "state", "type": "double"}
+      ]
+    },
+    "Block": {
+      "type": "Block",
+      "content": [
+        { "index": 0, "name": "cur_block_ind", "type": "double"},
+        { "index": 1, "name": "block_size", "type": "double"},
+        { "index": 2, "name": "block_state", "type": "double"},
+        { "index": 3, "name": "task_state", "type": "double"},
+        { "index": 4, "name": "excutor_state", "type": "double"},
+        { "index": 5, "name": "org_task_state", "type": "double"},
+        { "index": 6, "name": "org_excutor_state", "type": "double"},
+        { "index": 7, "name": "task_blockId", "type": "str"},
+        { "index": 8, "name": "cur_blockId", "type": "str"},
+        { "index": 9, "name": "mapfActive", "type": "bool"}
+      ]
+    },
+    "WAITING": {
+      "type": "WAITING",
+      "content": [
+        { "index": 0, "name": "cur_block_ind", "type": "double"},
+        { "index": 1, "name": "block_size", "type": "bool"},
+        { "index": 2, "name": "complete", "type": "double"}
+      ]
+    },
+    "robotOrderStatus": {
+        "type": "robotOrderStatus",
+        "content": [
+          { "index": 0, "name": "cur_order", "type": "double"},
+          { "index": 1, "name": "type", "type": "double"},
+          { "index": 2, "name": "complete", "type": "bool"},
+          { "index": 3, "name": "order_state", "type": "double"},
+          { "index": 4, "name": "joinable", "type": "bool"},
+          { "index": 5, "name": "order", "type":"json"}
+        ]
+    },
+    "TaskDispatcherIn":{
+      "type": "TaskDispatcherIn",
+      "content": [
+        { "index": 0, "name": "init", "type": "bool"}
+      ]
+    },
+    "updateOrderState":{
+      "type":"updateOrderState",
+      "content": [
+        { "index": 0, "name": "order_state", "type": "double"},
+        { "index": 1, "name": "in_state", "type": "double"},
+        { "index": 2, "name": "excutor_state", "type": "double"}
+      ]
+    },
+    "current_excutor_list":{
+      "type":"current_excutor_list",
+      "content": [
+        { "index": 0, "name": "size0", "type": "double"},
+        { "index": 1, "name": "size1", "type": "double"},
+        { "index": 2, "name": "size2", "type": "double"},
+        { "index": 3, "name": "excutor_state", "type": "str"},
+        { "index": 4, "name": "in_lift_task", "type": "bool"}
+      ]
+    },
+    "curOrderState":{
+      "type": "curOrderState",
+      "content": [
+        { "index": 0, "name": "cur_block_state", "type": "double"},
+        { "index": 1, "name": "complete", "type": "bool"},
+        { "index": 2, "name": "cur_order_state", "type": "double"},
+        { "index": 3, "name": "robot_state", "type": "bool"},
+        { "index": 5, "name": "order_type", "type": "double"}
+      ]
+    },
+    "curOrderState2":{
+      "type": "curOrderState2",
+      "content": [
+        { "index": 0, "name": "cur_block_state", "type": "double"},
+        { "index": 1, "name": "current_order", "type": "double"},
+        { "index": 2, "name": "cur_order_state", "type": "double"},
+        { "index": 3, "name": "robot_state", "type": "double"}
+      ]
+    },
+    "runCollision":{
+      "type": "runCollision",
+      "content": [
+        { "index": 0, "name": "outListSize", "type": "double"},
+        { "index": 1, "name": "send_id", "type": "double"},
+        { "index": 2, "name": "CMDSize", "type": "double"},
+        { "index": 3, "name": "moveTaskListSize", "type": "double"},
+        { "index": 4, "name": "exListSize", "type": "double"}
+      ]
+    },
+    "runExcutor":{
+      "type": "runExcutor",
+      "content": [
+        { "index": 0, "name": "state", "type": "double"},
+        { "index": 1, "name": "size", "type": "double"}
+      ]
+    },
+    "finishState":{
+      "type": "finishState",
+      "content": [
+        { "index": 0, "name": "current_order", "type": "double"},
+        { "index": 1, "name": "order_size", "type": "double"},
+        { "index": 2, "name": "charged_ok_to_next_order", "type": "bool"}
+      ]
+    },
+    "SEND":{
+      "type": "SEND",
+      "content": [
+        { "index": 0, "name": "cmd_uuid", "type": "str"},
+        { "index": 1, "name": "code", "type": "str"},
+        { "index": 2, "name": "port", "type": "str"},
+        { "index": 3, "name": "task_list_size", "type": "int"},
+        { "index": 4, "name": "cmd", "type": "json"}
+      ]
+    },
+    "LiftStatus":{
+      "type": "LiftStatus",
+      "content": [
+        { "index": 0, "name": "robot_name", "type": "str"},
+        { "index": 1, "name": "state", "type": "double"},
+        { "index": 2, "name": "is_new_task", "type": "bool"},
+        { "index": 3, "name": "is_locked", "type": "bool"},
+        { "index": 4, "name": "connection", "type": "double"},
+        { "index": 5, "name": "available", "type": "bool"},
+        { "index": 6, "name": "running_status", "type": "double"},
+        { "index": 7, "name": "lift_current_area", "type": "str"},
+        { "index": 8, "name": "lift_area", "type": "str"},
+        { "index": 9, "name": "task_uuid", "type": "str"},
+        { "index": 10, "name": "runMode", "type": "double"},
+        { "index": 11, "name": "err", "type": "str"},
+        { "index": 12, "name": "has_door", "type": "bool"},
+        { "index": 13, "name": "doorStatus", "type": "str"},
+        { "index": 14, "name": "command_period", "type": "double"},
+        { "index": 15, "name": "accessflag", "type": "bool"}
+      ]
+    },
+    "LiftNewStatus":{
+      "type": "LiftNewStatus",
+      "content": [
+        { "index": 0, "name": "connection", "type": "double"},
+        { "index": 1, "name": "available", "type": "bool"},
+        { "index": 2, "name": "running_status", "type": "double"},
+        { "index": 3, "name": "current_lift_area", "type": "str"},
+        { "index": 4, "name": "lift_area", "type": "str"},
+        { "index": 5, "name": "err", "type": "str"},
+        { "index": 6, "name": "has_door", "type": "bool"},
+        { "index": 7, "name": "doorStatus", "type": "str"},
+        { "index": 8, "name": "command_period", "type": "double"},
+        { "index": 9, "name": "accessflag", "type": "bool"},
+        { "index": 10, "name": "cmd", "type": "str"}
+      ]
+    },
+    "DoorStatus":{
+      "type": "DoorStatus",
+      "content": [
+        { "index": 0, "name": "doorstatus", "type": "bool"},
+        { "index": 1, "name": "doorinplace", "type": "bool"},
+        { "index": 2, "name": "connection_status", "type": "bool"},
+        { "index": 3, "name": "ss", "type": "str"}
+      ]
+    },
+    "TCPConnection":{
+      "type":"TCPConnection",
+      "content":[
+        {"index":0, "name":"status", "type":"int64"},
+        {"index":1, "name":"native_handler", "type":"int64"},
+        {"index":2, "name":"local_ip", "type":"str"},
+        {"index":3, "name":"local_port", "type":"int64"},
+        {"index":4, "name":"remote_ip", "type":"str"},
+        {"index":5, "name":"remote_port", "type":"int64"}
+      ]
+    },
+    "networkDelay":{
+      "type":"networkDelay",
+      "content":[
+        {"index":0, "name":"delay", "type":"int64"}
+      ]
+    },
+    "RDSCommand":{
+      "type":"RDSCommand",
+      "content":[
+        {"index":0, "name":"type", "type":"str"},
+        {"index":1, "name":"status", "type":"bool"},
+        {"index":2, "name":"size", "type":"int64"},
+        {"index":3, "name":"data", "type":"json"}
+      ]
+    },
+    "RobotCommand":{
+      "type":"RobotCommand",
+      "content":[
+        {"index":0, "name":"time", "type":"int64"},
+        {"index":1, "name":"duration", "type":"int64"},
+        {"index":2, "name":"size", "type":"int64"},
+        {"index":3, "name":"data", "type":"json"}
+      ]
+    },
+    "SendRetry":{
+      "type":"SendRetry",
+      "content":[
+        {"index":0, "name":"time", "type":"int64"},
+        {"index":1, "name":"debug_str", "type":"json"}
+      ]
+    },
+    "RealRobotStatus":{
+      "type":"RealRobotStatus",
+      "content":[
+        {"index":0, "name":"debug_str", "type":"json"}
+      ]
+    },
+  "modelChange":{
+    "type":"modelChange",
+    "content":[
+      {"index":0, "name":"changed", "type":"bool"}
+    ]
+  },
+  "mapChange":{
+    "type":"mapChange",
+    "content":[
+      {"index":0, "name":"local_md5", "type":"str"},
+      {"index":1, "name":"new_md5", "type":"str"},
+      {"index":2, "name":"map_path", "type":"str"}
+    ]
+  },
+  "dispatchableStatus":{
+    "type":"dispatchableStatus",
+    "content":[
+      {"index":0, "name":"under_control", "type":"bool"},
+      {"index":1, "name":"reason", "type":"json"}
+    ]
+  },
+  "CMDClient":{
+    "type":"CMDClient",
+    "content":[
+      {"index":0, "name":"status", "type":"int"}
+    ]
+  },
+  "receiveJson":{
+    "type":"receiveJson",
+    "content":[
+      {"index":0, "name":"local_end", "type":"str"},
+      {"index":1, "name":"remote_end", "type":"str"},
+      {"index":2, "name":"rcv", "type":"json"}
+    ]
+  },
+  "sendRobotCMD":{
+    "type":"sendRobotCMD",
+    "content":[
+      {"index":0, "name":"local_end", "type":"str"},
+      {"index":1, "name":"remote_end", "type":"str"},
+      {"index":2, "name":"send", "type":"json"}
+    ]
+  },
+"RobokitRunState":{
+    "type":"RobokitRunState",
+    "content":[
+      {"index":0, "name":"Robokit CPU", "type":"double","description":"Robokit CPU","unit":"%"},
+      {"index":1, "name":"Robotit Mem", "type":"double","description":"Robokit Mem","unit":"M"},
+      {"index":2, "name":"SRC CPU Temp", "type":"double","description":"SRC CPU Temp","unit":"℃"}
+    ]
+  },
+  "InternalMsg":{
+    "type":"InternalMsg",
+    "content":[
+      {"index":0, "name":"header", "type":"json"},
+      {"index":1, "name":"location", "type":"json"}
+    ]
+  }
+}

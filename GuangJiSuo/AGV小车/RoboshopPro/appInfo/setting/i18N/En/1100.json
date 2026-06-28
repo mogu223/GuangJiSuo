@@ -1,0 +1,161 @@
+{
+    "double": [
+		{
+            "key": "timeDiff",
+            "desc": "TCP delay(ms)",
+			"isChecked":true
+        },
+        {
+            "key": "r_vx",
+            "desc": "x:Delivery speed(m/s)"
+        },
+        {
+            "key": "vx",
+            "desc": "x:Actual speed(m/s)"
+        },
+        {
+            "key": "r_vy",
+            "desc": "y:Delivery speed(m/s)"
+        },
+        {
+            "key": "vy",
+            "desc": "y:Actual speed(m/s)"
+        },
+        {
+            "key": "r_w",
+            "desc": "Angular velocity(°/s)"
+        },
+        {
+            "key": "w",
+            "desc": "Actual angular velocity(°/s)"
+        },
+        {
+            "key": "r_steer",
+            "desc": "Issue single steering wheel angle"
+        },
+        {
+            "key": "steer",
+            "desc": "Actual single steering wheel angle"
+        },
+        {
+            "key": "r_steer_angles1",
+            "desc": "Lower rudder angle 1"
+        },
+        {
+            "key": "r_steer_angles2",
+            "desc": "Lower rudder angle 2"
+        },
+        {
+            "key": "steer_angles1",
+            "desc": "Actual rudder angle 1"
+        },
+        {
+            "key": "steer_angles2",
+            "desc": "Actual rudder angle 2"
+        },
+        {
+            "key": "yaw",
+            "desc": "Gyro yaw angle(°)"
+        },
+        {
+            "key": "roll",
+            "desc": "Gyro roll angle(°)"
+        },
+        {
+            "key": "pitch",
+            "desc": "Gyro pitch angle(°)"
+        },
+        {
+            "key": "fork_height",
+            "desc": "Fork current height(m)"
+        },
+        {
+            "key": "jack_speed",
+            "desc": "Jacking motor speed(mm/s)"
+        },
+        {
+            "key": "jack_height",
+            "desc": "Jacking current height(m)"
+        },
+        {
+            "key":"confidence",
+            "desc":"confidence"
+        },
+        {
+            "key":"spin",
+            "desc":"Actual pallet angle(°)"
+        },
+        {
+            "key":"r_spin",
+            "desc":"Delivery tray speed(°/s)"
+        },
+        {
+            "key":"battery_level",
+            "desc":"Battery power"
+        },
+        {
+            "key":"voltage",
+            "desc":"Battery voltage"
+        },
+        {
+            "key":"current",
+            "desc":"Battery current"
+        },
+        {
+            "key":"max_charge_voltage",
+            "desc":"Maximum charging voltage"
+        },
+        {
+            "key":"max_charge_current",
+            "desc":"Maximum charging current"
+        }
+    ],
+    "bool": [
+        {
+            "key": "charging",
+            "desc": "Is charging",
+			"isChecked":true
+        },
+        {
+            "key": "roller_emc",
+            "desc": "Roller emergency"
+        },
+        {
+            "key": "roller_isFull",
+            "desc": "Roller is Full"
+        },
+        {
+            "key": "fork_height_in_place",
+            "desc": "Whether the fork is in place"
+        },
+        {
+            "key": "emergency",
+            "desc": "Emergency stop has been pressed"
+        },
+        {
+            "key": "slowed",
+            "desc": "Is slowed"
+        },
+        {
+            "key": "blocked",
+            "desc": "Is blocked"
+        },
+        {
+            "key": "manual_charge",
+            "desc": "Manual charge"
+        },
+        {
+            "key": "auto_charge",
+            "desc": "Auto charge"
+        },
+        {
+            "key": "brake",
+            "desc": "Is Brake",
+			"isChecked":true
+        },
+        {
+            "key": "driver_emc",
+            "desc": "Drive disabled state"
+        }
+    ]
+}

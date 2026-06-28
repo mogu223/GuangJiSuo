@@ -1,0 +1,5 @@
+{
+	"robotStatusUrl":"ws://host:8089/robotsStatus",
+	"websocketUrl":"ws://localhost:1234",
+	"webserverUrl":"ws://localhost:1234"
+}

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# TcXaeShell Solution File, Format Version 11.00
+VisualStudioVersion = 15.0.33403.129
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "M812x-Demo", "M812x-Demo\M812x-Demo.vcproj", "{52412CB6-8E08-4BD4-AEB7-2E235B6C8996}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52412CB6-8E08-4BD4-AEB7-2E235B6C8996}.Debug|Win32.ActiveCfg = Debug|Win32
+		{52412CB6-8E08-4BD4-AEB7-2E235B6C8996}.Debug|Win32.Build.0 = Debug|Win32
+		{52412CB6-8E08-4BD4-AEB7-2E235B6C8996}.Release|Win32.ActiveCfg = Release|Win32
+		{52412CB6-8E08-4BD4-AEB7-2E235B6C8996}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88963302-136E-423A-A0D9-7072B38B8775}
+	EndGlobalSection
+EndGlobal

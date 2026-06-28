@@ -1,0 +1,8 @@
+{
+	"parkAllowed": false,
+	"chargeAllowed": false,
+	"giveWayNotAllowed": false,
+	"rotateNotAllowed": false,
+	"containerRotateNotAllowed": false,
+	"containerRotateAllowed": false
+}

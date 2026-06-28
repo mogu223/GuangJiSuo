@@ -1,0 +1,16 @@
+{
+    "Cooling Fan": "散热风扇",
+    "Green Light": "三色灯-绿色",
+    "Yellow Light": "三色灯-黄色",
+    "Red Light": "三色灯-红色",
+    "NA": "无",
+    "Electrode Contactor": "极片接触器",
+    "Line Charging Contactor": "线充接触器",
+    "Emergency Stop": "急停",
+    "Cathode Sheet Sensor": "极片正极传感器",
+    "Anode Sheet Sensor": "极片负极传感器",
+    "Motor Zero Position Sensor": "电机零位传感器",
+    "Over-Temperature Sensor": "过温传感器",
+    "Charging Module": "充电模块",
+    "Driver Motor": "驱动器电机"
+}

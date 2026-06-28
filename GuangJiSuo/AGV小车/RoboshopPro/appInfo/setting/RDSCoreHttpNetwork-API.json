@@ -1,0 +1,1274 @@
+{
+	"info": {
+		"_postman_id": "5fe57b4a-9c9a-41de-affb-72af4c78e219",
+		"name": "rds core v0.0.1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "下载当前场景",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/downloadScene",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"downloadScene"
+					]
+				},
+				"description": "下载scene"
+			},
+			"response": []
+		},
+		{
+			"name": "创建任务",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"test1\",\n    \"vehicle\": \"2000-1\",\n    \"blocks\": [\n        {\n            \"blockId\": \"test2\",\n            \"location\": \"AP67\",\n            \"operation\": \"Wait\"\n        }\n    ],\n    \"complete\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/setOrder",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"setOrder"
+					]
+				},
+				"description": "set order"
+			},
+			"response": []
+		},
+		{
+			"name": "获取机器人信息",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "58.34.177.164:8088/robotsStatus",
+					"host": [
+						"58",
+						"34",
+						"177",
+						"164"
+					],
+					"port": "8088",
+					"path": [
+						"robotsStatus"
+					]
+				},
+				"description": "### 获取机器人信息：\n\n> **HTTP**\n>\n> GET endpoint/robotsStatus\n>\n> ---\n>> 返回示例：\n```json\n{\n\t\"report\": [{\n\t\t\"changes\": {\n\t\t\t\"maps\": [\"aaa\", \"bbb\"],\n            \"model\": true,\n            \"params\": true\n\t\t},\n\t\t\"basic_info\": {\n\t\t\t\"current_map\": \"default\",\n\t\t\t\"dsp_version\": null,\n\t\t\t\"ip\": \"106.14.190.57\",\n\t\t\t\"model\": null,\n\t\t\t\"version\": null\n\t\t},\n\t\t\"chassis\": {\n\t\t\t\"head\": 0.25,\n\t\t\t\"radius\": 0.0,\n\t\t\t\"shape\": 1,\n\t\t\t\"tail\": 0.25,\n\t\t\t\"width\": 0.5\n\t\t},\n\t\t\"connection_status\": 1,\n\t\t\"dispatchable\": false,\n\t\t\"lock_info\": {\n\t\t\t\"desc\": \"\",\n\t\t\t\"ip\": \"58.34.135.133\",\n\t\t\t\"locked\": true,\n\t\t\t\"nick_name\": \"abc\",\n\t\t\t\"port\": 62643,\n\t\t\t\"time_t\": \"1626334951\",\n\t\t\t\"type\": 0\n\t\t},\n\t\t\"rbk_report\": {\n\t\t\t\"DI\": [{\n\t\t\t\t\"id\": 0,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 1,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 2,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 3,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 4,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 5,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 6,\n\t\t\t\t\"status\": true\n\t\t\t}],\n\t\t\t\"DO\": [{\n\t\t\t\t\"id\": 0,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 1,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 2,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 3,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 4,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 5,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 6,\n\t\t\t\t\"status\": true\n\t\t\t}],\n\t\t\t\"angle\": -3.1057,\n\t\t\t\"battery_level\": -0.0,\n\t\t\t\"blocked\": false,\n\t\t\t\"charging\": false,\n\t\t\t\"confidence\": 0.9896,\n\t\t\t\"current\": -0.0,\n\t\t\t\"current_map\": \"default\",\n\t\t\t\"current_map_md5\": \"6b70166cff49b10d68fbeb312806bacb\",\n\t\t\t\"current_station\": \"AP31\",\n\t\t\t\"errors\": [],\n\t\t\t\"fatals\": [],\n\t\t\t\"fork\": null,\n\t\t\t\"jack\": null,\n\t\t\t\"last_station\": \"\",\n\t\t\t\"lock_info\": {\n\t\t\t\t\"desc\": \"\",\n\t\t\t\t\"ip\": \"58.34.135.133\",\n\t\t\t\t\"locked\": true,\n\t\t\t\t\"nick_name\": \"abc\",\n\t\t\t\t\"port\": 62643,\n\t\t\t\t\"time_t\": \"1626334951\",\n\t\t\t\t\"type\": 0\n\t\t\t},\n\t\t\t\"odo\": 16652.114,\n\t\t\t\"received_on\": {\n\t\t\t\t\"data_nsec\": \"3303365892476174\",\n\t\t\t\t\"frame_id\": \"\",\n\t\t\t\t\"pub_nsec\": \"3303365892476174\",\n\t\t\t\t\"seq\": \"0\"\n\t\t\t},\n\t\t\t\"reloc_status\": 1,\n\t\t\t\"requestCurrent\": -0.0,\n\t\t\t\"requestVoltage\": -0.0,\n\t\t\t\"roller\": null,\n\t\t\t\"steer\": -0.0,\n\t\t\t\"time\": 849838457,\n\t\t\t\"total_time\": 18890960666,\n\t\t\t\"voltage\": -0.0,\n\t\t\t\"vx\": -0.0,\n\t\t\t\"vy\": -0.0,\n\t\t\t\"w\": -0.0,\n\t\t\t\"warnings\": [{\n\t\t\t\t\"55001\": 1626321233,\n\t\t\t\t\"desc\": \"The robot is in the dispatching state. If you need to control, please regain control and go offline during dispatching.\",\n\t\t\t\t\"times\": 1\n\t\t\t}, {\n\t\t\t\t\"55600\": 1626169259,\n\t\t\t\t\"desc\": \"IMU has NOT been calibrated while the skid detection is enabled\",\n\t\t\t\t\"times\": 2\n\t\t\t}],\n\t\t\t\"x\": 6.0318,\n\t\t\t\"y\": 1.0829\n\t\t},\n\t\t\"uuid\": \"192b6743-d4d0-4c21-ab42-fdd23f596470\",\n\t\t\"vehicle_id\": null\n\t}, {\n\t\t\"basic_info\": {\n\t\t\t\"current_map\": \"default\",\n\t\t\t\"dsp_version\": null,\n\t\t\t\"ip\": \"106.14.198.1\",\n\t\t\t\"model\": null,\n\t\t\t\"version\": null\n\t\t},\n\t\t\"chassis\": {\n\t\t\t\"head\": 0.25,\n\t\t\t\"radius\": 0.0,\n\t\t\t\"shape\": 1,\n\t\t\t\"tail\": 0.25,\n\t\t\t\"width\": 0.5\n\t\t},\n\t\t\"connection_status\": 1,\n\t\t\"dispatchable\": false,\n\t\t\"lock_info\": {\n\t\t\t\"desc\": \"\",\n\t\t\t\"ip\": \"58.34.135.133\",\n\t\t\t\"locked\": true,\n\t\t\t\"nick_name\": \"DESKTOP-R9LN7VF(b756f)\",\n\t\t\t\"port\": 63537,\n\t\t\t\"time_t\": \"1626335840\",\n\t\t\t\"type\": 2\n\t\t},\n\t\t\"rbk_report\": {\n\t\t\t\"DI\": [{\n\t\t\t\t\"id\": 0,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 1,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 2,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 3,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 4,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 5,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 6,\n\t\t\t\t\"status\": true\n\t\t\t}],\n\t\t\t\"DO\": [{\n\t\t\t\t\"id\": 0,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 1,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 2,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 3,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 4,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 5,\n\t\t\t\t\"status\": true\n\t\t\t}, {\n\t\t\t\t\"id\": 6,\n\t\t\t\t\"status\": true\n\t\t\t}],\n\t\t\t\"agv_id\": \"\",\n\t\t\t\"angle\": 3.126,\n\t\t\t\"battery_level\": -0.0,\n\t\t\t\"blocked\": false,\n\t\t\t\"charging\": false,\n\t\t\t\"confidence\": 0.9779,\n\t\t\t\"current\": -0.0,\n\t\t\t\"current_map\": \"default\",\n\t\t\t\"current_map_md5\": \"a359e636162fa7b01bfaef7ed2d5d206\",\n\t\t\t\"current_station\": \"AP29\",\n\t\t\t\"errors\": [],\n\t\t\t\"fatals\": [],\n\t\t\t\"fork\": null,\n\t\t\t\"jack\": null,\n\t\t\t\"last_station\": \"\",\n\t\t\t\"lock_info\": {\n\t\t\t\t\"desc\": \"\",\n\t\t\t\t\"ip\": \"58.34.135.133\",\n\t\t\t\t\"locked\": true,\n\t\t\t\t\"nick_name\": \"DESKTOP-R9LN7VF(b756f)\",\n\t\t\t\t\"port\": 63537,\n\t\t\t\t\"time_t\": \"1626335840\",\n\t\t\t\t\"type\": 2\n\t\t\t},\n\t\t\t\"odo\": 18047.61,\n\t\t\t\"received_on\": {\n\t\t\t\t\"data_nsec\": \"3303365459510887\",\n\t\t\t\t\"frame_id\": \"\",\n\t\t\t\t\"pub_nsec\": \"3303365459510887\",\n\t\t\t\t\"seq\": \"0\"\n\t\t\t},\n\t\t\t\"reloc_status\": 1,\n\t\t\t\"requestCurrent\": -0.0,\n\t\t\t\"requestVoltage\": -0.0,\n\t\t\t\"roller\": null,\n\t\t\t\"steer\": -0.0,\n\t\t\t\"time\": 849892485,\n\t\t\t\"total_time\": 18045399244,\n\t\t\t\"voltage\": -0.0,\n\t\t\t\"vx\": -0.0,\n\t\t\t\"vy\": -0.0,\n\t\t\t\"w\": -0.0,\n\t\t\t\"warnings\": [{\n\t\t\t\t\"55001\": 1626258013,\n\t\t\t\t\"desc\": \"The robot is in the dispatching state. If you need to control, please regain control and go offline during dispatching.\",\n\t\t\t\t\"times\": 1\n\t\t\t}],\n\t\t\t\"x\": 7.5186,\n\t\t\t\"y\": 1.0951\n\t\t},\n\t\t\"uuid\": \"c5b5ea06-db96-470a-afa4-d69e540dd61b\",\n\t\t\"vehicle_id\": null\n\t}]\n}\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "上传场景文件",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/uploadScene",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"uploadScene"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RDS脚本测试",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "58.34.177.164:8080/script-api/postOrder",
+					"host": [
+						"58",
+						"34",
+						"177",
+						"164"
+					],
+					"port": "8080",
+					"path": [
+						"script-api",
+						"postOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询任务",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/orderDetails/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"orderDetails",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "机器人任务id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "分页查询",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "192.168.6.57:8088/orders?page=1&size=20&orderBy=terminalTime",
+					"host": [
+						"192",
+						"168",
+						"6",
+						"57"
+					],
+					"port": "8088",
+					"path": [
+						"orders"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "orderBy",
+							"value": "terminalTime"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "库位查询，单个库位",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/binDetails/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"binDetails",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "asdasda"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "库位查询，所有库位",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/binDetails",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"binDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "库位查询，库位组",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/binDetails?binGroups=TE500-MAT,TE500-PD,TE500-RB,TE500-C/B,TE500-C/O,TE500-EM,TE7-MAT,TE7-PD,TE7-RB,TE7-C/B,TE7-C/O,TE3-MAT,TE3-PD,TE3-RB,TE3-C/B,TE3-C/O,TE3-EM,TE4-MAT,TE4-PD,TE4-C/B,TE4-C/O,TE4-EM,TE6A-MAT,TE6A-PD,TE6A-RB,TE6A-C/B,TE6A-C/O,TE6A-EM,TE6C-MAT,TE6C-PD,TE6C-C/B,TE6C-C/O,PGP-MAT,PGP-PD,PGP-C/B,PGP-C/O,PGP-EM,DRS-MAT,DRS-PD,DRS-C/B,DRS-C/O,DRS-EM,NEW TE4-MAT,NEW TE4-PD,NEW TE4-C/O,NEW TE4-EM,SP-EM,MAT-B/S,MAT-RB,CCM-C/B,CCM-C/O-IN,CCM-C/O-OUT,CCM-EM,HDE-RB,HDE-C/B,HDE-PD,HDE-EM,HDM-PD,HDM-RB,HDM-EM,CAG-PD,CAG-C/B,SCW/CAG-EM,SCW-PD,SCW-C/B,RB-IN,RB-OUT",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"binDetails"
+					],
+					"query": [
+						{
+							"key": "binGroups",
+							"value": "TE500-MAT,TE500-PD,TE500-RB,TE500-C/B,TE500-C/O,TE500-EM,TE7-MAT,TE7-PD,TE7-RB,TE7-C/B,TE7-C/O,TE3-MAT,TE3-PD,TE3-RB,TE3-C/B,TE3-C/O,TE3-EM,TE4-MAT,TE4-PD,TE4-C/B,TE4-C/O,TE4-EM,TE6A-MAT,TE6A-PD,TE6A-RB,TE6A-C/B,TE6A-C/O,TE6A-EM,TE6C-MAT,TE6C-PD,TE6C-C/B,TE6C-C/O,PGP-MAT,PGP-PD,PGP-C/B,PGP-C/O,PGP-EM,DRS-MAT,DRS-PD,DRS-C/B,DRS-C/O,DRS-EM,NEW TE4-MAT,NEW TE4-PD,NEW TE4-C/O,NEW TE4-EM,SP-EM,MAT-B/S,MAT-RB,CCM-C/B,CCM-C/O-IN,CCM-C/O-OUT,CCM-EM,HDE-RB,HDE-C/B,HDE-PD,HDE-EM,HDM-PD,HDM-RB,HDM-EM,CAG-PD,CAG-C/B,SCW/CAG-EM,SCW-PD,SCW-C/B,RB-IN,RB-OUT"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "终止任务，针对机器人",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"RD-TEST-1\",\"RD-TEST-2\"],\n    \"disableVehicle\": false,\n    \"clearAll\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "58.34.177.164:8088/terminate",
+					"host": [
+						"58",
+						"34",
+						"177",
+						"164"
+					],
+					"port": "8088",
+					"path": [
+						"terminate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "终止任务，批量终止",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idList\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "58.34.177.164:8088/terminate",
+					"host": [
+						"58",
+						"34",
+						"177",
+						"164"
+					],
+					"port": "8088",
+					"path": [
+						"terminate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "设置DO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\n        \"\",\n        \"\"\n    ],\n    \"body\": {\n        \"params\": [\n            {\n                \"id\": 0,\n                \"status\": true\n            },\n            {\n                \"id\": 1,\n                \"status\": false\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/setDO",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"setDO"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "与终端交互",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"terminalName\",\n    \"type\":\"write\",\n    \"value\":666\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/callTerminal",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"callTerminal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "追加动作块",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"\",\n    \"blocks\": [\n        {\n            \"blockId\": \"b1\",\n            \"location\": \"AP7\",\n            \"operation\": \"Script\",\n            \"scriptName\": \"\",\n            \"scriptArgs\": {}\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/addBlocks",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"addBlocks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "通知任务封口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/markComplete",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"markComplete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取控制权",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/lock",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"lock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "释放控制权",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/unlock",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"unlock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改调度配置",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"],\n    \"body\":{\n        \"energyLevelCritical\" : 0.3,\n        \"energyLevelGood\": 0.8,\n        \"assignedParkingPosition\": \"LM11\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/config",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "不可接单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/undispatchable",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"undispatchable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "可接单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/dispatchable",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"dispatchable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "开环运动",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle\": \"\",\n    \"body\": {\n        \"speed\": {\n            \"vx\": 0.1,\n            \"vy\": 0.1,\n            \"w\": 0.1,\n            \"steer\": 1,\n            \"realSteer\": 0.1\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/dispatchable",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"dispatchable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "机器人重定位",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle\": \"\",\n    \"body\": {\n        \"x\": 1,\n        \"y\": 1,\n        \"angle\": 1,\n        \"length\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/reLocStart",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"reLocStart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "确认定位",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/reLocConfirm",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"reLocConfirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消重定位",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/reLocCancel",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"reLocCancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "启用软急停",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/enableSoftEms",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"enableSoftEms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消软急停",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/disableSoftEms",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"disableSoftEms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "开始导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle\": \"\",\n    \"body\": {\n        \"id\": \"\",\n        \"task_id\": \"\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSiteStart",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSiteStart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "暂停导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSitePause",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSitePause"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "继续导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSiteResume",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSiteResume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSiteCancel",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSiteCancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "清除指定导航路径",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\n        \"\",\n        \"\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/clearMoveList",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"clearMoveList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "清空所有错误信息",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"error_codes\": [53200]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/clearAllErrors",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"clearAllErrors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "设置电量阈值",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"\",\"\"],\n    \"body\":{\n        \"params\":{\n            \"chargeOnly\": 30.0,\n            \"charge\": 80.0,\n            \"taskReady\": 40.0,\n            \"fullyCharged\": 95.0\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/energyThreshold",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"energyThreshold"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "设置DI",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\n        \"\",\n        \"\"\n    ],\n    \"body\": {\n        \"params\": [\n            {\n                \"id\": 0,\n                \"status\": true\n            },\n            {\n                \"id\": 1,\n                \"status\": false\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/setDI",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"setDI"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加动态障碍物",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"dynamic_obstacle\": {\n\t\t\"new\": [{\n\t\t\t\t\"name\": \"ob1\",\n\t\t\t\t\"points\": [{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 134.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 99.0,\n\t\t\t\t\t\t\"y\": 99.0\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"ob2\",\n\t\t\t\t\"points\": [{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t],\n\t\t\"new1\": [{\n\t\t\t\t\"name\": \"ob3\",\n\t\t\t\t\"points\": [{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 99.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"name\": \"ob4\",\n\t\t\t\t\"points\": [{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 0.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t},\n\t\t\t\t\t{\n\t\t\t\t\t\t\"x\": 99.0,\n\t\t\t\t\t\t\"y\": 0.0\n\t\t\t\t\t}\n\t\t\t\t]\n\t\t\t}\n\t\t]\n\n\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/addDynamicObstacle",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"addDynamicObstacle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "删除动态障碍物",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"dynamic_obstacle\": {\n\t\t\"new\": [{\n\t\t\t\"name\": \"ob1\"\n\t\t}, {\n\t\t\t\"name\": \"ob2\"\n\t\t}],\n\t\t\"new1\": [{\n\t\t\t\"name\": \"ob3\"\n\t\t}, {\n\t\t\t\"name\": \"ob4\"\n\t\t}]\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/removeDynamicObstacle",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"removeDynamicObstacle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "同步场景",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"area\":\"1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/syncScene",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"syncScene"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "仿真机器人测试",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uuid\":\"simulation_01\",\n    \"port\":19301,\n    \"code\":3066,\n    \"cmd\":\"{\\\"move_task_list\\\":[{\\\"id\\\":\\\"AP1\\\",\\\"source_id\\\":\\\"AP61\\\",\\\"task_id\\\":\\\"12344321\\\"},{\\\"id\\\":\\\"AP64\\\",\\\"source_id\\\":\\\"AP1\\\",\\\"task_id\\\":\\\"12344322\\\"}]}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/sendCMD",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"sendCMD"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "可接单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\n        \"hu-test-1\",\n        \"hu-test-3\"\n    ],\n    \"type\": \"dispatchable\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/dispatchable",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"dispatchable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "不可接单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\n        \"hu-test-1\",\n        \"hu-test-3\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/undispatchable",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"undispatchable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "确认定位",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"hu-test-3\", \"hu-test-1\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/reLocConfirm",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"reLocConfirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "暂停导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"hu-test-3\", \"hu-test-1\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSitePause",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSitePause"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "开始导航",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicles\": [\"hu-test-3\", \"hu-test-1\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/gotoSiteResume",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"gotoSiteResume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "切换地图",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"vehicle\":\"2000-1\",\"map\":\"mz\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/switchMap",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"switchMap"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取机器人地图",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"vehicle\":\"2000-1\",\"map\":\"default.smap\"}",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/robotSmap",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"robotSmap"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取当前运行的场景信息",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/scene",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"scene"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "库位有效性检查",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8088/binCheck",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"binCheck"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

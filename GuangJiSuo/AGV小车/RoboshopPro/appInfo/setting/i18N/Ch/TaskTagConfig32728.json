@@ -1,0 +1,185 @@
+[
+
+	{
+		"plugin_name": "MoveFactory",
+		"plugin_text": "机器人控制",
+		"actions": [{
+			"action_name": "move_action",
+			"action_text": "导航",
+			"has_parameters": true,
+			"parameters": [{
+					"action_name": "GotoSpecifiedPose",
+					"action_text": "路径导航",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "Translate",
+					"action_text": "平动",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "Turn",
+					"action_text": "转动",
+					"has_parameters": true,
+					"parameters": []
+				},
+				{
+					"action_name": "GotoSpecifiedPoseLoad",
+					"action_text": "货叉取货",
+					"has_parameters": true,
+					"parameters": [{
+							"text": "",
+							"key": "actiontype",
+							"value": "load"
+						},
+						{
+							"text": "",
+							"key": "actionnumber",
+							"value": 0
+						}
+					]
+				},
+				{
+					"action_name": "GotoSpecifiedPoseUnload",
+					"action_text": "货叉放货",
+					"has_parameters": true,
+					"parameters": [{
+							"text": "",
+							"key": "actiontype",
+							"value": "unload"
+						},
+						{
+							"text": "",
+							"key": "actionnumber",
+							"value": 0
+						}
+					]
+				},
+				{
+					"action_name": "action_setLiftSpinDegree",
+					"action_text": "托盘旋转",
+					"has_parameters": true,
+					"parameters": [{
+						"text": "角度",
+						"key": "value",
+						"value": 0
+					}]
+				},
+				{
+					"action_name": "jackLoad",
+					"action_text": "顶升上升",
+					"has_parameters": false,
+					"parameters": []
+				},
+				{
+					"action_name": "jackUnload",
+					"action_text": "顶升下降",
+					"has_parameters": false,
+					"parameters": []
+				},
+                {
+					"action_name": "Action",
+					"action_text": "自定义动作",
+					"has_parameters": true,
+					"parameters":[]
+                }
+			]
+		}]
+	},
+	{
+		"plugin_name": "TaskManager",
+		"plugin_text": "任务管理器",
+		"actions": [{
+			"action_name": "action_waitDI",
+			"action_text": "等待触发 DI",
+			"has_parameters": true,
+			"parameters": [{
+					"text": "",
+					"key": "index",
+					"value": 4
+				},
+				{
+					"text": "",
+					"key": "value",
+					"value": true
+				}
+			]
+		}]
+	},
+	{
+		"plugin_name": "DSPChassis",
+		"plugin_text": "底盘设备控制",
+		"actions": [{
+				"action_name": "action_setDO",
+				"action_text": "设置 DO",
+				"has_parameters": true,
+				"parameters": [{
+						"text": "",
+						"key": "index",
+						"value": 0
+					},
+					{
+						"text": "",
+						"key": "value",
+						"value": false
+					}
+				]
+			},
+			{
+				"action_name": "action_setForkHeight",
+				"action_text": "货叉举升",
+				"has_parameters": true,
+				"parameters": [{
+					"text": "高度",
+					"key": "value",
+					"value": 0
+				}]
+			}
+		]
+	},
+	{
+		"plugin_name": "SeerRoller",
+		"plugin_text": "辊筒(皮带)/顶升控制",
+		"actions": [{
+				"action_name": "leftLoad",
+				"action_text": "辊筒(皮带)左上料",
+				"has_parameters": false,
+				"parameters": []
+			},
+			{
+				"action_name": "leftUnload",
+				"action_text": "辊筒(皮带)左下料",
+				"has_parameters": false,
+				"parameters": []
+			},
+			{
+				"action_name": "rightLoad",
+				"action_text": "辊筒(皮带)右上料",
+				"has_parameters": false,
+				"parameters": []
+			},
+			{
+				"action_name": "rightUnload",
+				"action_text": "辊筒(皮带)右下料",
+				"has_parameters": false,
+				"parameters": []
+			}
+		]
+	},
+	{
+		"plugin_name": "SoundPlayer",
+		"plugin_text": "音频控制",
+		"actions": [{
+			"action_name": "playSoundFile",
+			"action_text": "播放音频",
+			"has_parameters": true,
+			"parameters": [{
+				"text": "",
+				"key": "name",
+				"value": ""
+			}]
+		}]
+	}
+]

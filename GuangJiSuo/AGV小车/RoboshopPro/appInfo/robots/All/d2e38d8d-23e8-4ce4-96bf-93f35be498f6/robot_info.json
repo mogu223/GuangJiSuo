@@ -1,0 +1,19 @@
+{
+    "current_ip": "111.111.111.111",
+    "current_map": "default",
+    "current_map_md5": "db61dcc0430f8c09f9d3ee23cba365b3",
+    "dsp_version": "simulation",
+    "gyro_version": "simulation",
+    "id": "d2e38d8d-23e8-4ce4-96bf-93f35be498f6",
+    "ip": "0.0.0.0",
+    "map_version": "v1.0.6",
+    "modbus_version": "v1.3.4",
+    "model": "AMB-150",
+    "model_md5": "5352365a31f3ec5ada9d9bfe48ea0bc0",
+    "model_version": "v2.1.2",
+    "netprotocol_version": "v1.8.2",
+    "rssi": 100,
+    "ssid": "Seer-Robotics-5G",
+    "vehicle_id": "AMB-01",
+    "version": "v3.3.3.65"
+}

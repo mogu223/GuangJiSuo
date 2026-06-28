@@ -1,0 +1,253 @@
+{
+ "DI" : {
+  "index" : [
+   {
+    "func" : 3,
+    "id" : 1,
+    "inverse" : true,
+    "maxDist" : 0.50000,
+    "minDist" : 0.10000,
+    "r" : 0.00000,
+    "range" : 30.00000,
+    "type" : 1,
+    "x" : 0.20000,
+    "y" : 0.20000,
+    "z" : 0.20000
+   },
+   {
+    "func" : 0,
+    "id" : 2,
+    "inverse" : false,
+    "type" : 3,
+    "vertex" : [
+     {
+      "x" : 0.49500,
+      "y" : -0.66500
+     },
+     {
+      "x" : -0.50500,
+      "y" : -0.66500
+     }
+    ]
+   }
+  ],
+  "maxDINum" : 16,
+  "num" : 2
+ },
+  "PGV" : {
+  "index" : [
+   {
+    "func" : 0,
+    "id" : 0,
+    "r" : 30.00000,
+    "x" : 0.00000,
+    "y" : 0.00000,
+    "z" : 0.00000
+   },
+   {
+    "func" : 0,
+    "id" : 1,
+    "r" : 30.00000,
+    "x" : 0.00000,
+    "y" : 0.00000,
+    "z" : 0.00000
+   }
+  ],
+  "num" : 2
+ },
+ "DO" : {
+  "defaultValue" : [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "index" : [
+   {
+    "func" : 2,
+    "id" : 0,
+    "inverse" : false,
+    "r" : 0.00000,
+    "type" : 3,
+    "x" : 0.29000,
+    "y" : -0.37000,
+    "z" : 0.00000
+   }
+  ],
+  "maxDONum" : 16,
+  "num" : 1
+ },
+ "RFID" : {
+  "index" : [
+   {
+    "x" : -0.38000,
+    "y" : -0.12500,
+    "z" : 0.00000
+   }
+  ],
+  "num" : 1,
+  "type" : 0
+ },
+ "chassis" : {
+  "LED" : 0,
+  "autoBrake" : true,
+  "autoGyroCal" : true,
+  "batteryInfo" : 1,
+  "brake" : 0,
+  "charger" : {
+   "x" : 0.00000,
+   "y" : 0.00000
+  },
+  "laserProtectArea" : {
+   "width" : 0.40000,
+   "xmax" : 0.20000,
+   "xmin" : 0.20000
+  },
+  "gyro" : 1,
+  "head" : 0.30000,
+  "mode" : 1,
+  "mode_param" : {
+   "A": 0.52,
+   "B": 0.52,
+   "theta": 0,
+   "driver" : 0,
+   "driverBrand" : "Castdservo",
+   "driverID" : [
+    0,
+    0
+   ],
+   "encoderLine" : 2500,
+   "inverse" : false,
+   "maxMotorRpm" : 3000,
+   "reductionRatio" : 40.00000,
+   "type" : 10,
+   "wheelRadius" : 0.16150,
+   "absEncoder": 1,
+   "absEncoderRange": [0,1800],
+   "steerAngle": [-90,90],
+   "steerAngle" : [-90,90]
+  },
+
+  "shape" : 1,
+  "tail" : 0.30000,
+  "width" : 0.60000,
+  "radius": 0.3
+ },
+ "laser" : {
+  "index" : [
+   {
+    "ip" : "192.168.192.100",
+    "maxAngle" : 90.00000,
+    "minAngle" : -90.00000,
+    "model" : "SickLMS",
+    "port" : 2111,
+    "r" : 0.00000,
+    "step" : 0.50000,
+    "upside" : false,
+    "useForLocalization" : true,
+    "x" : -0.09000,
+    "y" : 0.00000,
+    "z" : 0.00000
+   }
+  ],
+  "num" : 1
+ },
+ "roller": {
+    "type": 1
+ },
+ "jack": {
+   "elevation" : {
+   "heightLimit" : 0.00000,
+   "inverse" : true,
+   "mmCntRatio" : 4.50000
+  },
+  "rotation" : {
+   "gearRatio" : 5.00000,
+   "inverse" : true,
+   "reductionRatio" : 0.50000
+  },
+  "type" : 2
+ },
+ "hook": {
+    "type": 1
+ },
+ "arm": {
+    "type": 0
+ },
+
+ "magneticSensor" : {
+  "index" : [
+   {
+    "id" : 1,
+    "r" : 0.00000,
+    "resolution" : 8.00000,
+    "step" : 0.01000,
+    "x" : 0.16500,
+    "y" : -0.44000,
+    "z" : 0.00000
+   }
+  ],
+  "num" : 1,
+  "type" : 0
+ },
+ "model" : "Seer-2017",
+ "ultrasonic" : {
+  "index" : [
+   {
+    "func" : 0,
+    "id" : 0,
+    "maxDist" : 1.00000,
+    "minDist" : 0.13000,
+    "r" : 0.00000,
+    "range" : 85.00000,
+    "x" : -0.50000,
+    "y" : 0.49000,
+    "z" : 0.00000
+   }
+  ],
+  "maxUltrasonicNum" : 2,
+  "num" : 1,
+  "type" : 0
+ },
+ "vision" : {
+  "index" : [
+   {
+    "ip" : "192.168.4.12",
+	"id" : 0,
+	"port" : 19204,
+    "pitch" : 0.00000,
+    "roll" : 0.00000,
+    "type" : 0,
+    "x" : 0.03500,
+    "y" : -1.13000,
+    "yaw" : 0.00000,
+    "z" : 0.00000
+   }
+  ],
+  "num" : 1
+ },
+ "fork" : {
+  "downBuffer" : 0.01000,
+  "encoderSteps" : 16384,
+  "lengthFactor" : 1.00000,
+  "lengthPerTurn" : 0.23000,
+  "maxHeight" : 1.50000,
+  "minHeight" : 0.10000,
+  "pressureSensor" : 0,
+  "pump" : 1,
+  "type" : 2,
+  "upBuffer" : 0.01000
+ }
+}

@@ -1,0 +1,20 @@
+{
+	"item": [{
+		"name": "发送任务",
+		"request": {
+			"body": {
+				"mode": "raw",
+				"raw": "{\n    \"blocks\": [\n        {\n            \"blockId\": \"{$0$}\",\n            \"location\": \"AP1\",\n            \"operation\": \"Wait\"\n        }\n    ],\n    \"complete\": true,\n    \"id\": \"{$1$}\",\n    \"vehicle\": \"RD-TEST-1\"\n}\n"
+			},
+			"description": "set order",
+			"method": "POST",
+			"url": {
+				"path": [
+					"setOrder"
+				],
+				"port": "8088",
+				"raw": "58.34.177.164:8088/setOrder"
+			}
+		}
+	}]
+}

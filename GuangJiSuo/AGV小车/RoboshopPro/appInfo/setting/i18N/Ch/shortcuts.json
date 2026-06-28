@@ -1,0 +1,179 @@
+{
+    "roboshop_shortcuts": [
+                {
+                    "module_name":    "全局",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "Ctrl+1",
+                                        "desc":           "第一个标签页"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+2",
+                                        "desc":           "第二个标签页"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+3",
+                                        "desc":           "第三个标签页"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+H",
+                                        "desc":           "返回首页"
+                                    },
+                                    {
+                                        "keys":           "......",
+                                        "desc":           "......"
+                                    }
+                    ]
+                },
+                {
+                    "module_name":    "地图编辑",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "Ctrl+E",
+                                        "desc":           "启用/禁用地图编辑"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "保存地图"
+                                    },
+									{
+                                        "keys":           "Ctrl+Z",
+                                        "desc":           "撤销地图编辑"
+                                    },
+									{
+                                        "keys":           "Ctrl+Y",
+                                        "desc":           "恢复撤销"
+                                    },
+									{
+                                        "keys":           "Ctrl+A",
+                                        "desc":           "全选地图元素"
+                                    },
+									{
+                                        "keys":           "Ctrl+F",
+                                        "desc":           "搜索地图元素"
+                                    },
+									{
+                                        "keys":           "Ctrl+鼠标滚轮",
+                                        "desc":           "缩放地图"
+                                    },
+									{
+                                        "keys":           "鼠标中键",
+                                        "desc":           "拖动地图"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+左键拖动",
+                                        "desc":           "局部放大"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+Shift+左键拖动",
+                                        "desc":           "测量尺"
+                                    },
+                                    {
+                                        "keys":           "Esc",
+                                        "desc":           "指针"
+                                    },
+                                    {
+                                        "keys":           "E",
+                                        "desc":           "橡皮擦"
+                                    },
+                                    {
+                                        "keys":           "L",
+                                        "desc":           "高级线"
+                                    },
+                                    {
+                                        "keys":           "M",
+                                        "desc":           "站点"
+                                    },
+                                    {
+                                        "keys":           "P",
+                                        "desc":           "路径"
+                                    },
+                                    {
+                                        "keys":           "A",
+                                        "desc":           "区域"
+                                    },
+                                    {
+                                        "keys":           "C",
+                                        "desc":           "标定图元"
+                                    },
+                                    {
+                                        "keys":           "T",
+                                        "desc":           "坐标转换"
+                                    }
+                                ]
+                },
+                {
+                    "module_name":    "机器人控制",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "W",
+                                        "desc":           "前进"
+                                    },
+                                    {
+                                        "keys":           "S",
+                                        "desc":           "后退"
+                                    },
+									{
+                                        "keys":           "A",
+                                        "desc":           "左转"
+                                    },
+                                    {
+                                        "keys":           "D",
+                                        "desc":           "右转"
+                                    },
+									{
+                                        "keys":           "Q",
+                                        "desc":           "急停：立即制动"
+                                    },
+                                    {
+                                        "keys":           "E",
+                                        "desc":           "左移"
+                                    },
+									{
+                                        "keys":           "R",
+                                        "desc":           "右移"
+                                    },
+                                    {
+                                        "keys":           "Alt+C",
+                                        "desc":           "连接/停止连接"
+                                    }
+                                ]
+                },
+				{
+                    "module_name":    "模型文件",
+                    "shortcuts"  :[
+
+									{
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "保存模型文件"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+Z",
+                                        "desc":           "撤销编辑"
+                                    },
+									{
+                                        "keys":           "Ctrl+Y",
+                                        "desc":           "恢复编辑"
+                                    }
+
+                                ]
+                },
+				{
+                    "module_name":    "任务链",
+                    "shortcuts"  :[
+                                    {
+                                        "keys":           "Ctrl+C",
+                                        "desc":           "复制任务、组"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+V",
+                                        "desc":           "粘贴任务、组"
+                                    },
+                                    {
+                                        "keys":           "Ctrl+S",
+                                        "desc":           "保存任务链"
+                                    }
+                                ]
+                }
+            ]
+}

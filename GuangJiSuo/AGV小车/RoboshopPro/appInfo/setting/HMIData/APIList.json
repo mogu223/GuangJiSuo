@@ -1,0 +1,273 @@
+{
+  "Public": {
+    "Status": [
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Vehicle Battery Level",
+        "param": "battery_level"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Control Authority",
+        "param": "current_lock"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Current IP Address",
+        "param": "current_ip"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Driving Speed",
+        "param": [
+          "vx",
+          "vy"
+        ]
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Angular Velocity",
+        "param": "w"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Driving Direction",
+        "param": [
+          "vx",
+          "vy"
+        ]
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Cargo Status",
+        "param": [
+          "cargo_status"
+        ]
+      }
+    ],
+    "Controls": [
+      {
+        "apiName": "robot_config_lock_req",
+        "name": "Seize Control"
+      },
+      {
+        "apiName": "robot_config_unlock_req",
+        "name": "Release Control"
+      },
+      {
+        "apiName": "robot_control_comfirmloc_req",
+        "name": "Confirm Position"
+      },
+      {
+        "apiName": "robot_task_cancel_req",
+        "name": "Cancel Navigation"
+      }
+    ],
+    "Task": [
+      {
+		"apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+		 "inputType": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "key": "requestJson",
+                  "name": "requestJson",
+                  "type": "json",
+                  "value": ""
+                }
+              ],
+              "desc": "InputType",
+              "key": "InputType",
+              "name": "InputType",
+              "type": "array"
+            }
+          ]
+        },
+        "name": "Path Navigation"
+      }
+    ]
+  },
+  "Jack": {
+    "Status": [
+      {
+        "apiName": "robot_status_jack_req",
+        "name": "Jack Status"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack Mode",
+        "param": "jack_mode"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack State",
+        "param": "jack_state"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack Enable",
+        "param": "jack_enable"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack Error Code",
+        "param": "jack_error_code"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack is Full",
+        "param": "jack_isFull"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack Speed",
+        "param": "jack_speed"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack EMC",
+        "param": "jack_emc"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Jack Height",
+        "param": "jack_height"
+      },
+	  {
+        "apiName": "robot_status_all1_req",
+        "name": "QR code Angle",
+        "param": "pgvs"
+      },
+      {
+        "apiName": "robot_status_all1_req",
+        "name": "Number of jacking ups",
+        "param": "jack_load_times"
+      }
+    ],
+    "Controls": [
+      {
+        "apiType": 19210,
+        "apiName": "robot_other_jack_unload_req",
+        "name": "Jack Unload"
+      },
+      {
+        "apiType": 19210,
+        "apiName": "robot_other_jack_load_req",
+        "name": "Jack Load"
+      },
+      {
+        "apiType": 19210,
+        "apiName": "robot_other_jack_stop_req",
+        "name": "Jack Stop"
+      },
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+        "inputType": {},
+        "name": "Jack Identify shelves"
+      },
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+        "inputType": {},
+        "name": "Set Angle To 0"
+      },
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+        "inputType": {},
+        "name": "Use Pgv"
+      },
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+        "inputType": {},
+        "name": "Use Down Pgv"
+      },
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_gotarget_req",
+        "inputType": {},
+        "name": "Adjust jack recognition Angle"
+      },
+      {
+        "apiType": 19210,
+        "apiName": "robot_other_jack_set_height_req",
+        "inputType": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "defaultValue": 0,
+                  "key": "height",
+                  "name": "height",
+                  "type": "double",
+                  "value": 0
+                }
+              ],
+              "desc": "InputType",
+              "key": "InputType",
+              "name": "InputType",
+              "type": "array"
+            }
+          ]
+        },
+        "name": "Set Jack Height"
+      }
+    ],
+    "Task": [
+      {
+        "apiType": 19206,
+        "apiName": "robot_task_spin_req",
+        "inputType": {
+          "groups": [
+            {
+              "childs": [
+                {
+                  "defaultValue": 0,
+                  "key": "increase_spin_angle",
+                  "name": "increase_spin_angle",
+                  "type": "double",
+                  "value": 0
+                },
+                {
+                  "defaultValue": 0,
+                  "key": "robot_spin_angle",
+                  "name": "robot_spin_angle",
+                  "type": "double",
+                  "value": 0
+                },
+                {
+                  "defaultValue": 0,
+                  "key": "global_spin_angle",
+                  "name": "global_spin_angle",
+                  "type": "double",
+                  "value": 0
+                },
+                {
+                  "defaultValue": 0,
+                  "key": "spin_direction",
+                  "name": "spin_direction",
+                  "type": "double",
+                  "value": 0
+                }
+              ],
+              "desc": "InputType",
+              "key": "InputType",
+              "name": "InputType",
+              "type": "array"
+            }
+          ]
+        },
+        "name": "Tray Rotation"
+      }
+    ]
+  },
+  "Other": {
+    "Status": [],
+    "Controls": [],
+    "Task": []
+  }
+}
