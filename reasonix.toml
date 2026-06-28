@@ -1,0 +1,14 @@
+# Reasonix local overrides — merges with ~/AppData/Roaming/reasonix/config.toml
+
+[[plugins]]
+name    = "codegraph"
+command = "codegraph"
+args    = ["serve", "--mcp"]
+
+[[plugins]]
+name    = "context7"
+command = "context7-mcp"
+args    = ["--transport", "stdio"]
+# If you have an API key, set CONTEXT7_API_KEY in ~/AppData/Roaming/reasonix/.env
+# Get a free key at https://context7.com/dashboard
+# The server also works without an API key (with rate limits).
