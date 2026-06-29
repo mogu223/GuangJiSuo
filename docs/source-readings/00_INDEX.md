@@ -18,6 +18,8 @@
 12. `12_Pin_h_cpp.md` - 销子子系统 `Pin.h/.cpp`
 13. `13_vision_source.md` - 视觉模块目录 `vision_source/`
 14. `14_LRU_h_cpp.md` - OpenGL LRU 模型显示 `LRU.h/.cpp`
+15. `15_CoverPlate_cpp_detailed.md` - `CoverPlate.cpp` 盖板外层控制器详细解读
+16. `16_CoverPlateFSM_h_detailed.md` - `CoverPlateFSM.h` 状态机详细解读；仓库中没有独立的 `CoverPlateFSM.cpp`
 
 ## 主线理解
 
