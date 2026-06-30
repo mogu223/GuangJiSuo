@@ -1,0 +1,11 @@
+build
+*.autosave
+*.obj
+Makefile
+Makefile.*
+log
+.qmake.stash
+libzmotion.so
+debug
+release
+.qtc_clangd
