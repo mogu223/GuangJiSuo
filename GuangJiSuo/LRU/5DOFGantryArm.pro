@@ -156,7 +156,6 @@ HEADERS += \
     lrumonitor.h \
     robotview/rrglwidget.h \
     robotview/stlfileloader.h \
-    zauxdll2.h \
     zmotion.h \
     zmcaux.h \
     common/IniHandler.h \
