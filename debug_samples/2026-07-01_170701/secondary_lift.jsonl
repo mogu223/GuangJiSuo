@@ -1,0 +1,17 @@
+﻿{"message":"进入状态: \"取盖板下降至55\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:10:56"}
+{"message":"进入状态: \"反向横移至100\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:10:57"}
+{"message":"进入状态: \"纵移至50\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:11:50"}
+{"message":"进入状态: \"持续纵移\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:12:10"}
+{"message":"进入状态: \"正向相对纵移320\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:12:27"}
+{"message":"进入状态: \"取盖板上升至0\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-26 15:12:59"}
+{"message":"进入状态: \"取盖板下降至55\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-27 15:03:22"}
+{"message":"进入状态: \"反向横移至100\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-27 15:03:22"}
+{"message":"进入状态: \"纵移至50\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-27 15:04:15"}
+{"message":"进入状态: \"持续纵移\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-27 15:04:36"}
+{"message":"进入状态: \"取盖板上升至0\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-27 15:04:48"}
+{"message":"进入状态: \"取盖板下降至55\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:28:44"}
+{"message":"进入状态: \"反向横移至100\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:28:44"}
+{"message":"进入状态: \"纵移至50\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:29:19"}
+{"message":"进入状态: \"持续纵移\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:29:40"}
+{"message":"进入状态: \"正向相对纵移320\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:29:55"}
+{"message":"进入状态: \"取盖板上升至0\" (:0, )","category":"secondary_lift","level":"Debug","source":"GuangJiSuo/LRU/crash_log.txt","ts":"2026-05-28 10:30:28"}

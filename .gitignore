@@ -117,3 +117,18 @@ GuangJiSuo/LRU/.qtc_clangd/
 GuangJiSuo/LRU/.qtcreator/
 GuangJiSuo/LRU/*.pro.user
 GuangJiSuo/LRU/*.pro.user.*
+
+# Debug sample bloat guards
+debug_samples/**/*.mp4
+debug_samples/**/*.avi
+debug_samples/**/full_video_frames/
+debug_samples/**/raw_video/
+build/
+
+# Allow committed debug samples despite global binary/log ignores above.
+!debug_samples/
+!debug_samples/**/
+!debug_samples/**/*.jsonl
+!debug_samples/**/*.json
+!debug_samples/**/*.md
+!debug_samples/**/*.png
