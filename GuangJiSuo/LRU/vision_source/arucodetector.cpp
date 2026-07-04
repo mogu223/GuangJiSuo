@@ -405,6 +405,7 @@ QString ArucoDetector::getCameraParamsFile(float z)
         return "vision/resource/calibration_results_opcv/camera_calibration_16.json";
     }
     return QString();
+}
 
 ArucoDetector::PlanarPose ArucoDetector::processImage(cv::Mat &image, float z)
 {
