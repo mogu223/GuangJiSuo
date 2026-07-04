@@ -418,6 +418,13 @@ bool Lift::StatusModifyLatte()
 
 bool Lift::vision_detected()
 {
+    if(autodescent || autolift)
+    {
+        LiftUpdateUI("自动运动中，请勿手动检测");
+        return false;
+    }
+    detected_flag = false;
+
     if(!m_zm->GetConnectStatus())
     {
         LiftUpdateUI("未连接控制器");
@@ -437,12 +444,6 @@ bool Lift::vision_detected()
         LiftUpdateUI("相机对象失效");
         return false;
     }
-    if(autodescent || autolift)
-    {
-        LiftUpdateUI("自动运动中，请勿手动检测");
-        return false;
-    }
-
     QJsonObject coordinates = m_SixDof->getCurrentCoordinates();
     float six_z  = QString::number(coordinates["z"].toDouble(),  'f', 2).toFloat();
 
@@ -460,10 +461,7 @@ bool Lift::vision_detected()
     // 多帧检测（手动也使用同一套标准）
     MultiFrameResult mfr = detectMultiFrame(deviceIndex);
     if (!mfr.valid) {
-        AutoLiftDiagnostics d;
-        d.mfr = mfr;
-        d.stopReason = mfr.failureReason;
-        softStop(d);
+        LiftUpdateUI(QString("视觉检测失败: %1").arg(mfr.failureReason));
         return false;
     }
 
@@ -620,6 +618,7 @@ bool Lift::auto_lift()
     m_autoLiftCompleted = false;
     float goal_z = final_z_lift;
     float z = 0.0;
+    bool hasZ0Residual = false;
 
     // ================================================================
     //  阶段1：z≈0，相机1
@@ -628,6 +627,7 @@ bool Lift::auto_lift()
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
     if (z >= -0.5f && z < 0.5f && autolift) {
         if (!runAutoLiftVisionStage(1, "z≈0", z0Residual)) return false;
+        hasZ0Residual = true;
     }
 
     // ================================================================
@@ -655,6 +655,13 @@ bool Lift::auto_lift()
         if (!runAutoLiftVisionStage(0, "z≈1700", z1700Residual)) return false;
 
         // 跨高度一致性检查
+        if (!hasZ0Residual) {
+            AutoLiftDiagnostics diag;
+            diag.stageLabel = "跨高度一致性";
+            diag.stopReason = "缺少 z≈0 检测结果，无法做跨高度一致性检查";
+            softStop(diag);
+            return false;
+        }
         if (qAbs(z1700Residual.x - z0Residual.x) > m_cfgCrossHeightXyMm ||
             qAbs(z1700Residual.y - z0Residual.y) > m_cfgCrossHeightXyMm ||
             qAbs(z1700Residual.yaw - z0Residual.yaw) > m_cfgCrossHeightYawDeg) {
@@ -775,7 +782,7 @@ bool Lift::auto_descent()
             detected_flag = true;
             LiftUpdateUI("正在进行姿态调整");
             if (!autodescent) { LiftUpdateUI("自动下降已终止"); return false; }
-            bool flag = auto_StatusModifyLatte();
+            bool flag = descent_StatusModifyLatte();
             if (!flag) { LiftUpdateUI("平台运动失败，自动下降已终止"); return false; }
             waitSixDof();
             LiftUpdateUI("六自由度平台调整已完成");
@@ -863,7 +870,8 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
     int64_t lastSeq = baselineSeq;
 
     while (consecutiveRetries <= maxRetries) {
-        QVector<double> xs, ys, yaws;
+        struct FrameSample { double x; double y; double yaw; };
+        QVector<FrameSample> samples;
         int sampledFrames = 0;
         int rawValidFrames = 0;
 
@@ -879,9 +887,7 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
             if (!frameResult.valid) continue;
 
             rawValidFrames++;
-            xs.push_back(frameResult.x);
-            ys.push_back(frameResult.y);
-            yaws.push_back(frameResult.yaw);
+            samples.push_back({frameResult.x, frameResult.y, frameResult.yaw});
         }
 
         if (rawValidFrames < m_cfgMinValidFrames) {
@@ -894,26 +900,31 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
             continue;
         }
 
-        auto median = [](QVector<double> &v) -> double {
-            if (v.isEmpty()) return 0.0;
-            std::sort(v.begin(), v.end());
-            return v[v.size() / 2];
+        // 提取 x/y/yaw 到临时副本，在副本上排序求中位数，不改变 samples 顺序
+        auto medianOnCopy = [](const QVector<FrameSample>& src,
+                               double FrameSample::*field) -> double {
+            if (src.isEmpty()) return 0.0;
+            QVector<double> copy;
+            copy.reserve(src.size());
+            for (const auto& s : src) copy.push_back(s.*field);
+            std::sort(copy.begin(), copy.end());
+            return copy[copy.size() / 2];
         };
-        double medX = median(xs), medY = median(ys), medYaw = median(yaws);
+        double medX = medianOnCopy(samples, &FrameSample::x);
+        double medY = medianOnCopy(samples, &FrameSample::y);
+        double medYaw = medianOnCopy(samples, &FrameSample::yaw);
 
-        // 剔除跳变帧
-        QVector<double> fxs, fys, fyaws;
-        for (int i = 0; i < rawValidFrames; ++i) {
-            if (std::abs(xs[i] - medX) <= m_cfgJumpXyMm &&
-                std::abs(ys[i] - medY) <= m_cfgJumpXyMm &&
-                std::abs(yaws[i] - medYaw) <= m_cfgJumpYawDeg) {
-                fxs.push_back(xs[i]);
-                fys.push_back(ys[i]);
-                fyaws.push_back(yaws[i]);
+        // 遍历原始 samples 做跳变过滤
+        QVector<FrameSample> filtered;
+        for (const auto& s : samples) {
+            if (std::abs(s.x - medX) <= m_cfgJumpXyMm &&
+                std::abs(s.y - medY) <= m_cfgJumpXyMm &&
+                std::abs(s.yaw - medYaw) <= m_cfgJumpYawDeg) {
+                filtered.push_back(s);
             }
         }
 
-        int filteredCount = fxs.size();
+        int filteredCount = filtered.size();
         if (filteredCount < m_cfgMinValidFrames) {
             mfr.sampledFrameCount = sampledFrames;
             mfr.rawValidFrameCount = rawValidFrames;
@@ -926,9 +937,10 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
             continue;
         }
 
-        mfr.x = median(fxs);
-        mfr.y = median(fys);
-        mfr.yaw = median(fyaws);
+        // 过滤后的结果取中位数输出，也用副本排序
+        mfr.x = medianOnCopy(filtered, &FrameSample::x);
+        mfr.y = medianOnCopy(filtered, &FrameSample::y);
+        mfr.yaw = medianOnCopy(filtered, &FrameSample::yaw);
         mfr.sampledFrameCount = sampledFrames;
         mfr.rawValidFrameCount = rawValidFrames;
         mfr.validFrameCount = filteredCount;
@@ -1101,6 +1113,56 @@ bool Lift::auto_StatusModifyLatte()
     if( angle <= -m_cfgSettleYawDeg || angle >= m_cfgSettleYawDeg)
     {
         m_SixDof->posePointMotion(x, y, z, rx, ry, rz - angle * m_cfgCorrectionGain, 2, 1);
+        LiftUpdateUI("六自由度平台正在调整");
+    }
+    else if(goal_distance_x > m_cfgSettleXyMm || goal_distance_x < -m_cfgSettleXyMm ||
+            goal_distance_y > m_cfgSettleXyMm || goal_distance_y < -m_cfgSettleXyMm)
+    {
+        m_SixDof->posePointMotion(x + goal_distance_x, y - goal_distance_y, z, rx, ry, rz, 2, 1);
+        LiftUpdateUI("六自由度平台正在调整");
+    }
+    else{
+        LiftUpdateUI("六自由度平台不需要调整");
+    }
+    detected_flag = false;
+    return true;
+}
+
+bool Lift::descent_StatusModifyLatte()
+{
+    if(checkCollision_flag == false)
+    {
+        LiftUpdateUI("请先开启碰撞检测!");
+        return false;
+    }
+    if(detected_flag == false)
+    {
+        LiftUpdateUI("请先进行视觉检测!");
+        return false;
+    }
+    LiftUpdateUI("六自由度平台正在调整");
+    QJsonObject coordinates = m_SixDof->getCurrentCoordinates();
+
+    float x  = QString::number(coordinates["x"].toDouble(),  'f', 2).toFloat();
+    float y  = QString::number(coordinates["y"].toDouble(),  'f', 2).toFloat();
+    float z  = QString::number(coordinates["z"].toDouble(),  'f', 2).toFloat();
+    float rx = QString::number(coordinates["rx"].toDouble(), 'f', 2).toFloat();
+    float ry = QString::number(coordinates["ry"].toDouble(), 'f', 2).toFloat();
+    float rz = QString::number(coordinates["rz"].toDouble(), 'f', 2).toFloat();
+
+    float angle = m_angle;
+    float distance_x = m_gapwidth_x;
+    float distance_y = m_gapwidth_y;
+
+    float rz_rad = std::abs(rz) * (std::acos(-1) / 180.0);
+
+    // 全量补偿（下降专用，不乘 CorrectionGain）
+    float goal_distance_x = (distance_x - x_gap_lift) * std::cos(rz_rad);
+    float goal_distance_y = (distance_y - y_gap_lift) * std::cos(rz_rad);
+
+    if( angle <= -m_cfgSettleYawDeg || angle >= m_cfgSettleYawDeg)
+    {
+        m_SixDof->posePointMotion(x, y, z, rx, ry, rz - angle, 2, 1);
         LiftUpdateUI("六自由度平台正在调整");
     }
     else if(goal_distance_x > m_cfgSettleXyMm || goal_distance_x < -m_cfgSettleXyMm ||

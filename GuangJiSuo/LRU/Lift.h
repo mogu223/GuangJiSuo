@@ -104,6 +104,7 @@ public slots:
     //视觉加六自由度平台-开始
     bool StatusModifyLatte();
     bool auto_StatusModifyLatte();
+    bool descent_StatusModifyLatte();
     bool vision_detected();
     bool auto_vision_detected();
     bool auto_lift();
