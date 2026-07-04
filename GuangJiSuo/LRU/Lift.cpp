@@ -42,6 +42,7 @@ Lift::Lift(ZMotionControl* zm,dahengTwoCams_qt_vs *dahengCamera,LightSourceContr
    m_cfgJumpXyMm = iniReadThreshold->value("VisionQuality/JumpXyMm", 2.0).toDouble();
    m_cfgJumpYawDeg = iniReadThreshold->value("VisionQuality/JumpYawDeg", 1.0).toDouble();
    m_vision_detected->setCornerBorderMarginPx(m_cfgCornerBorderMarginPx);
+   m_vision_detected->setReprojectionErrorMaxPx(m_cfgReprojectionErrorMaxPx);
 
    // 读取 AutoLiftControl 配置
    m_cfgSettleXyMm = iniReadThreshold->value("AutoLiftControl/SettleXyMm", 0.15).toDouble();

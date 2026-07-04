@@ -404,7 +404,7 @@ QString ArucoDetector::getCameraParamsFile(float z)
     } else if(1699.5 <=z && z<= 1700.5) {
         return "vision/resource/calibration_results_opcv/camera_calibration_16.json";
     }
-}
+    return QString();
 
 ArucoDetector::PlanarPose ArucoDetector::processImage(cv::Mat &image, float z)
 {
@@ -475,11 +475,10 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     result.reprojectionError = pose.reprojectionError;
 
     // 6. 检查重投影误差
-    double reprojThreshold = 2.5;  // 默认值，可由外部配置
-    if (pose.reprojectionError > reprojThreshold) {
+    if (pose.reprojectionError > m_reprojectionErrorMaxPx) {
         result.failureReason = QString("重投影误差过大: %1 px (阈值: %2)")
                                    .arg(pose.reprojectionError, 0, 'f', 2)
-                                   .arg(reprojThreshold, 0, 'f', 1);
+                                   .arg(m_reprojectionErrorMaxPx, 0, 'f', 1);
         arucoUpdateUI(result.failureReason);
         return result;
     }
@@ -531,6 +530,11 @@ void ArucoDetector::setMarkerSizeMm(float sizeMm)
 void ArucoDetector::setCornerBorderMarginPx(int marginPx)
 {
     m_cornerBorderMarginPx = marginPx;
+}
+
+void ArucoDetector::setReprojectionErrorMaxPx(double maxPx)
+{
+    m_reprojectionErrorMaxPx = maxPx;
 }
 
 void ArucoDetector::onParamsReceived(const LRUInnerParams &params)

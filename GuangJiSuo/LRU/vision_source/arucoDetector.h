@@ -81,6 +81,8 @@ public:
     void setMarkerSizeMm(float sizeMm);
     // 设置角点边界门控像素数
     void setCornerBorderMarginPx(int marginPx);
+    // 设置重投影误差阈值(px)
+    void setReprojectionErrorMaxPx(double maxPx);
 
     // 旋转向量 → 欧拉角（内旋 X-Y-Z，即外旋 Z-Y-X，单位：度）
     static void rotationVectorToEuler(const cv::Vec3d &rvec,
@@ -102,6 +104,7 @@ private:
 private:
     float m_markerSizeMm = 40.0f;         // ArUco 码物理边长(mm)
     int   m_cornerBorderMarginPx = 5;     // 角点贴边门控(像素)
+    double m_reprojectionErrorMaxPx = 2.5;// 重投影误差阈值(px)
 
     cv::Mat m_intrinsicMatrix;
     cv::Mat m_distCoeffs;
