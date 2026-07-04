@@ -1,4 +1,4 @@
-# 系统文件
+# OS files
 __MACOSX/
 .DS_Store
 Thumbs.db
@@ -8,25 +8,46 @@ Desktop.ini
 *~
 *.lnk
 
-# Reasonix
+# Local agent/tool state
 .reasonix/
+.codegraph/
+codegraph.gz
 
-# IDE / 构建产物
+# IDE and editor state
 .vs/
 *.vs
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# C/C++ and Qt build outputs
 Debug/
 Release/
 x64/
 x86/
-*.sdf
-*.ipch
-*.ncb
-*.pch
+build/
+cmake-build-*/
+out/
 *.obj
 *.o
+*.pch
 *.pdb
+*.idb
+*.ilk
+*.exp
+*.tlog
+*.lastbuildstate
+*.qmake.stash
+Makefile
+Makefile.*
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
 
-# 二进制库 / 可执行文件
+# Executables and libraries
 *.exe
 *.dll
 *.lib
@@ -37,7 +58,7 @@ x86/
 *.pyc
 *.pyo
 
-# 压缩包
+# Archives and installers
 *.rar
 *.zip
 *.7z
@@ -51,15 +72,13 @@ x86/
 *.deb
 *.rpm
 
-# 图片
+# Binary media and documents
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.ico
 *.bmp
-
-# 文档二进制
 *.pdf
 *.pptx
 *.doc
@@ -67,27 +86,23 @@ x86/
 *.xls
 *.xlsx
 *.chm
-
-# 数据库
-*.db
-*.s3db
-
-# 媒体
 *.webm
 *.mp4
 *.avi
 *.mov
 *.wav
 
-# 其他二进制
+# Databases, logs, and generated data
+*.db
+*.s3db
+*.log
 *.pak
 *.dat
 *.pcd
+*.TMP
+*.tmp
 
-# 日志
-*.log
-
-# 生成的文档 / 帮助文件
+# Generated documentation/helpers
 *.html
 *.qbk
 *.quickbook
@@ -98,14 +113,7 @@ x86/
 *.ipp
 *.v2
 
-# 临时文件
-*.TMP
-*.tmp
-
-# CodeGraph 索引
-.codegraph/
-
-# LRU 构建产物与第三方依赖
+# LRU local build outputs and third-party dependency drops
 GuangJiSuo/LRU/build/
 GuangJiSuo/LRU/debug/
 GuangJiSuo/LRU/release/
@@ -123,13 +131,11 @@ debug_samples/**/*.mp4
 debug_samples/**/*.avi
 debug_samples/**/full_video_frames/
 debug_samples/**/raw_video/
-build/
 
-# Allow committed debug samples despite global binary/log ignores above.
+# Allow small committed debug sample metadata/screenshots.
 !debug_samples/
 !debug_samples/**/
 !debug_samples/**/*.jsonl
 !debug_samples/**/*.json
 !debug_samples/**/*.md
 !debug_samples/**/*.png
-codegraph.gz
