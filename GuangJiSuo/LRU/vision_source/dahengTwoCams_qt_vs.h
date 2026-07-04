@@ -92,6 +92,10 @@ public:
     bool visionprocess();
     // 获取最新帧
     cv::Mat getlatestframe(int deviceIndex);
+    // 获取最新帧和帧序号（用于多帧采样）
+    std::pair<cv::Mat, int64_t> getlatestframeWithSeq(int deviceIndex);
+    // 获取指定相机的当前曝光时间(us)
+    int getExposureTimeUs(int deviceIndex);
 
     void setShutter_us(int deviceIndex, double dExposureUs);
     QMutex m_cameraMutex;

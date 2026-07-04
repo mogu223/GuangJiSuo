@@ -53,14 +53,34 @@ public:
         double yaw;     // 绕Z轴旋转角（度）
     };
 
+    // 详细单帧检测结果（用于多帧门控）
+    struct DetailedFrameResult {
+        bool   valid = false;         // 通过所有质量门控
+        bool   targetIdFound = false; // 是否检测到目标 marker_id
+        bool   hasFourCorners = true; // 角点是否完整(4个)
+        bool   cornersInBounds = true;// 角点是否贴边或出画
+        bool   pnpSuccess = false;    // PnP 是否成功
+        double reprojectionError = 0; // 重投影误差(px)
+        double x = 0, y = 0, yaw = 0; // 平台坐标结果
+        QString failureReason;        // 失败原因文本
+    };
+
     explicit ArucoDetector(QObject *parent = nullptr);
 
     ArucoResult detectOneArucoCode(cv::Mat &image);
     ArucoDetector::PlanarPose processImage(cv::Mat &image, float z);
 
+    // 详细单帧检测（含完整质量门控）
+    DetailedFrameResult processImageDetailed(cv::Mat &image, float z);
+
     // 基于 IPPE_SQUARE 的 PnP 位姿求解（对齐 Python 版本）
     PoseResult solvePnPPose(const std::vector<cv::Point2f> &cornerPixels,
-                            float arucoSizeMm = 40.0f);
+                            float arucoSizeMm);
+
+    // 设置 ArUco 码物理边长(mm)
+    void setMarkerSizeMm(float sizeMm);
+    // 设置角点边界门控像素数
+    void setCornerBorderMarginPx(int marginPx);
 
     // 旋转向量 → 欧拉角（内旋 X-Y-Z，即外旋 Z-Y-X，单位：度）
     static void rotationVectorToEuler(const cv::Vec3d &rvec,
@@ -80,6 +100,9 @@ private:
     QString getCameraParamsFile(float z);
 
 private:
+    float m_markerSizeMm = 40.0f;         // ArUco 码物理边长(mm)
+    int   m_cornerBorderMarginPx = 5;     // 角点贴边门控(像素)
+
     cv::Mat m_intrinsicMatrix;
     cv::Mat m_distCoeffs;
     cv::Mat m_rotationMatrix;

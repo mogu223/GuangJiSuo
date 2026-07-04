@@ -1,0 +1,925 @@
+
+#ifndef COVERPLATEFSM_H
+#define COVERPLATEFSM_H
+
+#include <boost/msm/front/state_machine_def.hpp>
+#include<cmath>
+#include <boost/msm/front/functor_row.hpp>
+#include <boost/msm/back/state_machine.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <QtGlobal>
+#include <cmath>
+#include <vector>
+#include <QObject>
+#include <QTimer>
+#include <QDebug>
+#include <functional>
+#include <zmotioncontrol.h>
+#include <vision_source/dmdetected.h>
+
+
+namespace GlobalMotorPos {
+
+static float coverPlatePos[4] = {0.0f};
+
+static float borrowPos[2] = {0.0f};
+
+static bool leftSymbol;
+
+static bool rightSymbol;
+
+// 存储4个电机位置
+inline void setCoverPlatePosBatch(float pos5, float pos6, float pos7, float pos8) {
+    coverPlatePos[0] = pos5;
+    coverPlatePos[1] = pos6;
+    coverPlatePos[2] = pos7;
+    coverPlatePos[3] = pos8;
+}
+
+inline void setBorrowPosBatch(float pos5, float pos6) {
+    borrowPos[0] = pos5;
+    borrowPos[1] = pos6;
+}
+
+// 获取电机位置
+inline float getCoverPlatePos(int idx) {
+    return coverPlatePos[idx];
+}
+
+inline float getBorrowPos(int idx) {
+    return borrowPos[idx];
+}
+
+inline void setCoverPlateSymbol(bool symbol) {
+    leftSymbol = symbol;
+    rightSymbol = !symbol;
+}
+
+inline void resetCoverPlateSymbol() {
+    leftSymbol = false;
+    rightSymbol = false;
+}
+}
+
+
+//取盖板电机逻辑——实际运动映射关系
+//托举电机: Forward-下降
+//横移电机: 均设置Forward-靠近电机端
+//手指电机: 均设置Forward-两手指远离
+//纵移电机: 均设置Forward-靠近电机端
+// 前向声明
+class ZMotionControl;
+class DMDetected;
+// 事件定义*************************************************************************************************************
+struct AngleAdjustDone{};
+struct XAdjustDone{};
+struct YAdjustDone{};
+struct LiftingDone {};
+struct LoweringDone {};
+struct LoweringDone_10 {};
+struct FingerReleasingDone {};//当手指进入大孔的时候设置为零点，手指释放
+struct FingerClampingDone {};//两个手指正向运动10cm,手指夹紧外围大孔
+struct FingerClampingDone2 {};
+struct HangingDone {};//悬挂移动
+struct AntiHangingDone {};//摘取移动
+struct ForwardTransverseMovementDone {};
+struct ReverseTransverseMovementDone {};
+struct ForwardLongitudinalMovementDone {};
+struct ReverseLongitudinalMovementDone {};
+struct ReverseTransverseMovementTo100{};
+struct LongitudinalMovementDone{};
+struct MyRecoverDone {};
+struct MyPlateRecoverDone1 {};
+struct MyPlateRecoverDone2 {};
+
+// 守卫条件*********************************************************************************************************
+struct GuardLeftCoverPlate{
+    // 左侧
+    template <class FSM, class Event, class SourceState, class TargetState>
+    bool operator()(Event const&, FSM& fsm, SourceState&, TargetState&) const {
+        return GlobalMotorPos::leftSymbol;
+    }
+};
+
+struct GuardRightCoverPlate{
+    // 右侧
+    template <class FSM, class Event, class SourceState, class TargetState>
+    bool operator()(Event const&, FSM& fsm, SourceState&, TargetState&) const {
+        return GlobalMotorPos::rightSymbol;
+    }
+};
+
+// 公共状态定义*******************************************************************************************************
+//下降
+struct Lowering : boost::msm::front::state<>
+{
+    static QString name() { return "下降至0"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, 0); // 下降至0，防止封门压线
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//抬升
+struct Lifting : boost::msm::front::state<>
+{
+    static QString name() { return "抬升至-24"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, -24); // 抬升至-24，封门没过梢钉
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//正向横移
+struct ForwardTransverseMovement : boost::msm::front::state<>
+{
+    static QString name() { return "正向横移至1134"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(7,1134);//1134
+            fsm.moveMotorAbs(8,1134);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//反向横移
+struct ReverseTransverseMovement : boost::msm::front::state<>
+{
+    static QString name() { return "反向横移至0"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(7,0);
+            fsm.moveMotorAbs(8,0);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+// //正向纵移，用于取装左侧盖板
+// struct ForwardLongitudinalMovement : boost::msm::front::state<>
+// {
+//     static QString name() { return "正向纵移至90"; }
+
+//     template <class Event,class FSM>
+//     void on_entry(Event const&, FSM& fsm)
+//     {
+//         qDebug() << "进入状态:" << name();
+//         if (fsm.m_enableEntryActions) {
+//             fsm.moveMotorAbs(5,90);
+//             fsm.moveMotorAbs(6,90);
+//         }
+//         emit fsm.sigStateChanged(name());
+//     }
+// };
+
+//反向纵移，用于确保左右侧盖板的二维码视野
+struct ReverseLongitudinalMovement : boost::msm::front::state<>
+{
+    static QString name() { return "纵移至-90"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(5,-90);
+            fsm.moveMotorAbs(6,-90);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//手指松开
+struct FingerReleasing : boost::msm::front::state<>
+{
+    static QString name() { return "手指松开至0"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(9,0);
+            fsm.moveMotorAbs(10,0);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//手指夹紧
+struct FingerClamping : boost::msm::front::state<>
+{
+    static QString name() { return "手指夹紧至3"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(9,3);
+            fsm.moveMotorAbs(10,3);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//取下封门移动
+struct MoveForAntiHanging : boost::msm::front::state<>
+{
+    static QString name() { return "取封门横移至1134"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        fsm.moveMotorAbs(7,1134);//1134
+        fsm.moveMotorAbs(8,1134);
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//封门悬挂移动
+struct MoveForHanging : boost::msm::front::state<>
+{
+    static QString name() { return "挂封门横移至1154"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        fsm.moveMotorAbs(7,1154);//1154
+        fsm.moveMotorAbs(8,1154);
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//角度调整
+struct AngleAdjust : boost::msm::front::state<>//角度调整
+{
+    static QString name() { return "角度调整"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        QTimer::singleShot(1000,&fsm,[&fsm](){
+            if (fsm.m_enableEntryActions) {
+                // 角度调节
+                QVector<float> currentVals1 = fsm.getDmValues();
+                float relativeAngle = (currentVals1[2] / 10 - 90) * 3.1415926 / 180;//初始为90度
+                float distance = 980.0f * tan(relativeAngle);//两个纵移丝杆距离980
+                fsm.moveMotorOpp(5, -distance);//固定电机6不动，只调节电机5；相对角度为正代表纵移机构有顺时针偏角，电机5向远离电机方向移动(backward)，距离为负
+            }
+            emit fsm.sigStateChanged(name());
+        });
+    }
+};
+
+//X调整
+struct XAdjust : boost::msm::front::state<>//X坐标调整
+{
+    static QString name() { return "X坐标调整"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        QTimer::singleShot(1000,&fsm,[&fsm](){
+            if (fsm.m_enableEntryActions) {
+                //x坐标调节
+                QVector<float> currentVals2 = fsm.getDmValues();
+                float relativeX = currentVals2[1] / 10;//x初始坐标为0
+                fsm.moveMotorOpp(5, relativeX);//x坐标变大，代表5、6电机要向靠近电机端运动(Forward)
+                fsm.moveMotorOpp(6, relativeX);
+            }
+            emit fsm.sigStateChanged(name());
+        });
+    }
+};
+
+//Y调整
+struct YAdjust : boost::msm::front::state<>//Y坐标调整
+{
+    static QString name() { return "Y坐标调整";}
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        QTimer::singleShot(1000,&fsm,[&fsm](){
+            if (fsm.m_enableEntryActions) {
+                //y坐标调节
+                QVector<float> currentVals3 = fsm.getDmValues();
+                float relativeY = currentVals3[0] / 10 - 4;//y初始坐标为0
+                fsm.moveMotorOpp(7, relativeY);//y坐标变大，代表7、8电机要向远离电机端运动(Backward),距离为负
+                fsm.moveMotorOpp(8, relativeY);
+            }
+            emit fsm.sigStateChanged(name());
+        });
+    }
+};
+
+//机构复原
+struct MyRecover : boost::msm::front::state<>
+{
+    static QString name() { return "恢复横、纵移机构初始状态"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        fsm.moveMotorAbs(5,0);
+        fsm.moveMotorAbs(6,0);
+        fsm.moveMotorAbs(7,0);
+        fsm.moveMotorAbs(8,0);
+        fsm.moveMotorAbs(9,0);
+        fsm.moveMotorAbs(10,0);
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//完成状态
+struct TakeFloorCompleted : boost::msm::front::state<>
+{
+    static QString name() { return "TakeFloorCompleted"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct TakePlateCompleted : boost::msm::front::state<>
+{
+    static QString name() { return "TakePlateCompleted"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct CoverPlateCompleted : boost::msm::front::state<>
+{
+    static QString name() { return "CoverPlateCompleted"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct CoverFloorCompleted : boost::msm::front::state<>
+{
+    static QString name() { return "CoverFloorCompleted"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+
+//专属状态
+//取盖板状态机专属状态
+namespace MyPlate {
+struct Lowering1 : boost::msm::front::state<>
+{
+    static QString name() { return "取盖板下降至0"; }//15
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, 0); // 下降至15，确保手指完全从封门伸出
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct Lowering2 : boost::msm::front::state<>
+{
+    static QString name() { return "取盖板下降至23"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, 23); // 下降至23，确保盖板低于封门位置
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct MoveTo_10 : boost::msm::front::state<>
+{
+    static QString name() { return "取盖高度至-10"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, -10);
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct Lifting1 : boost::msm::front::state<>
+{
+    static QString name() { return "取盖板上升至-65"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+
+        float pos5 = fsm.getMotorPosition(5);
+        float pos6 = fsm.getMotorPosition(6);
+        float pos7 = fsm.getMotorPosition(7);
+        float pos8 = fsm.getMotorPosition(8);
+        GlobalMotorPos::setCoverPlatePosBatch(pos5, pos6, pos7, pos8);
+
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, -65); // 抬升至-95，确保手指伸入盖板孔位
+        emit fsm.sigStateChanged(name());
+        emit fsm.sigStateChanged(QString("记录横移位置：%1").arg(pos7));
+        emit fsm.sigStateChanged(QString("记录纵移位置1：%1").arg(pos5));
+        emit fsm.sigStateChanged(QString("记录纵移位置2：%1").arg(pos6));
+    }
+};
+
+//手指靠拢
+struct FingerNear1 : boost::msm::front::state<>
+{
+    static QString name() { return "手指靠拢至-201.5"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(9,-201.5);
+            fsm.moveMotorAbs(10,-201.5);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//手指夹紧
+struct FingerNear2 : boost::msm::front::state<>
+{
+    static QString name() { return "手指靠拢至-219"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(9,-219);
+            fsm.moveMotorAbs(10,-219);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//反向横移至50
+struct ReverseTransverseMovement : boost::msm::front::state<>
+{
+    static QString name() { return "反向横移至70"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(7,70);
+            fsm.moveMotorAbs(8,70);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//纵移回零
+struct LongitudinalMovement : boost::msm::front::state<>
+{
+    static QString name() { return "纵移至0"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorAbs(5,0);
+            fsm.moveMotorAbs(6,0);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//盖盖板姿态恢复
+struct MyPlateRecover1: boost::msm::front::state<>
+{
+    static QString name() { return "横移姿态恢复"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions){
+            fsm.moveMotorAbs(7, GlobalMotorPos::getCoverPlatePos(2));
+            fsm.moveMotorAbs(8, GlobalMotorPos::getCoverPlatePos(3));
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct MyPlateRecover2: boost::msm::front::state<>
+{
+    static QString name() { return "纵移姿态恢复"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions){
+            fsm.moveMotorAbs(5, GlobalMotorPos::getCoverPlatePos(0));
+            fsm.moveMotorAbs(6, GlobalMotorPos::getCoverPlatePos(1));
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//纵移补偿，用于取装左侧盖板
+struct ForwardLongitudinalForBorrow : boost::msm::front::state<>
+{
+    static QString name() { return "正向相对纵移待定324"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        float pos5 = fsm.getMotorPosition(5);
+        float pos6 = fsm.getMotorPosition(6);
+        GlobalMotorPos::setBorrowPosBatch(pos5, pos6);
+
+        emit fsm.sigStateChanged(QString("记录纵移位置1：%1").arg(pos5));
+        emit fsm.sigStateChanged(QString("记录纵移位置2：%1").arg(pos6));
+
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorOpp(5,324);
+            fsm.moveMotorOpp(6,324);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+//纵移补偿，用于取装右侧盖板
+struct ReverseLongitudinalForBorrow : boost::msm::front::state<>
+{
+    static QString name() { return "反向相对纵移-324"; }
+
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        float pos5 = fsm.getMotorPosition(5);
+        float pos6 = fsm.getMotorPosition(6);
+        GlobalMotorPos::setBorrowPosBatch(pos5, pos6);
+
+        emit fsm.sigStateChanged(QString("记录纵移位置1：%1").arg(pos5));
+        emit fsm.sigStateChanged(QString("记录纵移位置2：%1").arg(pos6));
+
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions) {
+            fsm.moveMotorOpp(5,-324);
+            fsm.moveMotorOpp(6,-324);
+        }
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+}
+
+
+// 盖封门状态机专属状态
+namespace MyCoverFloor {
+struct Lowering1 : boost::msm::front::state<>
+{
+    static QString name() { return "盖封门下降至15"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, 15); // 下降至15，确保手指低于封门
+        emit fsm.sigStateChanged(name());
+    }
+};
+
+struct Lifting1 : boost::msm::front::state<>
+{
+    static QString name() { return "盖封门上升至-5"; }
+    template <class Event,class FSM>
+    void on_entry(Event const&, FSM& fsm)
+    {
+        qDebug() << "进入状态:" << name();
+        if (fsm.m_enableEntryActions)
+            fsm.moveMotorAbs(11, -5); // 抬升至-5，确保封门密封良好
+        emit fsm.sigStateChanged(name());
+    }
+};
+}
+
+// 非模板QObject基类
+class BaseFSM_QObject : public QObject {
+    Q_OBJECT
+signals:
+    void sigStateChanged(const QString& stateName);
+
+public:
+    explicit BaseFSM_QObject(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : QObject(parent), m_zm(zm), m_dm(dm) {}
+
+    ZMotionControl* m_zm;
+    DMDetected* m_dm;
+};
+
+
+// 模板类
+template <class Derived>
+class BaseFSM : public BaseFSM_QObject, public boost::msm::front::state_machine_def<Derived> {
+public:
+    BaseFSM(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : BaseFSM_QObject(parent, zm, dm) {}
+
+    // 用于手动模式下，只进行状态转换，不进入运控逻辑
+    bool m_enableEntryActions = true;
+
+    // 存储电机位置坐标，用于盖盖板回复姿态
+    float motorPos[4] = {0.0f};
+
+    // 外部接口
+    std::function<void(int motor, float position)> moveMotorAbs;       // 电机绝对位置移动
+    std::function<void(int motor, float position)> moveMotorOpp;       // 电机相对位置移动
+    std::function<float(int motor)> getMotorPosition;                  // 获取电机位置
+    std::function<QVector<float>()> getDmValues;                       // 获取DM解析后的数值
+
+    // 重写no_transition，状态机接收到没有转换规则的事件不进行任何动作，直接忽略
+    template <class Event, class StateMachine>
+    void no_transition(Event const& /*e*/, StateMachine& /*sm*/, int /*state*/) {
+    }
+};
+
+// 基础版本均基于TM1、TM2
+// 取封门状态机
+class TakeFloorFSMFront : public BaseFSM<TakeFloorFSMFront>
+{
+    Q_OBJECT
+public:
+    TakeFloorFSMFront(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : BaseFSM(parent, zm, dm) {}
+
+    // 初始状态
+    typedef Lowering initial_state;
+
+    // 状态转换表
+    struct transition_table : boost::mpl::vector5<
+                                  // 下降至0[防止封门压线]-> 正向横移至1134
+                                  boost::msm::front::Row<Lowering, LoweringDone, ForwardTransverseMovement>,
+                                  // 正向横移至1134 -> 抬升至-24
+                                  boost::msm::front::Row<ForwardTransverseMovement, ForwardTransverseMovementDone, Lifting>,
+                                  // 抬升至-24 -> 悬挂移动至1154
+                                  boost::msm::front::Row<Lifting, LiftingDone, MoveForHanging>,
+                                  // 悬挂移动至1154 -> 手指松开至0
+                                  boost::msm::front::Row<MoveForHanging, HangingDone, FingerReleasing>,
+                                  // 手指松开至0 -> 取封门完成
+                                  boost::msm::front::Row<FingerReleasing, FingerReleasingDone, TakeFloorCompleted>> {};
+};
+
+// 取盖板状态机
+class TakePlateFSMFront : public BaseFSM<TakePlateFSMFront>
+{
+    Q_OBJECT
+public:
+    TakePlateFSMFront(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : BaseFSM(parent, zm, dm) {}
+
+    // 初始状态
+    typedef MyPlate::Lowering1 initial_state;
+
+    // 状态转换表
+    struct transition_table : boost::mpl::vector13<
+                                  // 下降至0[确保手指从封门中完全取出] -> 反向横移至70,保证横移调整的裕度
+                                  boost::msm::front::Row<MyPlate::Lowering1, LoweringDone, MyPlate::ReverseTransverseMovement,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 反向横移至70 -> 手指靠拢至-201.5对照盖板孔位
+                                  boost::msm::front::Row<MyPlate::ReverseTransverseMovement, ReverseTransverseMovementTo100, MyPlate::FingerNear1,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 手指靠拢至-201.5 -> 调整纵移，保证二维码视野,左右盖板均适用
+                                  boost::msm::front::Row<MyPlate::FingerNear1, FingerClampingDone, ReverseLongitudinalMovement,
+                                                         boost::msm::front::none, GuardRightCoverPlate>,
+                                  // 调整纵移,右侧盖板 -> 角度调整状态
+                                  boost::msm::front::Row<ReverseLongitudinalMovement, ReverseLongitudinalMovementDone, AngleAdjust,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 角度调整状态 -> X调整状态
+                                  boost::msm::front::Row<AngleAdjust, AngleAdjustDone, XAdjust,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // X调整状态 -> Y调整状态
+                                  boost::msm::front::Row<XAdjust, XAdjustDone, YAdjust,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // Y调整状态 -> 抬升至-65 待定
+                                  boost::msm::front::Row<YAdjust, YAdjustDone, MyPlate::Lifting1,
+                                                         boost::msm::front::none, GuardRightCoverPlate>,
+                                  // 抬升至-65 待定 -> 手指收缩至-219，收缩销子
+                                  boost::msm::front::Row<MyPlate::Lifting1, LiftingDone, MyPlate::FingerNear2,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 手指收缩至-219 -> 下降至-10
+                                  boost::msm::front::Row<MyPlate::FingerNear2, FingerClampingDone2, MyPlate::MoveTo_10,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 下降至-10 -> 纵移至0
+                                  boost::msm::front::Row<MyPlate::MoveTo_10, LoweringDone_10, MyPlate::LongitudinalMovement,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  //  纵移至0 -> 下降至23,[确保移动时盖板和封门不会碰撞]
+                                  boost::msm::front::Row<MyPlate::LongitudinalMovement, LongitudinalMovementDone, MyPlate::Lowering2,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 下降至23 -> 正向横移至1134
+                                  boost::msm::front::Row<MyPlate::Lowering2, LoweringDone, ForwardTransverseMovement,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 正向横移至1134 -> 取盖板完成
+                                  boost::msm::front::Row<ForwardTransverseMovement, ForwardTransverseMovementDone, TakePlateCompleted,
+                                                         boost::msm::front::none, boost::msm::front::none>> {};
+};
+
+
+// 盖盖板状态机
+class CoverPlateFSMFront : public BaseFSM<CoverPlateFSMFront>
+{
+    Q_OBJECT
+public:
+    CoverPlateFSMFront(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : BaseFSM(parent, zm, dm) {}
+
+    // 初始状态
+    typedef MyPlate::MyPlateRecover1 initial_state;
+
+    // 状态转换表
+    struct transition_table : boost::mpl::vector6<
+                                  // 横移姿态恢复 -> 抬升到-10
+                                  boost::msm::front::Row<MyPlate::MyPlateRecover1, MyPlateRecoverDone1, MyPlate::MoveTo_10>,
+                                  // 抬升到-10 -> 纵移姿态恢复
+                                  boost::msm::front::Row<MyPlate::MoveTo_10, LoweringDone_10, MyPlate::MyPlateRecover2>,
+                                  // 纵移姿态恢复 -> 抬升至-110
+                                  boost::msm::front::Row<MyPlate::MyPlateRecover2, MyPlateRecoverDone2, MyPlate::Lifting1>,
+                                  // 抬升至-110 -> 手指松开至-25
+                                  boost::msm::front::Row<MyPlate::Lifting1, LiftingDone, MyPlate::FingerNear1>,
+                                  // 手指松开至-25 -> 下降至15,确保手指不会碰撞封门
+                                  boost::msm::front::Row<MyPlate::FingerNear1, FingerReleasingDone, MyPlate::Lowering1,
+                                                         boost::msm::front::none,boost::msm::front::none>,
+                                  // 下降至15 -> 盖盖板完成
+                                  boost::msm::front::Row<MyPlate::Lowering1, LoweringDone, CoverPlateCompleted>> {};
+};
+
+// 盖封门状态机，由于此时已经调整过位姿来取盖板，因此盖封门前要先恢复至纵移机构的零位
+class CoverFloorFSMFront : public BaseFSM<CoverFloorFSMFront>
+{
+    Q_OBJECT
+public:
+    CoverFloorFSMFront(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : BaseFSM(parent, zm, dm) {}
+
+    // 初始状态
+    typedef MyCoverFloor::Lowering1 initial_state;
+
+    // 状态转换表
+    struct transition_table : boost::mpl::vector9<
+                                  // 恢复机构初始 -> 正向横移至1134
+                                  boost::msm::front::Row<MyRecover, MyRecoverDone, ForwardTransverseMovement,
+                                                         boost::msm::front::none,boost::msm::front::none>,
+                                  // 正向横移至1134 -> 悬挂移动至1154
+                                  boost::msm::front::Row<ForwardTransverseMovement, ForwardTransverseMovementDone, MoveForHanging,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 悬挂移动至1154 -> 抬升至-24
+                                  boost::msm::front::Row<MoveForHanging, HangingDone, Lifting,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 抬升至-24 -> 手指夹紧至3
+                                  boost::msm::front::Row<Lifting, LiftingDone, FingerClamping,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 手指夹紧至3 -> 摘取移动至1134
+                                  boost::msm::front::Row<FingerClamping, FingerClampingDone, MoveForAntiHanging,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 摘取移动至1134 -> 下降至0[防止封门压线]
+                                  boost::msm::front::Row<MoveForAntiHanging, AntiHangingDone, Lowering,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 下降至0 -> 反向横移至0
+                                  boost::msm::front::Row<Lowering, LoweringDone, ReverseTransverseMovement,
+                                                         boost::msm::front::none ,boost::msm::front::none>,
+                                  // 反向横移至0 -> 抬升至-5
+                                  boost::msm::front::Row<ReverseTransverseMovement, ReverseTransverseMovementDone, MyCoverFloor::Lifting1,
+                                                         boost::msm::front::none, boost::msm::front::none>,
+                                  // 抬升至-5 -> 盖封门完成
+                                  boost::msm::front::Row<MyCoverFloor::Lifting1, LiftingDone, CoverFloorCompleted,
+                                                         boost::msm::front::none, boost::msm::front::none>> {};
+};
+
+// 状态机后端实现
+template <class FrontFSM>
+class FSMBackend : public boost::msm::back::state_machine<FrontFSM>
+{
+public:
+    FSMBackend(QObject* parent = nullptr, ZMotionControl* zm = nullptr, DMDetected* dm = nullptr)
+        : boost::msm::back::state_machine<FrontFSM>(), m_zm(zm), m_dm(dm) {
+
+        FrontFSM& frontFSM = *this;
+
+        // 连接状态变化信号到更新函数
+        QObject::connect(&frontFSM, &BaseFSM_QObject::sigStateChanged,
+                         [this](const QString& stateName) {
+                             m_currentStateName = stateName;
+                         });
+
+
+        // 运动控制接口
+        frontFSM.moveMotorAbs = [this](int motor, float position) {
+            if (m_zm)
+                m_zm->MoveSingleAbs(motor, position);
+        };
+
+        frontFSM.moveMotorOpp = [this](int motor, float position) {
+            if (m_zm)
+                m_zm->MoveSingleOpp(motor, position);
+        };
+
+        frontFSM.getMotorPosition = [this](int motor) {
+            if (m_zm)
+                return m_zm->GetAxisDpos(motor);
+            return 0.0f; // 添加默认返回值
+        };
+
+        // DM解析值获取接口
+        frontFSM.getDmValues = [this]() {
+            if (m_dm)
+                return m_dm->getValues();
+            return QVector<float>(); // 默认返回空向量
+        };
+
+        m_zm = zm;
+    }
+
+    // 提供访问前端的接口
+    FrontFSM* operator->() { return &this;}
+    FrontFSM& getFrontFSM() { return *this;}
+
+    // 获取当前状态名称 - 直接返回记录的状态名
+    QString getCurrentStateName() const {
+        return m_currentStateName;
+    }
+
+    //用于外部访问motorPos数组
+    float* getMotorPositions() {
+        return this->motorPos;
+    }
+    void start() {
+        boost::msm::back::state_machine<FrontFSM>::start();
+    }
+
+private:
+    ZMotionControl* m_zm;
+    DMDetected* m_dm;
+    QString m_currentStateName; // 存储当前状态名
+};
+
+// 实例化四个具体后端状态机
+typedef FSMBackend<TakeFloorFSMFront> TakeFloorFSM;
+typedef FSMBackend<TakePlateFSMFront> TakePlateFSM;
+typedef FSMBackend<CoverPlateFSMFront> CoverPlateFSM;
+typedef FSMBackend<CoverFloorFSMFront> CoverFloorFSM;
+
+#endif // COVERPLATEFSM_H
+
+//状态机在处理状态转换时，会将触发转换的事件对象传递给目标状态的on_entry方法
+//而状态机在调用状态的on_entry方法时，会将自身作为FSM&参数传入
+//FSMBackend<TakeFloorFSMFront> ，相当于告诉编译器用 TakeFloorFSMFront 这个类型替换模板中的 FrontFSM，生成一个专门适配该前端的后端类
+//lambda 表达式[]（捕获列表）用于指定 lambda 表达式可以访问的外部变量
+//lambda 表达式中()内的参数是输入参数列表，其含义与普通函数的参数列表完全一致
+
+

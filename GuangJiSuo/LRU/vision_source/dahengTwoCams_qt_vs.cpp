@@ -911,6 +911,26 @@ cv::Mat dahengTwoCams_qt_vs::getlatestframe(int deviceIndex)
     return latestFrame.clone();
 }
 
+std::pair<cv::Mat, int64_t> dahengTwoCams_qt_vs::getlatestframeWithSeq(int deviceIndex)
+{
+    QMutexLocker locker(&m_cameraMutex);
+    CDeviceProcess* pDevice = m_mapDeviceInformation[deviceIndex];
+    if (pDevice == nullptr) {
+        dahengUpdateUI("相机指针为空");
+        return {cv::Mat(), -1};
+    }
+    return pDevice->GetLatestMatFrameWithSeq();
+}
+
+int dahengTwoCams_qt_vs::getExposureTimeUs(int deviceIndex)
+{
+    if (deviceIndex == 0)
+        return camera0_exposureTime;
+    else if (deviceIndex == 1)
+        return camera1_exposureTime;
+    return 200000; // 默认200ms
+}
+
 
 
 void dahengTwoCams_qt_vs::on_closecamera_clicked()

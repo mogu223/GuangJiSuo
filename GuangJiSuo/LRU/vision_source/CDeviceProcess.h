@@ -102,6 +102,9 @@ public:
     // 获取最新的cv::Mat
     cv::Mat GetLatestMatFrame();
 
+    // 同时获取最新帧和帧序号，一次加锁
+    std::pair<cv::Mat, int64_t> GetLatestMatFrameWithSeq();
+
 private:
 
 	/// 显示图像
@@ -121,6 +124,7 @@ private:
 	string						m_strSavePath;					 //图像保存路径
 	string						m_strFileName;					 //保存图像的名称
     cv::Mat m_latestMat;  // 缓存最新的cv::Mat
+    int64_t m_latestFrameSeq = 0;  // 每写入一帧递增
     QMutex m_matMutex;    // 保护m_latestMat的互斥锁
 
 };

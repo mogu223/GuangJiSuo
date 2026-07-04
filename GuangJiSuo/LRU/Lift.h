@@ -27,6 +27,14 @@ class Lift: public QObject
 public:
     explicit Lift(ZMotionControl* zm,dahengTwoCams_qt_vs *dahengCamera,LightSourceController* lightcontrol,QObject *parent = nullptr);
 
+    // 多帧检测结果
+    struct MultiFrameResult {
+        bool valid = false;
+        double x = 0, y = 0, yaw = 0;
+        int validFrameCount = 0;
+        QString failureReason;
+    };
+
     //力实时信息
     float Check_ForceInfo[6] = {0.0f};
     float LastCheck_ForceInfo[6] = {0.0f};
@@ -89,6 +97,14 @@ public slots:
     void waitSixDof();
     bool auto_descent();
 
+    // 多帧采样检测
+    MultiFrameResult detectMultiFrame(int deviceIndex);
+    // 软停止（不调用 EmergencyStop）
+    void softStop(const QString& reason, int validFrames = 0, int totalFrames = 0,
+                  double xRes = 0, double yRes = 0, double yawRes = 0);
+    // 残差评分
+    double residualScore(double xRes, double yRes, double yawRes);
+
     void onParamsReceived(const LRUInnerParams &params);
 
     void setcollisionState(bool newState);
@@ -143,6 +159,24 @@ private:
     float y_gap_lift;
     float final_z_lift;
     bool checkCollision_flag = false;
+
+    // VisionQuality 配置缓存
+    int    m_cfgFrameCount = 15;
+    int    m_cfgMinValidFrames = 8;
+    int    m_cfgBatchRetryCount = 1;
+    double m_cfgReprojectionErrorMaxPx = 2.5;
+    int    m_cfgCornerBorderMarginPx = 5;
+    double m_cfgJumpXyMm = 2.0;
+    double m_cfgJumpYawDeg = 1.0;
+    // AutoLiftControl 配置缓存
+    double m_cfgSettleXyMm = 0.15;
+    double m_cfgSettleYawDeg = 0.15;
+    int    m_cfgStablePassCount = 2;
+    int    m_cfgMaxCorrections = 5;
+    double m_cfgCorrectionGain = 0.70;
+    double m_cfgResidualGrowthStopRatio = 1.10;
+    double m_cfgCrossHeightXyMm = 1.5;
+    double m_cfgCrossHeightYawDeg = 0.3;
     //视觉加六自由度平台-结束
 
     //子系统状态判断

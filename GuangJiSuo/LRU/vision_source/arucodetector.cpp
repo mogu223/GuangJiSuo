@@ -408,25 +408,83 @@ QString ArucoDetector::getCameraParamsFile(float z)
 
 ArucoDetector::PlanarPose ArucoDetector::processImage(cv::Mat &image, float z)
 {
+    // 内部调用详细检测，降级返回 PlanarPose
+    DetailedFrameResult detailed = processImageDetailed(image, z);
     PlanarPose result{false, 0.0, 0.0, 0.0};
+    if (detailed.valid) {
+        result.valid = true;
+        result.x = detailed.x;
+        result.y = detailed.y;
+        result.yaw = detailed.yaw;
+    }
+    return result;
+}
+
+ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &image, float z)
+{
+    DetailedFrameResult result;
+
+    // 1. 读取相机参数
     QString paramsFile = getCameraParamsFile(z);
     if (!readCameraParamsFromJson(paramsFile)) {
-        arucoUpdateUI("读取相机参数错误");
+        result.failureReason = "读取相机参数错误";
+        arucoUpdateUI(result.failureReason);
         return result;
     }
-    // 1. 检测 ArUco 码
+
+    // 2. 检测 ArUco 码
     ArucoResult detection = detectOneArucoCode(image);
     if (!detection.detected) {
-        arucoUpdateUI("检测二维码失败");
+        result.failureReason = "检测二维码失败";
+        arucoUpdateUI(result.failureReason);
         return result;
     }
-    // 2. PnP 解算
-    PoseResult pose = solvePnPPose(detection.cornerPixels, 40.0f);
+    result.targetIdFound = true;
+
+    // 3. 检查角点数量
+    if (detection.cornerPixels.size() != 4) {
+        result.hasFourCorners = false;
+        result.failureReason = QString("角点数量为%1，预期4个").arg(detection.cornerPixels.size());
+        arucoUpdateUI(result.failureReason);
+        return result;
+    }
+
+    // 4. 检查角点是否贴边或出画
+    int margin = m_cornerBorderMarginPx;
+    int w = image.cols;
+    int h = image.rows;
+    for (const auto &pt : detection.cornerPixels) {
+        if (pt.x <= margin || pt.x >= (w - margin) ||
+            pt.y <= margin || pt.y >= (h - margin)) {
+            result.cornersInBounds = false;
+            result.failureReason = "角点贴边或出画";
+            arucoUpdateUI(result.failureReason);
+            return result;
+        }
+    }
+
+    // 5. PnP 解算
+    PoseResult pose = solvePnPPose(detection.cornerPixels, m_markerSizeMm);
     if (!pose.valid) {
-        arucoUpdateUI("PnP位姿计算失败");
+        result.pnpSuccess = false;
+        result.failureReason = "PnP位姿计算失败";
+        arucoUpdateUI(result.failureReason);
         return result;
     }
-    // 3. 打印位姿信息（保留原日志）
+    result.pnpSuccess = true;
+    result.reprojectionError = pose.reprojectionError;
+
+    // 6. 检查重投影误差
+    double reprojThreshold = 2.5;  // 默认值，可由外部配置
+    if (pose.reprojectionError > reprojThreshold) {
+        result.failureReason = QString("重投影误差过大: %1 px (阈值: %2)")
+                                   .arg(pose.reprojectionError, 0, 'f', 2)
+                                   .arg(reprojThreshold, 0, 'f', 1);
+        arucoUpdateUI(result.failureReason);
+        return result;
+    }
+
+    // 7. 打印位姿信息（保留原日志）
     QString info = QString("PnP成功 | 重投影误差: %1 px\n"
                            "tvec(mm): X=%2  Y=%3  Z=%4\n"
                            "Euler(deg): Roll=%5  Pitch=%6  Yaw=%7")
@@ -438,17 +496,11 @@ ArucoDetector::PlanarPose ArucoDetector::processImage(cv::Mat &image, float z)
                        .arg(pose.pitch, 0, 'f', 2)
                        .arg(pose.yaw,   0, 'f', 2);
     arucoUpdateUI(info);
-    // 4. 仅返回需要的字段
-    //视觉检测的结果，相机坐标系下的
-    //
-    result.valid = true;
+
+    // 8. 坐标系转换（与现有 processImage 一致）
     result.yaw = pose.yaw;
 
-
     if(-0.5<=z && z <= 0.5){
-        // pose.tvec[0] = pose.tvec[0]+7.25;
-        // pose.tvec[1] = pose.tvec[1]+4.8;
-
         pose.tvec[0] = pose.tvec[0]-0.3;
         pose.tvec[1] = pose.tvec[1]+7.1;
     }else if (1699.5<=z && z <= 1700.5) {
@@ -456,28 +508,29 @@ ArucoDetector::PlanarPose ArucoDetector::processImage(cv::Mat &image, float z)
         pose.tvec[1] = pose.tvec[1]+3.3;
     }
 
-
     float x_platform = -pose.tvec[1];
     float y_platform = pose.tvec[0];
 
-
-    //result.x是x方向的缝隙宽度，六自由度平台坐标系
-    //result.y是y方向的缝隙宽度，六自由度平台坐标系
     if(-0.5<=z && z <= 0.5){
         result.x =(aruco_to_gapx + x_platform) - camera_to_lrux_50 + offset_x_50;
         result.y = camera_to_lruy_50 - (aruco_to_gapy + y_platform) + offset_y_50;
-
-
-        // result.x =(aruco_to_gapx + x_platform) - camera_to_lrux_50;
-        // result.y = camera_to_lruy_50 - (aruco_to_gapy + y_platform);
-
     }else if (1699.5<=z && z <= 1700.5) {
         result.x = (aruco_to_gapx + x_platform)-camera_to_lrux_16 + offset_x_16;
         result.y = camera_to_lruy_16 - (aruco_to_gapy + y_platform) + offset_y_16;
-        // result.x = (aruco_to_gapx + x_platform)-camera_to_lrux_16 ;
-        // result.y = camera_to_lruy_16 - (aruco_to_gapy + y_platform) ;
     }
+
+    result.valid = true;
     return result;
+}
+
+void ArucoDetector::setMarkerSizeMm(float sizeMm)
+{
+    m_markerSizeMm = sizeMm;
+}
+
+void ArucoDetector::setCornerBorderMarginPx(int marginPx)
+{
+    m_cornerBorderMarginPx = marginPx;
 }
 
 void ArucoDetector::onParamsReceived(const LRUInnerParams &params)

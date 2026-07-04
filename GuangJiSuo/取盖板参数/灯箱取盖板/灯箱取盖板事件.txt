@@ -1,0 +1,195 @@
+﻿// 检查是否触发状态机事件
+void CoverPlate::checkEvents()
+{
+    //机构恢复事件
+    bool isRecover1 = (qAbs(m_zm->GetAxisDpos(5) - 81) < 0.1) && (qAbs(m_zm->GetAxisDpos(6) - 47) < 0.1);
+    bool isRecover2 = (qAbs(m_zm->GetAxisDpos(7)) < 0.1) && (qAbs(m_zm->GetAxisDpos(8)) < 0.1);
+    if (isRecover1 && isRecover2) {
+        //if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(MyRecoverDone());//***
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(MyRecoverDone());//****
+    }
+
+    // 处理LiftingDone事件
+    if (qAbs(m_zm->GetAxisDpos(11) - 20) < 0.1) {
+        if (istakeFloorFsmOpen) m_takeFloorFsm->process_event(LiftingDone());//*
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(LiftingDone());//****
+    }
+    if (qAbs(m_zm->GetAxisDpos(11)) < 0.1) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LiftingDone());//**
+        if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(LiftingDone());//***
+    }
+    if (qAbs(m_zm->GetAxisDpos(11) - 14) < 0.1) {
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(LiftingDone());//****
+    }
+
+    // 处理LoweringDone事件
+    if (qAbs(m_zm->GetAxisDpos(11) - 40) < 0.1) {
+        if (istakeFloorFsmOpen) m_takeFloorFsm->process_event(LoweringDone());//*
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(LoweringDone());//****
+    }
+    if (qAbs(m_zm->GetAxisDpos(11) - 55) < 0.1) {//-15
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LoweringDone());//**
+        if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(LoweringDone());//***
+    }
+    if (qAbs(m_zm->GetAxisDpos(11) - 23) < 0.1) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LoweringDone());//**
+    }
+    if (qAbs(m_zm->GetAxisDpos(11) - 55) < 0.1) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LoweringDone_55());//**
+        if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(LoweringDone_55());//***
+    }
+
+    // 处理正向横移、摘取横移事件
+    bool isTransverse1134 = (qAbs(m_zm->GetAxisDpos(7) - 1132) < 0.1) &&(qAbs(m_zm->GetAxisDpos(8) - 1132) < 0.1);
+    if (isTransverse1134) {//1132
+        if (istakeFloorFsmOpen) m_takeFloorFsm->process_event(ForwardTransverseMovementDone());//*
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ForwardTransverseMovementDone());//**
+        if (iscoverFloorFsmOpen) {
+            m_coverFloorFsm->process_event(ForwardTransverseMovementDone());//****
+            m_coverFloorFsm->process_event(AntiHangingDone());//****
+        }
+    }
+
+    // 处理悬挂横移事件
+    if ((qAbs(m_zm->GetAxisDpos(7) - 1157) < 0.1) && (qAbs(m_zm->GetAxisDpos(8) - 1157) < 0.1)) {
+        if (istakeFloorFsmOpen) m_takeFloorFsm->process_event(HangingDone()); //*
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(HangingDone());//****
+    }
+
+    // 处理反向横移事件
+    if (qAbs(m_zm->GetAxisDpos(7)) < 0.1 && qAbs(m_zm->GetAxisDpos(8)) < 0.1) {
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(ReverseTransverseMovementDone());//****
+    }
+
+    if (qAbs(m_zm->GetAxisDpos(7) - 100) < 0.1 && qAbs(m_zm->GetAxisDpos(8) - 100) < 0.1) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ReverseTransverseMovementTo100());//**
+    }
+
+    //手指电流相关判断
+    if (istakePlateFsmOpen)
+    {
+        if(abs(m_zm->GetFingerCurrent(10)) > 10.0){
+            m_zm->SingleVMove(9,Cancel);
+            FingleCurrent9  = true;
+        }
+
+        if(abs(m_zm->GetFingerCurrent(11)) > 10.0){
+            m_zm->SingleVMove(10,Cancel);
+            FingleCurrent10  = true;
+        }
+
+        if(FingleCurrent9 && FingleCurrent10){
+            FingleCurrent9  = false;
+            FingleCurrent10  = false;
+            m_takePlateFsm->process_event(FingerClampingDurDone());
+        }
+
+        motor9Pos  = GlobalMotorPos::getFingerPos(0);
+        motor10Pos = GlobalMotorPos::getFingerPos(1);
+        if(abs(m_zm->GetAxisDpos(9) - motor9Pos + 12) < 0.1 && abs(m_zm->GetAxisDpos(10) - motor10Pos + 12) < 0.1){
+            m_takePlateFsm->process_event(FingerClampingOppDone());
+        }
+    }
+
+    if ((qAbs(m_zm->GetAxisDpos(9) - 11.5) < 0.1) && (qAbs(m_zm->GetAxisDpos(10) - 11.5) < 0.1)) {
+        if (iscoverFloorFsmOpen) m_coverFloorFsm->process_event(FingerClampingDone());//****
+    }
+
+    // 处理手指夹紧事件
+    bool isFingerNear1 = (qAbs(m_zm->GetAxisDpos(9) + 25) < 0.1) && (qAbs(m_zm->GetAxisDpos(10) + 25) < 0.1);//**
+    bool isFingerNear2 = (qAbs(m_zm->GetAxisDpos(9) + 50) < 0.1) && (qAbs(m_zm->GetAxisDpos(10) + 50) < 0.1);//**
+    if (isFingerNear1) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(FingerNear1Done());//**
+        if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(FingerNear1Done());//***
+    }
+    if (isFingerNear2) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(FingerNear2Done());//**
+    }
+
+    // 处理手指松开事件
+    if ((qAbs(m_zm->GetAxisDpos(9) - 10) < 0.1) && (qAbs(m_zm->GetAxisDpos(10) - 10) < 0.1)) {
+        if (istakeFloorFsmOpen)m_takeFloorFsm->process_event(FingerReleasingDone());//*
+        if (iscoverFloorFsmOpen)m_coverFloorFsm->process_event(FingerReleasingDone());//****
+    }
+
+    if ((qAbs(m_zm->GetAxisDpos(9) + 20) < 0.1) && (qAbs(m_zm->GetAxisDpos(10) + 20) < 0.1)) {
+        if (iscoverPlateFsmOpen) m_coverPlateFsm->process_event(FingerReleasingDone());//***
+    }
+
+    //处理纵移事件
+    if ((qAbs(m_zm->GetAxisDpos(5) - 50 ) < 0.2) && (qAbs(m_zm->GetAxisDpos(6) - 50) < 0.2)) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LongitudinalMoveto50Done()); //**
+    }
+
+
+    float LastDMVal0 = GlobalMotorPos::getDmValues(0);
+    float LastDMVal1 = GlobalMotorPos::getDmValues(1);
+    float LastDMVal2 = GlobalMotorPos::getDmValues(2);
+    QVector<float>CurrentDMVal = dmcamera->getValues();
+    bool DMisOK = (CurrentDMVal[0] != LastDMVal0 || CurrentDMVal[1] != LastDMVal1 || CurrentDMVal[2] != LastDMVal2);
+    if (DMisOK) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ReverseLongitudinalMovementDone()); //**
+    }
+
+    // if ((qAbs(m_zm->GetAxisDpos(5) - 65) < 0.1) && (qAbs(m_zm->GetAxisDpos(6) - 65) < 0.1)) {
+    //     if (istakePlateFsmOpen) m_takePlateFsm->process_event(ForwardLongitudinalMovementDone()); //**
+    // }
+
+    if ((qAbs(m_zm->GetAxisDpos(5)) < 0.1) && (qAbs(m_zm->GetAxisDpos(6)) < 0.1)) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(LongitudinalMovementDone()); //**
+    }
+
+    float  motor5BorrowPos = GlobalMotorPos::getBorrowPos(0);
+    float  motor6BorrowPos = GlobalMotorPos::getBorrowPos(1);
+
+    if ((qAbs(m_zm->GetAxisDpos(5) - motor5BorrowPos + 324 ) < 0.2) && (qAbs(m_zm->GetAxisDpos(6) - motor6BorrowPos + 324) < 0.2)) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ReverseLongitudinalForBorrowDone()); //**
+    }
+
+    if ((qAbs(m_zm->GetAxisDpos(5) - motor5BorrowPos - 324) < 0.1) && (qAbs(m_zm->GetAxisDpos(6) - motor6BorrowPos - 324) < 0.1)) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ForwardLongitudinalForBorrowDone()); //**
+    }
+
+    if ((qAbs(m_zm->GetAxisDpos(5) - motor5BorrowPos - 320) < 0.1) && (qAbs(m_zm->GetAxisDpos(6) - motor6BorrowPos - 320) < 0.1)) {
+        if (istakePlateFsmOpen) m_takePlateFsm->process_event(ForwardLongitudinalForCenterBorrowDone()); //**
+    }
+
+    // 处理读码器调整相关事件
+    currentVals = dmcamera->getValues();
+    bool OK = currentVals[0] != 0 || currentVals[1] != 0 || currentVals[2] != 0;
+    if (currentVals.size() >= 3 && OK) {
+        // 角度调整
+        if (istakePlateFsmOpen && abs(currentVals[2] / 10 - 90) <= 0.3) {
+            m_takePlateFsm->process_event(AngleAdjustDone());//**
+        }
+        // X调整
+        if (istakePlateFsmOpen && (abs(currentVals[1] / 10) <= 1)) {
+            m_takePlateFsm->process_event(XAdjustDone());//**
+            m_takePlateFsm->process_event(XAdjustAdvanceDone());//**
+        }
+        // Y调整
+        if (istakePlateFsmOpen && (abs(currentVals[0] / 10 - 4) <= 1)) {
+            m_takePlateFsm->process_event(YAdjustDone());//**
+            m_takePlateFsm->process_event(YAdjustAdvanceDone());//**
+        }
+    }
+
+    if (iscoverPlateFsmOpen){
+        // motor5Pos = GlobalMotorPos::getCoverPlatePos(0);
+        // motor7Pos = GlobalMotorPos::getCoverPlatePos(2);
+        // motor6Pos = GlobalMotorPos::getCoverPlatePos(1);
+        // motor8Pos = GlobalMotorPos::getCoverPlatePos(3);
+        motor5Pos =iniReadPOS->value("/Motorpos/Pos5").toString().toFloat();
+        motor6Pos =iniReadPOS->value("/Motorpos/Pos6").toString().toFloat();
+        motor7Pos =iniReadPOS->value("/Motorpos/Pos7").toString().toFloat();
+        motor8Pos =iniReadPOS->value("/Motorpos/Pos8").toString().toFloat();
+
+        if (qAbs(m_zm->GetAxisDpos(7) - motor7Pos) < 1 && qAbs(m_zm->GetAxisDpos(8) - motor8Pos) < 1) {
+            m_coverPlateFsm->process_event(MyPlateRecoverDone1());//***
+        }
+
+        if (qAbs(m_zm->GetAxisDpos(5) - motor5Pos) < 1 && qAbs(m_zm->GetAxisDpos(6) - motor6Pos) < 1) {
+            m_coverPlateFsm->process_event(MyPlateRecoverDone2());//***
+        }
+    }
+}

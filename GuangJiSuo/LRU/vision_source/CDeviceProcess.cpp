@@ -453,10 +453,17 @@ void CDeviceProcess::SetLatestMatFrame(const cv::Mat& mat)
     QMutexLocker locker(&m_matMutex);
     m_latestMat.release();
     m_latestMat = mat;
+    ++m_latestFrameSeq;
 }
 
 cv::Mat CDeviceProcess::GetLatestMatFrame()
 {
     QMutexLocker locker(&m_matMutex);
     return m_latestMat.clone();  // 返回拷贝，避免外部修改
+}
+
+std::pair<cv::Mat, int64_t> CDeviceProcess::GetLatestMatFrameWithSeq()
+{
+    QMutexLocker locker(&m_matMutex);
+    return {m_latestMat.clone(), m_latestFrameSeq};
 }
