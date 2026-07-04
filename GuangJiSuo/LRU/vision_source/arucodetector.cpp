@@ -50,8 +50,6 @@ ArucoDetector::ArucoResult ArucoDetector::detectOneArucoCode(cv::Mat &image)
 
     m_detector->detectMarkers(image, corners, ids);
 
-    image.release();
-
     if (ids.empty()) {
         arucoUpdateUI("二维码ID为空，检测失败！");
         return result;
@@ -427,6 +425,11 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
 
     // 1. 读取相机参数
     QString paramsFile = getCameraParamsFile(z);
+    if (paramsFile.isEmpty()) {
+        result.failureReason = QString("当前高度(%1)无匹配相机标定参数").arg(z, 0, 'f', 1);
+        arucoUpdateUI(result.failureReason);
+        return result;
+    }
     if (!readCameraParamsFromJson(paramsFile)) {
         result.failureReason = "读取相机参数错误";
         arucoUpdateUI(result.failureReason);

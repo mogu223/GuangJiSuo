@@ -31,8 +31,22 @@ public:
     struct MultiFrameResult {
         bool valid = false;
         double x = 0, y = 0, yaw = 0;
-        int validFrameCount = 0;
+        int validFrameCount = 0;       // 跳变剔除后有效帧数
+        int sampledFrameCount = 0;      // 实际采到的新帧数
+        int rawValidFrameCount = 0;     // 通过单帧质量门控的帧数
         QString failureReason;
+    };
+
+    // 自动抬升闭环诊断
+    struct AutoLiftDiagnostics {
+        MultiFrameResult mfr;
+        QString stageLabel;             // 阶段标识 e.g. "z≈0"
+        int correctionCount = 0;        // 已补偿次数
+        int maxCorrections = 0;         // 最大补偿次数
+        double xRes = 0, yRes = 0, yawRes = 0;  // 当前残差
+        double xCorrection = 0, yCorrection = 0, yawCorrection = 0; // 本次补偿量
+        bool residualGrew = false;      // 补偿后残差是否变大
+        QString stopReason;             // 停止原因
     };
 
     //力实时信息
@@ -99,11 +113,16 @@ public slots:
 
     // 多帧采样检测
     MultiFrameResult detectMultiFrame(int deviceIndex);
+    // 等待一帧新帧，超时返回空Mat
+    std::pair<cv::Mat, int64_t> waitNextFrame(int deviceIndex, int64_t afterSeq, int timeoutMs);
     // 软停止（不调用 EmergencyStop）
-    void softStop(const QString& reason, int validFrames = 0, int totalFrames = 0,
-                  double xRes = 0, double yRes = 0, double yawRes = 0);
+    void softStop(const AutoLiftDiagnostics& diag);
     // 残差评分
     double residualScore(double xRes, double yRes, double yawRes);
+
+    // 单高度闭环 helper：检测 → 补偿 → 复测 → 稳定确认
+    struct StageResidual { double x = 0; double y = 0; double yaw = 0; };
+    bool runAutoLiftVisionStage(int deviceIndex, const QString& label, StageResidual& outResidual);
 
     void onParamsReceived(const LRUInnerParams &params);
 
@@ -159,6 +178,7 @@ private:
     float y_gap_lift;
     float final_z_lift;
     bool checkCollision_flag = false;
+    bool m_autoLiftCompleted = false;   // auto_lift 成功完成后为 true
 
     // VisionQuality 配置缓存
     int    m_cfgFrameCount = 15;
