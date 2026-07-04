@@ -132,3 +132,4 @@ build/
 !debug_samples/**/*.json
 !debug_samples/**/*.md
 !debug_samples/**/*.png
+codegraph.gz
