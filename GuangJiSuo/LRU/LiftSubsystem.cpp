@@ -860,6 +860,32 @@ bool Lift::waitSixDofForSearch(int timeoutMs)
     return true;
 }
 
+void Lift::convertSearchResultToOrigin(MultiFrameResult &result,
+                                       double platformDx,
+                                       double platformDy,
+                                       const QString &sourceLabel)
+{
+    const double rawX = result.x;
+    const double rawY = result.y;
+
+    // This is the inverse of the six-DOF compensation convention:
+    // X residual is compensated by platformX += residualX, while
+    // Y residual is compensated by platformY -= residualY.
+    result.x = rawX + platformDx;
+    result.y = rawY - platformDy;
+
+    QString msg = QString("六自由度找码换算 @%1: move dx=%2 dy=%3 raw x=%4 y=%5 origin x=%6 y=%7")
+                      .arg(sourceLabel)
+                      .arg(platformDx, 0, 'f', 2)
+                      .arg(platformDy, 0, 'f', 2)
+                      .arg(rawX, 0, 'f', 2)
+                      .arg(rawY, 0, 'f', 2)
+                      .arg(result.x, 0, 'f', 2)
+                      .arg(result.y, 0, 'f', 2);
+    LiftUpdateUI(msg);
+    qInfo() << msg;
+}
+
 // =============================================================================
 //    多帧检测 helper
 // =============================================================================
@@ -1143,8 +1169,7 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
             // 成功！换算回原点
             double dx_final = target_x - origin_x;
             double dy_final = target_y - origin_y;
-            retryMfr.x = retryMfr.x + dx_final;
-            retryMfr.y = retryMfr.y - dy_final;
+            convertSearchResultToOrigin(retryMfr, dx_final, dy_final, bestMove.label);
 
             LiftUpdateUI(QString("六自由度找码成功 @%1: 换算回原点 (%2, %3)")
                              .arg(bestMove.label)
@@ -1213,8 +1238,7 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
             if (retryMfr.valid) {
                 double dx_final = target_x - origin_x;
                 double dy_final = target_y - origin_y;
-                retryMfr.x = retryMfr.x + dx_final;
-                retryMfr.y = retryMfr.y - dy_final;
+                convertSearchResultToOrigin(retryMfr, dx_final, dy_final, move.label);
 
                 LiftUpdateUI(QString("六自由度找码成功 @%1: 换算回原点 (%2, %3)")
                                  .arg(move.label)

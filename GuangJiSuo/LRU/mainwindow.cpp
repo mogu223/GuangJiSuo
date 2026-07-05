@@ -284,9 +284,6 @@ MainWindow::MainWindow(QWidget *parent) :
             m_lift->m_vision_detected, &ArucoDetector::onParamsReceived);
     connect(this, &MainWindow::paramsSelected,
             m_lift->m_dahengCamera, &dahengTwoCams_qt_vs::onParamsReceived);
-    // "参数调整" 按钮
-    connect(ui->btn_LRUParamAdjust, &QPushButton::clicked,
-            this, &MainWindow::on_btn_LRUParamAdjust_clicked);
     // 初始化触发
     if (!LRUpresetData().isEmpty()) {
         onComboChanged(ui->comboBox_LRUdata->currentText());

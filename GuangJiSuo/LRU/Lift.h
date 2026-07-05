@@ -183,6 +183,11 @@ private:
 
     //视觉加六自由度平台-开始
 
+    void convertSearchResultToOrigin(MultiFrameResult &result,
+                                     double platformDx,
+                                     double platformDy,
+                                     const QString &sourceLabel);
+
 
     float m_angle;
     float m_gapwidth_x;
