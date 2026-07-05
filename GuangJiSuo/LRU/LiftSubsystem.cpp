@@ -1106,29 +1106,33 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
     while (totalMoves < maxMoves) {
         struct { QString label; double dx; double dy; bool valid = false; } bestMove;
 
-        // A1. PnP 优先：根据 tvec 判断 marker 物理方向，选偏移更大的轴
+        // A1. PnP 优先：相机系线索先转平台系。平台 +X=车头/前，+Y=车左/左。
         if (currentMfr.hasPnpHint) {
             double camX = currentMfr.hintTvecX;
             double camY = currentMfr.hintTvecY;
-            if (std::abs(camX) >= std::abs(camY)) {
-                if (camX > 5.0)       bestMove = {"PnP→右",  moveDistRight, 0, true};
-                else if (camX < -5.0) bestMove = {"PnP→左", -moveDistLeft, 0, true};
+            double platformHintX = -camY;
+            double platformHintY =  camX;
+            if (std::abs(platformHintX) >= std::abs(platformHintY)) {
+                if (platformHintX > 5.0)       bestMove = {"PnP→前", moveDistForward, 0, true};
+                else if (platformHintX < -5.0) bestMove = {"PnP→后", -moveDistBack, 0, true};
             } else {
-                if (camY > 5.0)       bestMove = {"PnP→后", 0, -moveDistBack, true};
-                else if (camY < -5.0) bestMove = {"PnP→前", 0, moveDistForward, true};
+                if (platformHintY > 5.0)       bestMove = {"PnP→左", 0, moveDistLeft, true};
+                else if (platformHintY < -5.0) bestMove = {"PnP→右", 0, -moveDistRight, true};
             }
         }
 
-        // A2. 像素偏移：无 PnP 时用 marker 角点相对图像中心判断，选偏移更大的轴
+        // A2. 像素偏移：无 PnP 时按同一平台系方向近似判断，选偏移更大的轴
         if (!bestMove.valid && currentMfr.hasSearchHint) {
             double px = currentMfr.markerOffsetPxX;
             double py = currentMfr.markerOffsetPxY;
-            if (std::abs(px) >= std::abs(py)) {
-                if (px > 100)        bestMove = {"像素→右", moveDistRight, 0, true};
-                else if (px < -100)  bestMove = {"像素→左", -moveDistLeft, 0, true};
+            double platformHintX = -py;
+            double platformHintY =  px;
+            if (std::abs(platformHintX) >= std::abs(platformHintY)) {
+                if (platformHintX > 100)       bestMove = {"像素→前", moveDistForward, 0, true};
+                else if (platformHintX < -100) bestMove = {"像素→后", -moveDistBack, 0, true};
             } else {
-                if (py > 100)        bestMove = {"像素→后", 0, -moveDistBack, true};
-                else if (py < -100)  bestMove = {"像素→前", 0, moveDistForward, true};
+                if (platformHintY > 100)       bestMove = {"像素→左", 0, moveDistLeft, true};
+                else if (platformHintY < -100) bestMove = {"像素→右", 0, -moveDistRight, true};
             }
         }
 
@@ -1141,8 +1145,8 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
         // 安全检查：总偏移不得超过安全范围
         double dx = target_x - origin_x;
         double dy = target_y - origin_y;
-        dx = qBound(-m_cfgSearchSafetyLeftMm,   dx, m_cfgSearchSafetyRightMm);
-        dy = qBound(-m_cfgSearchSafetyBackwardMm, dy, m_cfgSearchSafetyForwardMm);
+        dx = qBound(-m_cfgSearchSafetyBackwardMm, dx, m_cfgSearchSafetyForwardMm);
+        dy = qBound(-m_cfgSearchSafetyRightMm,    dy, m_cfgSearchSafetyLeftMm);
         target_x = origin_x + dx;
         target_y = origin_y + dy;
 
@@ -1200,10 +1204,10 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
         }
 
         struct { QString label; double dx; double dy; } blindMoves[] = {
-            {"盲扫←左", -moveDistLeft, 0},
-            {"盲扫→右",  moveDistRight, 0},
-            {"盲扫↑前", 0, moveDistForward},
-            {"盲扫↓后", 0, -moveDistBack},
+            {"盲扫↑前",  moveDistForward, 0},
+            {"盲扫↓后", -moveDistBack, 0},
+            {"盲扫←左", 0,  moveDistLeft},
+            {"盲扫→右", 0, -moveDistRight},
         };
 
         for (const auto &move : blindMoves) {
@@ -1212,8 +1216,8 @@ Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
 
             double dx = target_x - origin_x;
             double dy = target_y - origin_y;
-            dx = qBound(-m_cfgSearchSafetyLeftMm,   dx, m_cfgSearchSafetyRightMm);
-            dy = qBound(-m_cfgSearchSafetyBackwardMm, dy, m_cfgSearchSafetyForwardMm);
+            dx = qBound(-m_cfgSearchSafetyBackwardMm, dx, m_cfgSearchSafetyForwardMm);
+            dy = qBound(-m_cfgSearchSafetyRightMm,    dy, m_cfgSearchSafetyLeftMm);
             target_x = origin_x + dx;
             target_y = origin_y + dy;
 
