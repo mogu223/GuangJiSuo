@@ -559,7 +559,7 @@ void UdpCommunication::posePointMotion(float x, float y, float z, float rx, floa
     int16ToTwoBytes(poseFrame, 13, floatToInt16(rx, COORD_FACTOR));
     int16ToTwoBytes(poseFrame, 15, floatToInt16(rz, COORD_FACTOR));
 
-    poseFrame[36] = 0xFF;
+    poseFrame[36] = static_cast<char>(0xFF);
 
     poseFrame = addChecksum(poseFrame);
     sendDataAsync(poseFrame);

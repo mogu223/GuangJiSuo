@@ -35,6 +35,15 @@ public:
         int sampledFrameCount = 0;      // 实际采到的新帧数
         int rawValidFrameCount = 0;     // 通过单帧质量门控的帧数
         QString failureReason;
+
+        // 搜索线索（即使多帧检测失败也填充，用于六自由度找码）
+        bool   hasSearchHint = false;
+        double markerOffsetPxX = 0;     // 第一批帧中 marker 偏离中心的平均像素偏移
+        double markerOffsetPxY = 0;
+        bool   hasPnpHint = false;
+        double hintTvecX = 0;
+        double hintTvecY = 0;
+        QString dominantFailureReason;  // 最主要的失败原因（用于诊断）
     };
 
     // 自动抬升闭环诊断
@@ -48,6 +57,9 @@ public:
         bool residualGrew = false;      // 补偿后残差是否变大
         QString stopReason;             // 停止原因
     };
+
+    // 单高度闭环 helper：检测 → 补偿 → 复测 → 稳定确认
+    struct StageResidual { double x = 0; double y = 0; double yaw = 0; };
 
     //力实时信息
     float Check_ForceInfo[6] = {0.0f};
@@ -110,10 +122,13 @@ public slots:
     bool auto_lift();
     void stop_auto_lift();
     void waitSixDof();
+    bool waitSixDofForSearch(int timeoutMs = 15000);
     bool auto_descent();
 
     // 多帧采样检测
     MultiFrameResult detectMultiFrame(int deviceIndex);
+    // 多帧检测 + 六自由度平移找码（失败时自动移动平台重试）
+    MultiFrameResult detectMultiFrameWithSixDofSearch(int deviceIndex);
     // 等待一帧新帧，超时返回空Mat
     std::pair<cv::Mat, int64_t> waitNextFrame(int deviceIndex, int64_t afterSeq, int timeoutMs);
     // 软停止（不调用 EmergencyStop）
@@ -121,8 +136,6 @@ public slots:
     // 残差评分
     double residualScore(double xRes, double yRes, double yawRes);
 
-    // 单高度闭环 helper：检测 → 补偿 → 复测 → 稳定确认
-    struct StageResidual { double x = 0; double y = 0; double yaw = 0; };
     bool runAutoLiftVisionStage(int deviceIndex, const QString& label, StageResidual& outResidual);
 
     void onParamsReceived(const LRUInnerParams &params);
@@ -198,6 +211,15 @@ private:
     double m_cfgResidualGrowthStopRatio = 1.10;
     double m_cfgCrossHeightXyMm = 1.5;
     double m_cfgCrossHeightYawDeg = 0.3;
+    // VisionSearch 配置缓存
+    bool   m_cfgEnableSixDofSearch = true;
+    double m_cfgSearchSafetyLeftMm = 70;
+    double m_cfgSearchSafetyRightMm = 70;
+    double m_cfgSearchSafetyForwardMm = 25;
+    double m_cfgSearchSafetyBackwardMm = 70;
+    double m_cfgSearchDistanceRatio = 0.70;
+    int    m_cfgMaxDirectedSearchMoves = 2;
+    bool   m_cfgEnableBlindFallback = true;
     //视觉加六自由度平台-结束
 
     //子系统状态判断

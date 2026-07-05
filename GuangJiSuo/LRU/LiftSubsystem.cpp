@@ -54,6 +54,16 @@ Lift::Lift(ZMotionControl* zm,dahengTwoCams_qt_vs *dahengCamera,LightSourceContr
    m_cfgCrossHeightXyMm = iniReadThreshold->value("AutoLiftControl/CrossHeightXyMm", 1.5).toDouble();
    m_cfgCrossHeightYawDeg = iniReadThreshold->value("AutoLiftControl/CrossHeightYawDeg", 0.3).toDouble();
 
+   // 读取 VisionSearch 配置
+   m_cfgEnableSixDofSearch = iniReadThreshold->value("VisionSearch/EnableSixDofSearch", true).toBool();
+   m_cfgSearchSafetyLeftMm = iniReadThreshold->value("VisionSearch/SearchSafetyLeftMm", 70).toDouble();
+   m_cfgSearchSafetyRightMm = iniReadThreshold->value("VisionSearch/SearchSafetyRightMm", 70).toDouble();
+   m_cfgSearchSafetyForwardMm = iniReadThreshold->value("VisionSearch/SearchSafetyForwardMm", 25).toDouble();
+   m_cfgSearchSafetyBackwardMm = iniReadThreshold->value("VisionSearch/SearchSafetyBackwardMm", 70).toDouble();
+   m_cfgSearchDistanceRatio = iniReadThreshold->value("VisionSearch/SearchDistanceRatio", 0.70).toDouble();
+   m_cfgMaxDirectedSearchMoves = iniReadThreshold->value("VisionSearch/MaxDirectedSearchMoves", 2).toInt();
+   m_cfgEnableBlindFallback = iniReadThreshold->value("VisionSearch/EnableBlindFallback", true).toBool();
+
    autolift = false;
    autodescent = false;
    m_angle = 0.0;
@@ -459,7 +469,7 @@ bool Lift::vision_detected()
     }
 
     // 多帧检测（手动也使用同一套标准）
-    MultiFrameResult mfr = detectMultiFrame(deviceIndex);
+    MultiFrameResult mfr = detectMultiFrameWithSixDofSearch(deviceIndex);
     if (!mfr.valid) {
         LiftUpdateUI(QString("视觉检测失败: %1").arg(mfr.failureReason));
         return false;
@@ -491,7 +501,7 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
 
     while (corrections < m_cfgMaxCorrections && autolift) {
         LiftUpdateUI(label + ": 多帧检测");
-        MultiFrameResult mfr = detectMultiFrame(deviceIndex);
+        MultiFrameResult mfr = detectMultiFrameWithSixDofSearch(deviceIndex);
         if (!mfr.valid) {
             AutoLiftDiagnostics diag;
             diag.mfr = mfr;
@@ -542,7 +552,7 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
         corrections++;
 
         // 补偿后复测
-        MultiFrameResult postMfr = detectMultiFrame(deviceIndex);
+        MultiFrameResult postMfr = detectMultiFrameWithSixDofSearch(deviceIndex);
         if (!postMfr.valid) {
             AutoLiftDiagnostics diag;
             diag.mfr = postMfr;
@@ -771,7 +781,7 @@ bool Lift::auto_descent()
         for (int i = 0; i <= 3 && autodescent; ++i) {
             LiftUpdateUI("正在检测缝隙");
             QThread::msleep(100);
-            MultiFrameResult mfr = detectMultiFrame(0);
+            MultiFrameResult mfr = detectMultiFrameWithSixDofSearch(0);
             if (!mfr.valid) {
                 LiftUpdateUI(QString("视觉检测失败: %1").arg(mfr.failureReason));
                 return false;
@@ -832,6 +842,24 @@ void Lift::waitSixDof()
     }
 }
 
+bool Lift::waitSixDofForSearch(int timeoutMs)
+{
+    QThread::msleep(300);
+    QElapsedTimer t;
+    t.start();
+    while (m_SixDof->isPlatformMoving() && t.elapsed() < timeoutMs)
+    {
+        LiftUpdateUI("等待六自由度就位(找码)");
+        QThread::msleep(100);
+    }
+    if (m_SixDof->isPlatformMoving()) {
+        LiftUpdateUI("六自由度找码等待超时，停止平台运动");
+        m_SixDof->stopMotion();
+        return false;
+    }
+    return true;
+}
+
 // =============================================================================
 //    多帧检测 helper
 // =============================================================================
@@ -869,6 +897,13 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
     auto [baseline, baselineSeq] = m_dahengCamera->getlatestframeWithSeq(deviceIndex);
     int64_t lastSeq = baselineSeq;
 
+    // 搜索线索聚合（用于失败时提供找码方向）
+    double sumOffsetPxX = 0, sumOffsetPxY = 0;
+    int    hintFrameCount = 0;
+    double sumTvecX = 0, sumTvecY = 0;
+    int    pnpHintCount = 0;
+    QMap<QString, int> failureCounts;
+
     while (consecutiveRetries <= maxRetries) {
         struct FrameSample { double x; double y; double yaw; };
         QVector<FrameSample> samples;
@@ -884,6 +919,24 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
             float z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
             ArucoDetector::DetailedFrameResult frameResult =
                 m_vision_detected->processImageDetailed(mat, z);
+
+            // ★ 收集搜索线索（无论帧是否有效）
+            if (frameResult.hasSearchHint) {
+                if (frameResult.targetSeen) {
+                    sumOffsetPxX += frameResult.markerOffsetPxX;
+                    sumOffsetPxY += frameResult.markerOffsetPxY;
+                    hintFrameCount++;
+                }
+                if (frameResult.hasPnpHint) {
+                    sumTvecX += frameResult.hintTvecX;
+                    sumTvecY += frameResult.hintTvecY;
+                    pnpHintCount++;
+                }
+            }
+            if (!frameResult.valid && !frameResult.failureReason.isEmpty()) {
+                failureCounts[frameResult.failureReason]++;
+            }
+
             if (!frameResult.valid) continue;
 
             rawValidFrames++;
@@ -952,10 +1005,258 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
         return mfr;
     }
 
+    // ★ 失败时填充搜索线索，供 detectMultiFrameWithSixDofSearch 使用
+    if (hintFrameCount > 0) {
+        mfr.hasSearchHint = true;
+        mfr.markerOffsetPxX = sumOffsetPxX / hintFrameCount;
+        mfr.markerOffsetPxY = sumOffsetPxY / hintFrameCount;
+    }
+    if (pnpHintCount > 0) {
+        mfr.hasPnpHint = true;
+        mfr.hintTvecX = sumTvecX / pnpHintCount;
+        mfr.hintTvecY = sumTvecY / pnpHintCount;
+        mfr.hasSearchHint = true;
+    }
+    // 找出最主要的失败原因
+    if (!failureCounts.isEmpty()) {
+        auto it = std::max_element(failureCounts.begin(), failureCounts.end(),
+                                   [](const auto& a, const auto& b) { return a < b; });
+        mfr.dominantFailureReason = it.key();
+    }
+
     if (mfr.failureReason.isEmpty()) {
         mfr.failureReason = QString("多帧检测失败，重试%1次后仍然无效").arg(maxRetries);
     }
     LiftUpdateUI(mfr.failureReason);
+    return mfr;
+}
+
+// =============================================================================
+//    多帧检测 + 六自由度平移找码
+//    原点检测失败时不立刻报失败，利用六自由度平台平移找码
+// =============================================================================
+Lift::MultiFrameResult Lift::detectMultiFrameWithSixDofSearch(int deviceIndex)
+{
+    // 1. 记录六自由度原始位置
+    QJsonObject originCoords = m_SixDof->getCurrentCoordinates();
+    double origin_x = originCoords["x"].toDouble();
+    double origin_y = originCoords["y"].toDouble();
+    double origin_z = originCoords["z"].toDouble();
+    double origin_rx = originCoords["rx"].toDouble();
+    double origin_ry = originCoords["ry"].toDouble();
+    double origin_rz = originCoords["rz"].toDouble();
+
+    auto returnToOrigin = [&]() -> bool {
+        m_SixDof->posePointMotion(origin_x, origin_y, origin_z, origin_rx, origin_ry, origin_rz, 2, 1);
+        return waitSixDofForSearch(15000);
+    };
+
+    // 2. 原点检测
+    MultiFrameResult mfr = detectMultiFrame(deviceIndex);
+    if (mfr.valid) {
+        return mfr;
+    }
+
+    // 3. 检查是否启用找码
+    if (!m_cfgEnableSixDofSearch) {
+        LiftUpdateUI("六自由度找码已禁用，返回原点检测结果");
+        return mfr;
+    }
+
+    // 4. 准备移动距离
+    double moveDistLeft    = m_cfgSearchSafetyLeftMm    * m_cfgSearchDistanceRatio;
+    double moveDistRight   = m_cfgSearchSafetyRightMm   * m_cfgSearchDistanceRatio;
+    double moveDistForward = m_cfgSearchSafetyForwardMm * m_cfgSearchDistanceRatio;
+    double moveDistBack    = m_cfgSearchSafetyBackwardMm * m_cfgSearchDistanceRatio;
+
+    int totalMoves = 0;
+    const int maxMoves = m_cfgMaxDirectedSearchMoves > 0 ? m_cfgMaxDirectedSearchMoves : 2;
+
+    MultiFrameResult currentMfr = mfr;
+
+    // ================================================================
+    // 阶段 A：定向找码（最多 maxMoves 次，每次用最新结果重判方向）
+    // ================================================================
+    while (totalMoves < maxMoves) {
+        struct { QString label; double dx; double dy; bool valid = false; } bestMove;
+
+        // A1. PnP 优先：根据 tvec 判断 marker 物理方向，选偏移更大的轴
+        if (currentMfr.hasPnpHint) {
+            double camX = currentMfr.hintTvecX;
+            double camY = currentMfr.hintTvecY;
+            if (std::abs(camX) >= std::abs(camY)) {
+                if (camX > 5.0)       bestMove = {"PnP→右",  moveDistRight, 0, true};
+                else if (camX < -5.0) bestMove = {"PnP→左", -moveDistLeft, 0, true};
+            } else {
+                if (camY > 5.0)       bestMove = {"PnP→后", 0, -moveDistBack, true};
+                else if (camY < -5.0) bestMove = {"PnP→前", 0, moveDistForward, true};
+            }
+        }
+
+        // A2. 像素偏移：无 PnP 时用 marker 角点相对图像中心判断，选偏移更大的轴
+        if (!bestMove.valid && currentMfr.hasSearchHint) {
+            double px = currentMfr.markerOffsetPxX;
+            double py = currentMfr.markerOffsetPxY;
+            if (std::abs(px) >= std::abs(py)) {
+                if (px > 100)        bestMove = {"像素→右", moveDistRight, 0, true};
+                else if (px < -100)  bestMove = {"像素→左", -moveDistLeft, 0, true};
+            } else {
+                if (py > 100)        bestMove = {"像素→后", 0, -moveDistBack, true};
+                else if (py < -100)  bestMove = {"像素→前", 0, moveDistForward, true};
+            }
+        }
+
+        if (!bestMove.valid) break;  // 无法确定方向，跳出定向阶段
+
+        // A3. 计算目标位置
+        double target_x = origin_x + bestMove.dx;
+        double target_y = origin_y + bestMove.dy;
+
+        // 安全检查：总偏移不得超过安全范围
+        double dx = target_x - origin_x;
+        double dy = target_y - origin_y;
+        dx = qBound(-m_cfgSearchSafetyLeftMm,   dx, m_cfgSearchSafetyRightMm);
+        dy = qBound(-m_cfgSearchSafetyBackwardMm, dy, m_cfgSearchSafetyForwardMm);
+        target_x = origin_x + dx;
+        target_y = origin_y + dy;
+
+        LiftUpdateUI(QString("六自由度找码 %1 (第%2次): 移动到 (%3, %4)")
+                         .arg(bestMove.label).arg(totalMoves + 1)
+                         .arg(target_x, 0, 'f', 1).arg(target_y, 0, 'f', 1));
+
+        m_SixDof->posePointMotion(target_x, target_y, origin_z, origin_rx, origin_ry, origin_rz, 2, 1);
+        if (!waitSixDofForSearch(15000)) {
+            QString reason = QString("六自由度找码移动超时: %1").arg(bestMove.label);
+            LiftUpdateUI(reason + "，停止找码并尝试回原点");
+            if (!returnToOrigin()) {
+                reason += "，且回原点超时";
+                emit UpdateSystemInfo(reason);
+            }
+            mfr.failureReason = QString("%1 | %2").arg(reason).arg(mfr.failureReason);
+            return mfr;
+        }
+
+        MultiFrameResult retryMfr = detectMultiFrame(deviceIndex);
+        totalMoves++;
+
+        if (retryMfr.valid) {
+            // 成功！换算回原点
+            double dx_final = target_x - origin_x;
+            double dy_final = target_y - origin_y;
+            retryMfr.x = retryMfr.x + dx_final;
+            retryMfr.y = retryMfr.y - dy_final;
+
+            LiftUpdateUI(QString("六自由度找码成功 @%1: 换算回原点 (%2, %3)")
+                             .arg(bestMove.label)
+                             .arg(retryMfr.x, 0, 'f', 2)
+                             .arg(retryMfr.y, 0, 'f', 2));
+
+            // 回原点
+            if (!returnToOrigin()) {
+                retryMfr.valid = false;
+                retryMfr.failureReason = "六自由度找码成功但回原点超时，请人工确认平台位置";
+                emit UpdateSystemInfo(retryMfr.failureReason);
+            }
+            return retryMfr;
+        }
+
+        // 失败：用最新结果更新线索，下一轮重新判断方向
+        currentMfr = retryMfr;
+    }
+
+    // ================================================================
+    // 阶段 B：四方向盲扫兜底（如果启用）
+    // ================================================================
+    if (m_cfgEnableBlindFallback) {
+        if (!currentMfr.hasSearchHint) {
+            LiftUpdateUI("原点未看到目标 marker，启用四方向盲扫");
+        } else {
+            LiftUpdateUI("定向找码失败，启用四方向盲扫兜底");
+        }
+
+        struct { QString label; double dx; double dy; } blindMoves[] = {
+            {"盲扫←左", -moveDistLeft, 0},
+            {"盲扫→右",  moveDistRight, 0},
+            {"盲扫↑前", 0, moveDistForward},
+            {"盲扫↓后", 0, -moveDistBack},
+        };
+
+        for (const auto &move : blindMoves) {
+            double target_x = origin_x + move.dx;
+            double target_y = origin_y + move.dy;
+
+            double dx = target_x - origin_x;
+            double dy = target_y - origin_y;
+            dx = qBound(-m_cfgSearchSafetyLeftMm,   dx, m_cfgSearchSafetyRightMm);
+            dy = qBound(-m_cfgSearchSafetyBackwardMm, dy, m_cfgSearchSafetyForwardMm);
+            target_x = origin_x + dx;
+            target_y = origin_y + dy;
+
+            LiftUpdateUI(QString("六自由度找码 %1: 移动到 (%2, %3)")
+                             .arg(move.label).arg(target_x, 0, 'f', 1).arg(target_y, 0, 'f', 1));
+
+            m_SixDof->posePointMotion(target_x, target_y, origin_z, origin_rx, origin_ry, origin_rz, 2, 1);
+            if (!waitSixDofForSearch(15000)) {
+                QString reason = QString("六自由度找码移动超时: %1").arg(move.label);
+                LiftUpdateUI(reason + "，停止找码并尝试回原点");
+                if (!returnToOrigin()) {
+                    reason += "，且回原点超时";
+                    emit UpdateSystemInfo(reason);
+                }
+                mfr.failureReason = QString("%1 | %2").arg(reason).arg(mfr.failureReason);
+                return mfr;
+            }
+
+            MultiFrameResult retryMfr = detectMultiFrame(deviceIndex);
+            totalMoves++;
+
+            if (retryMfr.valid) {
+                double dx_final = target_x - origin_x;
+                double dy_final = target_y - origin_y;
+                retryMfr.x = retryMfr.x + dx_final;
+                retryMfr.y = retryMfr.y - dy_final;
+
+                LiftUpdateUI(QString("六自由度找码成功 @%1: 换算回原点 (%2, %3)")
+                                 .arg(move.label)
+                                 .arg(retryMfr.x, 0, 'f', 2)
+                                 .arg(retryMfr.y, 0, 'f', 2));
+
+                if (!returnToOrigin()) {
+                    retryMfr.valid = false;
+                    retryMfr.failureReason = "六自由度找码成功但回原点超时，请人工确认平台位置";
+                    emit UpdateSystemInfo(retryMfr.failureReason);
+                }
+                return retryMfr;
+            }
+        }
+    }
+
+    // 6. 所有尝试失败：回原点
+    LiftUpdateUI("六自由度平移找码失败，正在回原点...");
+    bool originRestored = returnToOrigin();
+
+    QString originStatus = originRestored
+        ? QString("已回到找码前位置 (%1, %2)。")
+              .arg(origin_x, 0, 'f', 1).arg(origin_y, 0, 'f', 1)
+        : QString("尝试回到找码前位置 (%1, %2) 时超时，请人工确认平台位置。")
+              .arg(origin_x, 0, 'f', 1).arg(origin_y, 0, 'f', 1);
+    QString hintMsg = QString(
+        "多帧检测失败，六自由度平移找码也失败。\n"
+        "%1\n"
+        "请人工检查：\n"
+        "1. marker 是否被遮挡\n"
+        "2. marker_id 是否正确\n"
+        "3. 光源 / 曝光是否合适\n"
+        "4. 相机标定和 LRU 参数是否正确\n"
+        "5. 当前二级高度是否在 z=0 或 z=1700 工作范围")
+        .arg(originStatus);
+    LiftUpdateUI(hintMsg);
+    emit UpdateSystemInfo(hintMsg);
+
+    mfr.failureReason = QString("六自由度找码失败(%1次)%2 | %3")
+                            .arg(totalMoves)
+                            .arg(originRestored ? "" : "，回原点超时")
+                            .arg(mfr.failureReason);
     return mfr;
 }
 
@@ -1055,7 +1356,7 @@ bool Lift::auto_vision_detected()
     }
 
     // 多帧检测
-    MultiFrameResult mfr = detectMultiFrame(deviceIndex);
+    MultiFrameResult mfr = detectMultiFrameWithSixDofSearch(deviceIndex);
     if (!mfr.valid) {
         AutoLiftDiagnostics d;
         d.mfr = mfr;

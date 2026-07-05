@@ -79,8 +79,8 @@ public:
     // 新增：获取平台运动状态（线程安全）
     bool isPlatformMoving() const;
     //倾角传感器目标位姿
-    float target_rx = -0.05;
-    float target_ry = 0.46;
+    float target_rx = -0.05f;
+    float target_ry = 0.46f;
 
 signals:
     void receiveData(const QByteArray &rawData); // 原始88字节数据信号（保留）

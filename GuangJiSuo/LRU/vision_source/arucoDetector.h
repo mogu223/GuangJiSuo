@@ -63,6 +63,19 @@ public:
         double reprojectionError = 0; // 重投影误差(px)
         double x = 0, y = 0, yaw = 0; // 平台坐标结果
         QString failureReason;        // 失败原因文本
+
+        // 搜索线索（即使检测失败也尽可能填充，用于六自由度找码）
+        bool   targetSeen = false;      // 是否看到目标 marker（不一定通过质量门控）
+        double markerCenterX = 0;       // marker 角点中心 X（像素）
+        double markerCenterY = 0;       // marker 角点中心 Y（像素）
+        double imageCenterX = 1296.0;   // 图像中心 X（2592/2）
+        double imageCenterY = 972.0;    // 图像中心 Y（1944/2）
+        double markerOffsetPxX = 0;     // marker 中心偏离图像中心的 X 像素偏移
+        double markerOffsetPxY = 0;     // marker 中心偏离图像中心的 Y 像素偏移
+        bool   hasPnpHint = false;      // 是否有 PnP tvec 可用
+        double hintTvecX = 0;           // PnP tvec X（mm, 相机系，修正前）
+        double hintTvecY = 0;           // PnP tvec Y（mm, 相机系，修正前）
+        bool   hasSearchHint = false;   // 综合是否有任何搜索线索
     };
 
     explicit ArucoDetector(QObject *parent = nullptr);
@@ -124,6 +137,11 @@ private:
     float offset_y_16;
     int   marker_id;
     float angle_offset;
+
+    float z0_tvec_x_offset;
+    float z0_tvec_y_offset;
+    float z1700_tvec_x_offset;
+    float z1700_tvec_y_offset;
 
     cv::aruco::Dictionary         m_arucoDict;
     cv::aruco::DetectorParameters m_parameters;
