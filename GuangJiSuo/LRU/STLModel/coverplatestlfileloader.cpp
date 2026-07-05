@@ -1,11 +1,11 @@
-#include "STLModel/stlfileloader.h"
+#include "STLModel/coverplatestlfileloader.h"
 #include <QDebug>
 #include <QTextStream>
 #include <cstring>
 #include <QGL>
 
 
-STLFileLoader::STLFileLoader(const QString& filename, float ratio)
+CoverPlateSTLFileLoader::CoverPlateSTLFileLoader(const QString& filename, float ratio)
     : mRatio(ratio)
 {
     if (!filename.isEmpty()) {
@@ -13,12 +13,12 @@ STLFileLoader::STLFileLoader(const QString& filename, float ratio)
     }
 }
 
-STLFileLoader::~STLFileLoader()
+CoverPlateSTLFileLoader::~CoverPlateSTLFileLoader()
 {
     clear();
 }
 
-void STLFileLoader::loadStl(const QString& filename)
+void CoverPlateSTLFileLoader::loadStl(const QString& filename)
 {
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly)) {
@@ -36,13 +36,13 @@ void STLFileLoader::loadStl(const QString& filename)
     }
 }
 
-void STLFileLoader::loadTextStl(const QString& filename)
+void CoverPlateSTLFileLoader::loadTextStl(const QString& filename)
 {
     qDebug() << "load text file:" << filename;
     clear();
 
     QList<QVector3D> triangle;
-    STLTriangle tSTLTriangle;
+    CoverPlateSTLTriangle tSTLTriangle;
 
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -85,13 +85,13 @@ void STLFileLoader::loadTextStl(const QString& filename)
     }
 }
 
-void STLFileLoader::loadBinaryStl(const QString& filename)
+void CoverPlateSTLFileLoader::loadBinaryStl(const QString& filename)
 {
     qDebug() << "load Binary file:" << filename;
     clear();
 
     QList<QVector3D> triangle;
-    STLTriangle tSTLTriangle;
+    CoverPlateSTLTriangle tSTLTriangle;
 
     QFile STL_file(filename);
     int fileSize = STL_file.size();
@@ -155,14 +155,14 @@ void STLFileLoader::loadBinaryStl(const QString& filename)
     free(buf);
 }
 
-void STLFileLoader::draw()
+void CoverPlateSTLFileLoader::draw()
 {
-    QList<STLTriangle> triangles = model;
+    QList<CoverPlateSTLTriangle> triangles = model;
     QVector3D normal;
     QVector3D vertex;
 
     glBegin(GL_TRIANGLES);
-    foreach(STLTriangle tri, triangles) {
+    foreach(CoverPlateSTLTriangle tri, triangles) {
         normal = tri.getNormal();
         glNormal3f(
             mRatio * normal.x(),
@@ -182,7 +182,7 @@ void STLFileLoader::draw()
     glEnd();
 }
 
-void STLFileLoader::clear()
+void CoverPlateSTLFileLoader::clear()
 {
     model.clear();
 }

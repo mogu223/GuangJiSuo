@@ -1,16 +1,16 @@
-#ifndef RRGLWIDGET_H
-#define RRGLWIDGET_H
+#ifndef COVERPLATERRGLWIDGET_H
+#define COVERPLATERRGLWIDGET_H
 
 #include <QGLWidget>
 #include <QMouseEvent>
 #include <QPoint>
 //鼠标旋转、缩小、平移、网格、坐标系
-class RRGLWidget : public QGLWidget {
+class CoverPlateRRGLWidget : public QGLWidget {
     Q_OBJECT
 
 public:
-    explicit RRGLWidget(QWidget *parent = nullptr);
-    ~RRGLWidget();
+    explicit CoverPlateRRGLWidget(QWidget *parent = nullptr);
+    ~CoverPlateRRGLWidget();
 
     // 设置旋转角度
     void setXRotation(double angle);
@@ -63,4 +63,4 @@ private:
     double normalizeAngle(double angle, double min, double max);
 };
 
-#endif // RRGLWIDGET_H
+#endif // COVERPLATERRGLWIDGET_H

@@ -5,7 +5,7 @@
 
 //继承RRGLWidget,绘制取盖板模型
 DDR6RobotWidget::DDR6RobotWidget(QWidget *parent)
-    : RRGLWidget(parent)
+    : CoverPlateRRGLWidget(parent)
 {
     // 初始化配置
     configureModelParams();
@@ -32,11 +32,11 @@ void DDR6RobotWidget::loadCoverPlateModelSTLFile()
     QString stlDir = appPath + "/STL/";
 
     // 模型由 5 个小部件组成
-    mRobotModel.link0 = new STLFileLoader(stlDir + "0.STL", 0.5);
-    mRobotModel.link1 = new STLFileLoader(stlDir + "1.STL", 0.5);
-    mRobotModel.link2 = new STLFileLoader(stlDir + "2.STL", 0.5);
-    mRobotModel.link3 = new STLFileLoader(stlDir + "3.STL", 0.5);
-    mRobotModel.link4 = new STLFileLoader(stlDir + "4.STL", 0.5);
+    mRobotModel.link0 = new CoverPlateSTLFileLoader(stlDir + "0.STL", 0.5);
+    mRobotModel.link1 = new CoverPlateSTLFileLoader(stlDir + "1.STL", 0.5);
+    mRobotModel.link2 = new CoverPlateSTLFileLoader(stlDir + "2.STL", 0.5);
+    mRobotModel.link3 = new CoverPlateSTLFileLoader(stlDir + "3.STL", 0.5);
+    mRobotModel.link4 = new CoverPlateSTLFileLoader(stlDir + "4.STL", 0.5);
 }
 
 void DDR6RobotWidget::configureModelParams()

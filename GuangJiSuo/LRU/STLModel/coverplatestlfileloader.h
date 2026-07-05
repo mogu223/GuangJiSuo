@@ -1,5 +1,5 @@
-#ifndef STLFILELOADER_H
-#define STLFILELOADER_H
+#ifndef COVERPLATESTLFILELOADER_H
+#define COVERPLATESTLFILELOADER_H
 
 #include <QFile>
 #include <QVector3D>
@@ -8,7 +8,7 @@
 #include <QDataStream>
 
 // STL 三角形结构
-class STLTriangle {
+class CoverPlateSTLTriangle {
 public:
     QVector3D normal;
     QVector3D vertices[3];
@@ -43,10 +43,10 @@ public:
 };
 
 // STL 文件加载器类
-class STLFileLoader {
+class CoverPlateSTLFileLoader {
 public:
-    STLFileLoader(const QString& filename = "", float ratio = 1.0f);
-    ~STLFileLoader();
+    CoverPlateSTLFileLoader(const QString& filename = "", float ratio = 1.0f);
+    ~CoverPlateSTLFileLoader();
 
     // 加载 STL 文件
     void loadStl(const QString& filename);
@@ -69,8 +69,8 @@ private:
     void loadBinaryStl(const QString& filename);
 
 private:
-    QList<STLTriangle> model;  // 模型三角形列表
+    QList<CoverPlateSTLTriangle> model;  // 模型三角形列表
     float mRatio;              // 缩放比例
 };
 
-#endif // STLFILELOADER_H
+#endif // COVERPLATESTLFILELOADER_H

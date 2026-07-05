@@ -1,9 +1,9 @@
-#include "STLModel/rrglwidget.h"
+#include "STLModel/coverplaterrglwidget.h"
 #include <QPainter>
 #include <cmath>
 
 //鼠标旋转、缩小、平移、网格、坐标系
-RRGLWidget::RRGLWidget(QWidget *parent)
+CoverPlateRRGLWidget::CoverPlateRRGLWidget(QWidget *parent)
     : QGLWidget(parent)
     , xRot(0.0)
     , yRot(0.0)
@@ -16,13 +16,13 @@ RRGLWidget::RRGLWidget(QWidget *parent)
     setMouseTracking(false);         // 仅拖拽时跟踪鼠标
 }
 
-RRGLWidget::~RRGLWidget()
+CoverPlateRRGLWidget::~CoverPlateRRGLWidget()
 {
 
 }
 
 // 角度归一化
-double RRGLWidget::normalizeAngle(double angle, double min, double max) {
+double CoverPlateRRGLWidget::normalizeAngle(double angle, double min, double max) {
     angle = fmod(angle, 360.0);
     if (angle < min) angle = max + (angle - min);
     if (angle > max) angle = min + (angle - max);
@@ -30,7 +30,7 @@ double RRGLWidget::normalizeAngle(double angle, double min, double max) {
 }
 
 // X轴旋转
-void RRGLWidget::setXRotation(double angle) {
+void CoverPlateRRGLWidget::setXRotation(double angle) {
     angle = normalizeAngle(angle, -90, 90);
     if (qFuzzyCompare(xRot, angle)) return;
     xRot = angle;
@@ -38,7 +38,7 @@ void RRGLWidget::setXRotation(double angle) {
 }
 
 // Y轴旋转
-void RRGLWidget::setYRotation(double angle) {
+void CoverPlateRRGLWidget::setYRotation(double angle) {
     angle = normalizeAngle(angle, -90, 90);
     if (qFuzzyCompare(yRot, angle)) return;
     yRot = angle;
@@ -46,7 +46,7 @@ void RRGLWidget::setYRotation(double angle) {
 }
 
 // Z轴旋转
-void RRGLWidget::setZRotation(double angle) {
+void CoverPlateRRGLWidget::setZRotation(double angle) {
     angle = normalizeAngle(angle, 0.0, 360.0);
     if (qFuzzyCompare(zRot, angle)) return;
     zRot = angle;
@@ -54,7 +54,7 @@ void RRGLWidget::setZRotation(double angle) {
 }
 
 // 缩放
-void RRGLWidget::setScaleFactor(double factor) {
+void CoverPlateRRGLWidget::setScaleFactor(double factor) {
     factor = qBound(0.1, factor, 10.0);
     if (qFuzzyCompare(scaleFactor, factor)) return;
     scaleFactor = factor;
@@ -62,7 +62,7 @@ void RRGLWidget::setScaleFactor(double factor) {
 }
 
 
-void RRGLWidget::initializeGL()
+void CoverPlateRRGLWidget::initializeGL()
 {
     glEnable(GL_DEPTH_TEST);    // 开启深度缓冲
 
@@ -89,7 +89,7 @@ void RRGLWidget::initializeGL()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 }
 
-void RRGLWidget::resizeGL(int w, int h)
+void CoverPlateRRGLWidget::resizeGL(int w, int h)
 {
     if (w < 0 || h < 0) {
         return;
@@ -112,7 +112,7 @@ void RRGLWidget::resizeGL(int w, int h)
 }
 
 // 鼠标按下：记录初始状态
-void RRGLWidget::mousePressEvent(QMouseEvent *event) {
+void CoverPlateRRGLWidget::mousePressEvent(QMouseEvent *event) {
     if (!isMouseDragging) {
         curButton = event->button();
         lastMousePos = event->pos();
@@ -122,7 +122,7 @@ void RRGLWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 // 鼠标释放：重置状态
-void RRGLWidget::mouseReleaseEvent(QMouseEvent *event) {
+void CoverPlateRRGLWidget::mouseReleaseEvent(QMouseEvent *event) {
     Q_UNUSED(event);
     curButton = Qt::NoButton;
     isMouseDragging = false;
@@ -131,7 +131,7 @@ void RRGLWidget::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 // 鼠标移动
-void RRGLWidget::mouseMoveEvent(QMouseEvent *event) {
+void CoverPlateRRGLWidget::mouseMoveEvent(QMouseEvent *event) {
     if (!isMouseDragging || curButton == Qt::NoButton) return;
 
     const QPoint delta = event->pos() - lastMousePos;
@@ -159,7 +159,7 @@ void RRGLWidget::mouseMoveEvent(QMouseEvent *event) {
 }
 
 // 滚轮
-void RRGLWidget::wheelEvent(QWheelEvent *event) {
+void CoverPlateRRGLWidget::wheelEvent(QWheelEvent *event) {
     const double scaleStep = 0.05;
     double newFactor = scaleFactor;
 
@@ -178,7 +178,7 @@ void RRGLWidget::wheelEvent(QWheelEvent *event) {
     event->accept();
 }
 
-void RRGLWidget::drawGrid()
+void CoverPlateRRGLWidget::drawGrid()
 {
     glPushMatrix();
 
@@ -200,7 +200,7 @@ void RRGLWidget::drawGrid()
     glPopMatrix();
 }
 
-void RRGLWidget::drawCoordinates()
+void CoverPlateRRGLWidget::drawCoordinates()
 {
     glPushMatrix();
     glLineWidth(2.0f);
@@ -235,7 +235,7 @@ void RRGLWidget::drawCoordinates()
     glPopMatrix();
 }
 
-void RRGLWidget::drawSTLCoordinates(int r, int g, int b)
+void CoverPlateRRGLWidget::drawSTLCoordinates(int r, int g, int b)
 {
     glPushMatrix();
     glLineWidth(1.5f);
@@ -264,7 +264,7 @@ void RRGLWidget::drawSTLCoordinates(int r, int g, int b)
     glPopMatrix();
 }
 
-void RRGLWidget::setupColor(int r, int g, int b)
+void CoverPlateRRGLWidget::setupColor(int r, int g, int b)
 {
     setupColor(
         static_cast<float>(r) / 255.0f,
@@ -273,13 +273,13 @@ void RRGLWidget::setupColor(int r, int g, int b)
         );
 }
 
-void RRGLWidget::setupColor(float r, float g, float b)
+void CoverPlateRRGLWidget::setupColor(float r, float g, float b)
 {
     GLfloat color[] = {r, g, b, 1.0f};
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, color);
 }
 
-void RRGLWidget::paintGL()
+void CoverPlateRRGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

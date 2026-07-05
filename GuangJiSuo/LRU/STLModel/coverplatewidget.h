@@ -1,22 +1,22 @@
 #ifndef DDR6ROBOTWIDGET_H
 #define DDR6ROBOTWIDGET_H
 
-#include "STLModel/rrglwidget.h"
-#include "STLModel/stlfileloader.h"
+#include "STLModel/coverplaterrglwidget.h"
+#include "STLModel/coverplatestlfileloader.h"
 #include <QVector>
 //继承RRGLWidget,绘制取盖板模型
 // 取盖板结构（4 个部件）
 typedef struct {
-    STLFileLoader *link0;
-    STLFileLoader *link1;
-    STLFileLoader *link2;
-    STLFileLoader *link3;
-    STLFileLoader *link4;
+    CoverPlateSTLFileLoader *link0;
+    CoverPlateSTLFileLoader *link1;
+    CoverPlateSTLFileLoader *link2;
+    CoverPlateSTLFileLoader *link3;
+    CoverPlateSTLFileLoader *link4;
 } CoverPlateSTLModel;
 
 // 桌子模型结构
 typedef struct {
-    STLFileLoader *link0;
+    CoverPlateSTLFileLoader *link0;
 } DeskModel;
 
 // 配置参数
@@ -36,7 +36,7 @@ typedef struct {
     bool isDrawJoint4Coord;
 } GlobalConfig;
 
-class DDR6RobotWidget : public RRGLWidget {
+class DDR6RobotWidget : public CoverPlateRRGLWidget {
     Q_OBJECT
 
 public:
