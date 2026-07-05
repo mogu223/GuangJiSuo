@@ -15,6 +15,7 @@ TEMPLATE = app
 
 # CONFIG += c++17 unicode
 CONFIG += c++17 unicode
+CONFIG -= batch
 
 QMAKE_CXXFLAGS += /utf-8
 
@@ -42,8 +43,8 @@ SOURCES += \
     DatabaseManager.cpp \
     STLModel/coverplatewidget.cpp \
     STLModel/newform.cpp \
-    STLModel/rrglwidget.cpp \
-    STLModel/stlfileloader.cpp \
+    STLModel/coverplaterrglwidget.cpp \
+    STLModel/coverplatestlfileloader.cpp \
     SafetyMonitor.cpp \
     SerialSensor.cpp \
     SharedMemory/sharedmemorymanager.cpp \
@@ -51,6 +52,7 @@ SOURCES += \
     SCStatusTcp.cpp \
     TCPSensor.cpp \
     mainwindow.cpp \
+    lruparamdialog.cpp \
     srisensorworker.cpp \
     uvc_camera.cpp \
     vision/code/lenslic/LensAccess.c \
@@ -78,13 +80,13 @@ SOURCES += \
     LevelingSystem.cpp \
     MainLift.cpp \
     CoverPlate.cpp \
-    Lift.cpp \
+    LiftSubsystem.cpp \
     Pin.cpp \
     TaskMgr.cpp \
     loghandler.cpp \
     logmgr.cpp \
     LRU.cpp \
-    lrumonitor.cpp \
+    lrumonitor_window.cpp \
     main.cpp \
     robotview/rrglwidget.cpp \
     robotview/stlfileloader.cpp \
@@ -102,13 +104,14 @@ HEADERS += \
     DataType.h \
     DatabaseManager.h \
     LRUdatadef.h \
+    lruparamdialog.h \
     PMC_lib/PMC006xxLib.h \
     PMC_lib/PUSIControlLib.h \
     SCHeadData.h \
     STLModel/coverplatewidget.h \
     STLModel/newform.h \
-    STLModel/rrglwidget.h \
-    STLModel/stlfileloader.h \
+    STLModel/coverplaterrglwidget.h \
+    STLModel/coverplatestlfileloader.h \
     SafetyMonitor.h \
     SerialSensor.h \
     SharedMemory/sharedmemorymanager.h \

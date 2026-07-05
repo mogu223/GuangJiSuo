@@ -445,6 +445,25 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     }
     result.targetIdFound = true;
 
+    // ★ 搜索线索：计算 marker 中心与图像中心的偏移
+    {
+        result.targetSeen = true;
+        result.imageCenterX = image.cols / 2.0;
+        result.imageCenterY = image.rows / 2.0;
+        double cx = 0, cy = 0;
+        for (const auto &pt : detection.cornerPixels) {
+            cx += pt.x;
+            cy += pt.y;
+        }
+        cx /= detection.cornerPixels.size();
+        cy /= detection.cornerPixels.size();
+        result.markerCenterX = cx;
+        result.markerCenterY = cy;
+        result.markerOffsetPxX = cx - result.imageCenterX;
+        result.markerOffsetPxY = cy - result.imageCenterY;
+        result.hasSearchHint = true;
+    }
+
     // 3. 检查角点数量
     if (detection.cornerPixels.size() != 4) {
         result.hasFourCorners = false;
@@ -478,6 +497,14 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     result.pnpSuccess = true;
     result.reprojectionError = pose.reprojectionError;
 
+    // ★ 搜索线索：存储修正前的 PnP tvec
+    {
+        result.hasPnpHint = true;
+        result.hintTvecX = pose.tvec[0];
+        result.hintTvecY = pose.tvec[1];
+        result.hasSearchHint = true;
+    }
+
     // 6. 检查重投影误差
     if (pose.reprojectionError > m_reprojectionErrorMaxPx) {
         result.failureReason = QString("重投影误差过大: %1 px (阈值: %2)")
@@ -504,11 +531,11 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     result.yaw = pose.yaw;
 
     if(-0.5<=z && z <= 0.5){
-        pose.tvec[0] = pose.tvec[0]-0.3;
-        pose.tvec[1] = pose.tvec[1]+7.1;
+        pose.tvec[0] += z0_tvec_x_offset;
+        pose.tvec[1] += z0_tvec_y_offset;
     }else if (1699.5<=z && z <= 1700.5) {
-        pose.tvec[0] = pose.tvec[0]+7.3;
-        pose.tvec[1] = pose.tvec[1]+3.3;
+        pose.tvec[0] += z1700_tvec_x_offset;
+        pose.tvec[1] += z1700_tvec_y_offset;
     }
 
     float x_platform = -pose.tvec[1];
@@ -554,6 +581,10 @@ void ArucoDetector::onParamsReceived(const LRUInnerParams &params)
     offset_x_16 = params.offset_x_16;
     offset_y_16 = params.offset_y_16;
     marker_id = params.marker_id;
+    z0_tvec_x_offset    = params.z0_tvec_x_offset;
+    z0_tvec_y_offset    = params.z0_tvec_y_offset;
+    z1700_tvec_x_offset = params.z1700_tvec_x_offset;
+    z1700_tvec_y_offset = params.z1700_tvec_y_offset;
 }
 
 

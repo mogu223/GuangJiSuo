@@ -69,6 +69,7 @@
 #include <QCameraViewfinder>
 #include <QDialog>
 #include "LRUdatadef.h"
+#include "lruparamdialog.h"
 #include "vision_source/guangzilasersensor.h"
 #include "PMC_lib/PUSIControlLib.h"
 #include "PMC_lib/PMC006xxLib.h"
@@ -230,6 +231,7 @@ private slots:
     void onLight2ValueChanged(int value);
     void lightbrightnessvaleinit(int value1,int value2);
     void onComboChanged(const QString &text);
+    void on_btn_LRUParamAdjust_clicked();
     void on_distance_open_clicked();
     void updateDistanceLabels();  // 声明更新标签的槽函数
 

@@ -1015,7 +1015,7 @@ void dahengTwoCams_qt_vs::__FilterUsbOnly(GxIAPICPP::gxdeviceinfo_vector& vec)
 void dahengTwoCams_qt_vs::onParamsReceived(const LRUInnerParams &params)
 {
     camera0_exposureTime  = params.camera0_exposureTime;
-    camera1_exposureTime  = params.camera0_exposureTime;
+    camera1_exposureTime  = params.camera1_exposureTime;
 
 }
 

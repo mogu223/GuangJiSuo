@@ -694,6 +694,7 @@ public:
     QLabel *distance1;
     QLabel *lbl_GapAngle;
     QLabel *label_133;
+    QPushButton *btn_LRUParamAdjust;
     QGroupBox *groupBox_13;
     QGridLayout *gridLayout_22;
     QHBoxLayout *horizontalLayout_14;
@@ -5969,6 +5970,11 @@ public:
 
         gridLayout_13->addWidget(label_133, 2, 5, 1, 1);
 
+        btn_LRUParamAdjust = new QPushButton(groupBox_21);
+        btn_LRUParamAdjust->setObjectName(QString::fromUtf8("btn_LRUParamAdjust"));
+
+        gridLayout_13->addWidget(btn_LRUParamAdjust, 6, 2, 1, 1);
+
 
         gridLayout_48->addLayout(gridLayout_13, 0, 0, 1, 1);
 
@@ -7033,7 +7039,7 @@ public:
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         StartVision_2 = new QMenuBar(MainWindow);
         StartVision_2->setObjectName(QString::fromUtf8("StartVision_2"));
-        StartVision_2->setGeometry(QRect(0, 0, 1694, 21));
+        StartVision_2->setGeometry(QRect(0, 0, 1694, 25));
         LRUMonitor = new QMenu(StartVision_2);
         LRUMonitor->setObjectName(QString::fromUtf8("LRUMonitor"));
         AGVMonitor = new QMenu(StartVision_2);
@@ -7071,7 +7077,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -7595,6 +7601,7 @@ public:
         distance1->setText(QString());
         lbl_GapAngle->setText(QCoreApplication::translate("MainWindow", "0.0", nullptr));
         label_133->setText(QCoreApplication::translate("MainWindow", "Y\345\256\275\345\272\246(mm)\357\274\232", nullptr));
+        btn_LRUParamAdjust->setText(QCoreApplication::translate("MainWindow", "\345\217\202\346\225\260\350\260\203\346\225\264", nullptr));
         groupBox_13->setTitle(QCoreApplication::translate("MainWindow", "\347\242\260\346\222\236\346\243\200\346\265\213", nullptr));
         groupBox_27->setTitle(QCoreApplication::translate("MainWindow", "\345\212\233\344\277\241\346\201\257\345\217\215\351\246\210", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "FX:", nullptr));

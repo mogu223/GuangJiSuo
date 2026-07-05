@@ -27,6 +27,11 @@ struct LRUInnerParams {
     float target_ry;
     int camera0_exposureTime;
     int camera1_exposureTime;
+    // PnP tvec 修正偏移（Z≈0 / Z≈1700）
+    float z0_tvec_x_offset;
+    float z0_tvec_y_offset;
+    float z1700_tvec_x_offset;
+    float z1700_tvec_y_offset;
 };
 Q_DECLARE_METATYPE(LRUInnerParams)
 
@@ -49,7 +54,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      1,
                      0.0f,
                      -0.11f,0.57f,
-                     500000,300000}},
+                     500000,300000,
+                     -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右片架",   {7.0f,4.0f,
                      2655.0f,
                      41.73f,71.95f,
@@ -60,7 +66,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      1,
                      0.0f,
                      -0.11f,0.57f,
-                     500000,300000}},
+                     500000,300000,
+                     -0.3f,7.1f,7.3f,3.3f}},
 
 
    {"安装车右右隔板玻璃",   {7.0f,30.0f,
@@ -73,7 +80,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            1,
                            0.0f,
                            -0.11f,0.57f,
-                           500000,300000}},
+                           500000,300000,
+                           -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右右隔板玻璃",   {7.0f,30.0f,
                            2655.0f,
                            41.73f,71.95f,
@@ -84,7 +92,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            1,
                            0.0f,
                            -0.11f,0.57f,
-                           500000,300000}},
+                           500000,300000,
+                           -0.3f,7.1f,7.3f,3.3f}},
 
 
    {"安装车右左隔板玻璃",   {7.0f,20.0f,
@@ -97,7 +106,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            1,
                            0.0f,
                            -0.11f,0.57f,
-                           500000,300000}},
+                           500000,300000,
+                           -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右左隔板玻璃",   {7.0f,20.0f,
                            2675.0f,
                            41.73f,71.95f,
@@ -108,7 +118,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            1,
                            0.0f,
                            -0.11f,0.57f,
-                           500000,300000}},
+                           500000,300000,
+                           -0.3f,7.1f,7.3f,3.3f}},
 
 
    {"安装车右中灯箱",   {12.0f,3.0f,
@@ -121,7 +132,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        1,
                        0.0f,
                        -0.11f,0.57f,
-                       500000,300000}},
+                       500000,300000,
+                       -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右中灯箱",   {12.0f,3.0f,
                        2695.0f,
                        41.73f,605.95f,
@@ -132,7 +144,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        1,
                        0.0f,
                        -0.11f,0.57f,
-                       500000,300000}},
+                       500000,300000,
+                       -0.3f,7.1f,7.3f,3.3f}},
 
 
    {"安装车右侧灯箱",   {12.0f,5.0f,
@@ -145,7 +158,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0,
                        0.0f,
                        -0.11f,0.57f,
-                       500000,300000}},
+                       500000,300000,
+                       -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右侧灯箱",   {12.0f,5.0f,
                        2695.0f,
                        45.73f,-160.0f,
@@ -156,7 +170,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0,
                        0.0f,
                        -0.11f,0.57f,
-                       500000,300000}},
+                       500000,300000,
+                       -0.3f,7.1f,7.3f,3.3f}},
 
 
    {"安装车右片窗",   {7.25f,12.0f,
@@ -169,7 +184,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      1,
                      0.0f,
                      -0.11f,0.57f,
-                     500000,300000}},
+                     500000,300000,
+                     -0.3f,7.1f,7.3f,3.3f}},
    {"拆卸车右片窗",   {7.25f,12.0f,
                      2600.0f,
                      295.73f-32.0,30.95f,
@@ -180,7 +196,8 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      1,
                      0.0f,
                      -0.11f,0.57f,
-                     500000,300000}},
+                     500000,300000,
+                     -0.3f,7.1f,7.3f,3.3f}},
    };
     return LRU_DATA;
 }

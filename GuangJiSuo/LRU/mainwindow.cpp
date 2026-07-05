@@ -284,6 +284,9 @@ MainWindow::MainWindow(QWidget *parent) :
             m_lift->m_vision_detected, &ArucoDetector::onParamsReceived);
     connect(this, &MainWindow::paramsSelected,
             m_lift->m_dahengCamera, &dahengTwoCams_qt_vs::onParamsReceived);
+    // "参数调整" 按钮
+    connect(ui->btn_LRUParamAdjust, &QPushButton::clicked,
+            this, &MainWindow::on_btn_LRUParamAdjust_clicked);
     // 初始化触发
     if (!LRUpresetData().isEmpty()) {
         onComboChanged(ui->comboBox_LRUdata->currentText());
@@ -3428,7 +3431,39 @@ void MainWindow::lightbrightnessvaleinit(int value1, int value2)
 void MainWindow::onComboChanged(const QString &text)
 {
     if (LRUpresetData().contains(text)) {
-        emit paramsSelected(LRUpresetData().value(text));
+        LRUInnerParams defaults = LRUpresetData().value(text);
+        LRUInnerParams params = LruParamDialog::loadWithOverride(text, defaults);
+        emit paramsSelected(params);
+    }
+}
+
+void MainWindow::on_btn_LRUParamAdjust_clicked()
+{
+    QString lruName = ui->comboBox_LRUdata->currentText();
+    if (!LRUpresetData().contains(lruName)) {
+        UpdateUI("当前未选中有效的 LRU 类型");
+        return;
+    }
+
+    // 获取当前实际生效的参数（含 JSON 覆盖）
+    LRUInnerParams defaults = LRUpresetData().value(lruName);
+    LRUInnerParams current = LruParamDialog::loadWithOverride(lruName, defaults);
+
+    LruParamDialog dlg(lruName, current, this);
+    if (dlg.exec() == QDialog::Accepted) {
+        if (dlg.restoreRequested()) {
+            // 恢复默认：删除 JSON 覆盖
+            LruParamDialog::removeOverride(lruName);
+            LRUInnerParams restored = defaults;
+            emit paramsSelected(restored);
+            UpdateUI(QString("已恢复 %1 的出厂默认参数").arg(lruName));
+        } else {
+            // 保存并生效
+            LRUInnerParams edited = dlg.editedParams();
+            LruParamDialog::saveOverride(lruName, edited);
+            emit paramsSelected(edited);
+            UpdateUI(QString("已保存 %1 的参数调整").arg(lruName));
+        }
     }
 }
 
