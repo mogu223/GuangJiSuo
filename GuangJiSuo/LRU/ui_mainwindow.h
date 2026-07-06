@@ -671,21 +671,21 @@ public:
     QGridLayout *gridLayout_13;
     QLabel *label_132;
     QLabel *lbl_GapWidth_y;
-    QPushButton *btn_auto_descent;
-    QSpinBox *light2_value;
+    QPushButton *btn_LRUParamAdjust;
     QPushButton *btn_CheckStatus;
-    QLabel *lbl_GapWidth_x;
+    QPushButton *btn_SearchDetect;
     QHBoxLayout *horizontalLayout_19;
     QLabel *label_48;
     QDoubleSpinBox *x_offset;
     QSpinBox *light1_value;
-    QPushButton *btn_stop_secondry;
+    QPushButton *btn_StatusModifyLatter;
     QHBoxLayout *horizontalLayout_21;
     QLabel *label2222;
     QDoubleSpinBox *rz_offset;
     QLabel *label_129;
     QLabel *label_58;
-    QPushButton *btn_StatusModifyLatter;
+    QPushButton *btn_AutoAlign;
+    QPushButton *btn_auto_descent;
     QLabel *label_59;
     QPushButton *btn_secondary_lift;
     QHBoxLayout *horizontalLayout_20;
@@ -694,7 +694,6 @@ public:
     QLabel *distance1;
     QLabel *lbl_GapAngle;
     QLabel *label_133;
-    QPushButton *btn_LRUParamAdjust;
     QGroupBox *groupBox_13;
     QGridLayout *gridLayout_22;
     QHBoxLayout *horizontalLayout_14;
@@ -5818,17 +5817,10 @@ public:
 
         gridLayout_13->addWidget(lbl_GapWidth_y, 2, 6, 1, 1);
 
-        btn_auto_descent = new QPushButton(groupBox_21);
-        btn_auto_descent->setObjectName(QString::fromUtf8("btn_auto_descent"));
-        btn_auto_descent->setEnabled(true);
+        btn_LRUParamAdjust = new QPushButton(groupBox_21);
+        btn_LRUParamAdjust->setObjectName(QString::fromUtf8("btn_LRUParamAdjust"));
 
-        gridLayout_13->addWidget(btn_auto_descent, 0, 2, 1, 1);
-
-        light2_value = new QSpinBox(groupBox_21);
-        light2_value->setObjectName(QString::fromUtf8("light2_value"));
-        light2_value->setMaximum(255);
-
-        gridLayout_13->addWidget(light2_value, 6, 4, 1, 1);
+        gridLayout_13->addWidget(btn_LRUParamAdjust, 0, 0, 1, 1);
 
         btn_CheckStatus = new QPushButton(groupBox_21);
         btn_CheckStatus->setObjectName(QString::fromUtf8("btn_CheckStatus"));
@@ -5839,14 +5831,14 @@ public:
 
         gridLayout_13->addWidget(btn_CheckStatus, 0, 1, 1, 1);
 
-        lbl_GapWidth_x = new QLabel(groupBox_21);
-        lbl_GapWidth_x->setObjectName(QString::fromUtf8("lbl_GapWidth_x"));
-        sizePolicy10.setHeightForWidth(lbl_GapWidth_x->sizePolicy().hasHeightForWidth());
-        lbl_GapWidth_x->setSizePolicy(sizePolicy10);
-        lbl_GapWidth_x->setMinimumSize(QSize(50, 0));
-        lbl_GapWidth_x->setMaximumSize(QSize(50, 16777215));
+        btn_SearchDetect = new QPushButton(groupBox_21);
+        btn_SearchDetect->setObjectName(QString::fromUtf8("btn_SearchDetect"));
+        btn_SearchDetect->setEnabled(true);
+        sizePolicy9.setHeightForWidth(btn_SearchDetect->sizePolicy().hasHeightForWidth());
+        btn_SearchDetect->setSizePolicy(sizePolicy9);
+        btn_SearchDetect->setMinimumSize(QSize(100, 0));
 
-        gridLayout_13->addWidget(lbl_GapWidth_x, 0, 6, 1, 1);
+        gridLayout_13->addWidget(btn_SearchDetect, 0, 2, 1, 1);
 
         horizontalLayout_19 = new QHBoxLayout();
         horizontalLayout_19->setSpacing(6);
@@ -5872,11 +5864,11 @@ public:
 
         gridLayout_13->addWidget(light1_value, 0, 4, 1, 1);
 
-        btn_stop_secondry = new QPushButton(groupBox_21);
-        btn_stop_secondry->setObjectName(QString::fromUtf8("btn_stop_secondry"));
-        btn_stop_secondry->setEnabled(true);
+        btn_StatusModifyLatter = new QPushButton(groupBox_21);
+        btn_StatusModifyLatter->setObjectName(QString::fromUtf8("btn_StatusModifyLatter"));
+        btn_StatusModifyLatter->setEnabled(true);
 
-        gridLayout_13->addWidget(btn_stop_secondry, 6, 0, 1, 1);
+        gridLayout_13->addWidget(btn_StatusModifyLatter, 6, 0, 1, 1);
 
         horizontalLayout_21 = new QHBoxLayout();
         horizontalLayout_21->setSpacing(6);
@@ -5910,13 +5902,19 @@ public:
 
         gridLayout_13->addWidget(label_58, 6, 3, 1, 1);
 
-        btn_StatusModifyLatter = new QPushButton(groupBox_21);
-        btn_StatusModifyLatter->setObjectName(QString::fromUtf8("btn_StatusModifyLatter"));
-        btn_StatusModifyLatter->setEnabled(true);
-        sizePolicy17.setHeightForWidth(btn_StatusModifyLatter->sizePolicy().hasHeightForWidth());
-        btn_StatusModifyLatter->setSizePolicy(sizePolicy17);
+        btn_AutoAlign = new QPushButton(groupBox_21);
+        btn_AutoAlign->setObjectName(QString::fromUtf8("btn_AutoAlign"));
+        btn_AutoAlign->setEnabled(true);
+        sizePolicy17.setHeightForWidth(btn_AutoAlign->sizePolicy().hasHeightForWidth());
+        btn_AutoAlign->setSizePolicy(sizePolicy17);
 
-        gridLayout_13->addWidget(btn_StatusModifyLatter, 6, 1, 1, 1);
+        gridLayout_13->addWidget(btn_AutoAlign, 6, 1, 1, 1);
+
+        btn_auto_descent = new QPushButton(groupBox_21);
+        btn_auto_descent->setObjectName(QString::fromUtf8("btn_auto_descent"));
+        btn_auto_descent->setEnabled(true);
+
+        gridLayout_13->addWidget(btn_auto_descent, 6, 3, 1, 1);
 
         label_59 = new QLabel(groupBox_21);
         label_59->setObjectName(QString::fromUtf8("label_59"));
@@ -5927,7 +5925,7 @@ public:
         btn_secondary_lift->setObjectName(QString::fromUtf8("btn_secondary_lift"));
         btn_secondary_lift->setEnabled(true);
 
-        gridLayout_13->addWidget(btn_secondary_lift, 0, 0, 1, 1);
+        gridLayout_13->addWidget(btn_secondary_lift, 6, 2, 1, 1);
 
         horizontalLayout_20 = new QHBoxLayout();
         horizontalLayout_20->setSpacing(6);
@@ -5969,11 +5967,6 @@ public:
         label_133->setMaximumSize(QSize(120, 16777215));
 
         gridLayout_13->addWidget(label_133, 2, 5, 1, 1);
-
-        btn_LRUParamAdjust = new QPushButton(groupBox_21);
-        btn_LRUParamAdjust->setObjectName(QString::fromUtf8("btn_LRUParamAdjust"));
-
-        gridLayout_13->addWidget(btn_LRUParamAdjust, 6, 2, 1, 1);
 
 
         gridLayout_48->addLayout(gridLayout_13, 0, 0, 1, 1);
@@ -7420,7 +7413,7 @@ public:
         label_121->setText(QCoreApplication::translate("MainWindow", "\347\273\235\345\257\271\345\235\220\346\240\207\357\274\232", nullptr));
         right_laser->setText(QString());
         btnDisAbsMove4->setText(QCoreApplication::translate("MainWindow", "\347\273\235\345\257\271\350\277\220\345\212\250", nullptr));
-        btn_MainLiftForward->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\346\212\254\345\215\207", nullptr));
+        btn_MainLiftForward->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\346\212\254\345\215\207\345\271\266\345\257\271\351\275\220", nullptr));
         groupBox_29->setTitle(QCoreApplication::translate("MainWindow", "\346\211\213\345\212\250\345\217\226\350\243\205\347\233\226\346\235\277", nullptr));
         btnForward9_10->setText(QCoreApplication::translate("MainWindow", "\346\211\213\346\214\207\346\234\272\346\236\204\350\277\234\347\246\273", nullptr));
         btnBackward5_6->setText(QCoreApplication::translate("MainWindow", "\346\234\272\346\236\204\345\217\215\345\220\221\347\272\265\347\247\273", nullptr));
@@ -7584,24 +7577,24 @@ public:
         btnDisAbsMove12->setText(QCoreApplication::translate("MainWindow", "\347\273\235\345\257\271\350\277\220\345\212\250", nullptr));
         btnDisMove12->setText(QCoreApplication::translate("MainWindow", "\347\233\270\345\257\271\350\277\220\345\212\250", nullptr));
         groupBox_21->setTitle(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\344\272\214\347\272\247\345\215\207\351\231\215(\345\237\272\344\272\216\350\247\206\350\247\211)", nullptr));
-        label_132->setText(QCoreApplication::translate("MainWindow", "X\345\256\275\345\272\246(mm)\357\274\232", nullptr));
+        label_132->setText(QCoreApplication::translate("MainWindow", "\345\257\271\351\275\220\350\257\257\345\267\256X(mm)\357\274\232", nullptr));
         lbl_GapWidth_y->setText(QCoreApplication::translate("MainWindow", "2.0", nullptr));
-        btn_auto_descent->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\344\270\213\351\231\215", nullptr));
-        btn_CheckStatus->setText(QCoreApplication::translate("MainWindow", "\346\243\200\346\265\213\345\247\277\346\200\201", nullptr));
-        lbl_GapWidth_x->setText(QCoreApplication::translate("MainWindow", "2.0", nullptr));
+        btn_LRUParamAdjust->setText(QCoreApplication::translate("MainWindow", "LRU\345\217\202\346\225\260\350\256\276\347\275\256", nullptr));
+        btn_CheckStatus->setText(QCoreApplication::translate("MainWindow", "\350\247\206\350\247\211\346\243\200\346\265\213", nullptr));
+        btn_SearchDetect->setText(QCoreApplication::translate("MainWindow", "\345\271\263\347\247\273\346\211\276\347\240\201\346\243\200\346\265\213", nullptr));
         label_48->setText(QCoreApplication::translate("MainWindow", "x\345\201\217\347\275\256", nullptr));
-        btn_stop_secondry->setText(QCoreApplication::translate("MainWindow", "\346\211\213\345\212\250\346\216\245\347\256\241", nullptr));
+        btn_StatusModifyLatter->setText(QCoreApplication::translate("MainWindow", "\346\211\247\350\241\214\344\270\200\346\254\241\345\257\271\351\275\220", nullptr));
         label2222->setText(QCoreApplication::translate("MainWindow", "rz\345\201\217\347\275\256", nullptr));
-        label_129->setText(QCoreApplication::translate("MainWindow", "\347\274\235\351\232\231\350\247\222\345\272\246(deg)\357\274\232", nullptr));
+        label_129->setText(QCoreApplication::translate("MainWindow", "Yaw\350\257\257\345\267\256(deg)\357\274\232", nullptr));
         label_58->setText(QCoreApplication::translate("MainWindow", "\345\205\211\346\272\2202\344\272\256\345\272\246", nullptr));
-        btn_StatusModifyLatter->setText(QCoreApplication::translate("MainWindow", "\345\247\277\346\200\201\350\260\203\346\225\264", nullptr));
+        btn_AutoAlign->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\345\257\271\351\275\220", nullptr));
+        btn_auto_descent->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\344\270\213\351\231\215", nullptr));
         label_59->setText(QCoreApplication::translate("MainWindow", "\345\205\211\346\272\2201\344\272\256\345\272\246", nullptr));
-        btn_secondary_lift->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\346\212\254\345\215\207", nullptr));
+        btn_secondary_lift->setText(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\346\212\254\345\215\207\345\271\266\345\257\271\351\275\220", nullptr));
         label_51->setText(QCoreApplication::translate("MainWindow", "y\345\201\217\347\275\256", nullptr));
         distance1->setText(QString());
         lbl_GapAngle->setText(QCoreApplication::translate("MainWindow", "0.0", nullptr));
-        label_133->setText(QCoreApplication::translate("MainWindow", "Y\345\256\275\345\272\246(mm)\357\274\232", nullptr));
-        btn_LRUParamAdjust->setText(QCoreApplication::translate("MainWindow", "\345\217\202\346\225\260\350\260\203\346\225\264", nullptr));
+        label_133->setText(QCoreApplication::translate("MainWindow", "\345\257\271\351\275\220\350\257\257\345\267\256Y(mm)\357\274\232", nullptr));
         groupBox_13->setTitle(QCoreApplication::translate("MainWindow", "\347\242\260\346\222\236\346\243\200\346\265\213", nullptr));
         groupBox_27->setTitle(QCoreApplication::translate("MainWindow", "\345\212\233\344\277\241\346\201\257\345\217\215\351\246\210", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "FX:", nullptr));

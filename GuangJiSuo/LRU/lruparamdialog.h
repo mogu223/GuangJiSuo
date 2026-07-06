@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QComboBox>
 #include "LRUdatadef.h"
 
 // =============================================================================
@@ -25,6 +26,8 @@ public:
     LRUInnerParams editedParams() const { return m_editedParams; }
     /// 用户是否请求恢复默认
     bool restoreRequested() const { return m_restoreRequested; }
+    /// 当前选中的 LRU 类型
+    QString selectedLruType() const { return m_lruTypeName; }
 
     // ---- 静态 JSON 持久化 helpers ----
     /// 加载 lru_params.json，对同名 LRU 覆盖默认值；没有的字段保留默认
@@ -36,18 +39,26 @@ public:
     /// 删除 lru_params.json 中该 LRU 的覆盖值
     static void removeOverride(const QString &lruTypeName);
 
+signals:
+    void lruTypeChanged(const QString &lruTypeName);
+
 private slots:
     void onSave();
     void onRestoreDefault();
+    void onLruTypeChanged(int index);
 
 private:
     void setupUi(const LRUInnerParams &params);
     void collectParams(LRUInnerParams &out);
+    bool promptSaveUnsavedChanges();
 
     QString m_lruTypeName;
     LRUInnerParams m_defaultParams;
     LRUInnerParams m_editedParams;
     bool m_restoreRequested = false;
+    bool m_paramsDirty = false;
+
+    QComboBox *m_lruTypeCombo = nullptr;
 
     // UI widgets
     QDoubleSpinBox *m_x_gap = nullptr;

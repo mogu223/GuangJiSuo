@@ -3058,6 +3058,12 @@ void MainWindow::UpdateUILog(QString str)
     // 添加到表格
     m_tableModel->appendRow({timeItem, msgItem});
 
+    // 限制 UI 日志行数，避免长时间运行表格越来越慢
+    const int maxLogRows = 500;
+    while (m_tableModel->rowCount() > maxLogRows) {
+        m_tableModel->removeRow(0);
+    }
+
     // 自动滚动到最新行
     int lastRow = m_tableModel->rowCount() - 1;
     ui->tableView_SystemStatus->scrollTo(m_tableModel->index(lastRow, 0));
@@ -3351,9 +3357,19 @@ void MainWindow::on_btn_secondary_lift_clicked()
 }
 
 
-void MainWindow::on_btn_stop_secondry_clicked()
+void MainWindow::on_btn_AutoAlign_clicked()
 {
-    m_lift->stop_auto_lift();
+    ui->btn_AutoAlign->setEnabled(false);
+    QThread* startThread = new QThread;
+    QObject::connect(startThread, &QThread::started, [this,startThread]() {
+        m_lift->auto_align();
+        startThread->quit();
+    });
+    QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
+    QObject::connect(startThread, &QThread::finished, this,  [this](){
+        ui->btn_AutoAlign->setEnabled(true);
+    });
+    startThread->start();
 }
 
 
@@ -3365,13 +3381,10 @@ void MainWindow::on_btn_CheckStatus_clicked()
         m_lift->vision_detected();
         startThread->quit();
     });
-    // 连接 finished 信号到 deleteLater 槽，确保线程执行完毕后释放资源
     QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
     QObject::connect(startThread, &QThread::finished, this,  [this](){
-        ui->btn_CheckStatus->setEnabled(true); // 线程结束后恢复按钮可用
+        ui->btn_CheckStatus->setEnabled(true);
     });
-
-    // 启动线程
     startThread->start();
 }
 
@@ -3384,13 +3397,41 @@ void MainWindow::on_btn_StatusModifyLatter_clicked()
         m_lift->StatusModifyLatte();
         startThread->quit();
     });
-    // 连接 finished 信号到 deleteLater 槽，确保线程执行完毕后释放资源
     QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
     QObject::connect(startThread, &QThread::finished, this,  [this](){
-        ui->btn_StatusModifyLatter->setEnabled(true); // 线程结束后恢复按钮可用
+        ui->btn_StatusModifyLatter->setEnabled(true);
     });
+    startThread->start();
+}
 
-    // 启动线程
+void MainWindow::on_btn_SearchDetect_clicked()
+{
+    ui->btn_SearchDetect->setEnabled(false);
+    QThread* startThread = new QThread;
+    QObject::connect(startThread, &QThread::started, [this,startThread]() {
+        m_lift->search_vision_detected();
+        startThread->quit();
+    });
+    QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
+    QObject::connect(startThread, &QThread::finished, this,  [this](){
+        ui->btn_SearchDetect->setEnabled(true);
+    });
+    startThread->start();
+}
+
+void MainWindow::on_btn_auto_descent_clicked()
+{
+    ui->btn_auto_descent->setEnabled(false);
+    QThread* startThread = new QThread;
+    QObject::connect(startThread, &QThread::started, [this,startThread]() {
+        m_lift->autodescent = true;
+        m_lift->auto_descent();
+        startThread->quit();
+    });
+    QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
+    QObject::connect(startThread, &QThread::finished, this,  [this](){
+        ui->btn_auto_descent->setEnabled(true);
+    });
     startThread->start();
 }
 
@@ -3447,20 +3488,28 @@ void MainWindow::on_btn_LRUParamAdjust_clicked()
     LRUInnerParams current = LruParamDialog::loadWithOverride(lruName, defaults);
 
     LruParamDialog dlg(lruName, current, this);
+    connect(&dlg, &LruParamDialog::lruTypeChanged, this, [this](const QString &type) {
+        ui->comboBox_LRUdata->setCurrentText(type);
+        onComboChanged(type);
+    });
     if (dlg.exec() == QDialog::Accepted) {
+        QString finalLruName = dlg.selectedLruType();
         if (dlg.restoreRequested()) {
             // 恢复默认：删除 JSON 覆盖
-            LruParamDialog::removeOverride(lruName);
-            LRUInnerParams restored = defaults;
+            LruParamDialog::removeOverride(finalLruName);
+            LRUInnerParams restored = LRUpresetData().value(finalLruName);
             emit paramsSelected(restored);
-            UpdateUI(QString("已恢复 %1 的出厂默认参数").arg(lruName));
+            UpdateUI(QString("已恢复 %1 的出厂默认参数").arg(finalLruName));
         } else {
             // 保存并生效
             LRUInnerParams edited = dlg.editedParams();
-            LruParamDialog::saveOverride(lruName, edited);
+            LruParamDialog::saveOverride(finalLruName, edited);
             emit paramsSelected(edited);
-            UpdateUI(QString("已保存 %1 的参数调整").arg(lruName));
+            UpdateUI(QString("已保存 %1 的参数调整").arg(finalLruName));
         }
+        // 同步主界面 LRU 类型
+        ui->comboBox_LRUdata->setCurrentText(finalLruName);
+        onComboChanged(finalLruName);
     }
 }
 
@@ -4320,30 +4369,6 @@ void MainWindow::on_btn_PlatformLeveling_clicked()
 }
 
 
-void MainWindow::on_btnTest_clicked()
-{
-    for(int i = 0;i < 60;i++){
-      MyDataBase->logSensorData("称重传感器-0", i);
-    }
-}
-
-
-void MainWindow::on_btn_auto_descent_clicked()
-{
-    QThread* startThread = new QThread;
-    QObject::connect(startThread, &QThread::started, [this,startThread]() {
-        m_lift->autodescent = true;
-        m_lift->auto_descent();
-        startThread->quit();
-    });
-    // 连接 finished 信号到 deleteLater 槽，确保线程执行完毕后释放资源
-    QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
-
-    // 启动线程
-    startThread->start();
-}
-
-void MainWindow::on_btn_IOForward_pressed()
 {
     zm->SetIOOutput(6,1);
 }

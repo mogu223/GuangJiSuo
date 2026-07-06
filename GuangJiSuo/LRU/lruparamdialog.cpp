@@ -5,6 +5,7 @@
 #include <QGroupBox>
 #include <QScrollArea>
 #include <QLabel>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -14,11 +15,21 @@
 #include <QDir>
 
 // =============================================================================
-// 静态 helper：JSON 文件路径
+// 静态 helper：JSON 文件路径（优先当前工作目录，兼容旧 exe 目录）
 // =============================================================================
+static QString primaryJsonFilePath()
+{
+    return QDir::current().absoluteFilePath("lru_params.json");
+}
+
+static QString legacyJsonFilePath()
+{
+    return QCoreApplication::applicationDirPath() + "/lru_params.json";
+}
+
 static QString jsonFilePath()
 {
-    return QApplication::applicationDirPath() + "/lru_params.json";
+    return primaryJsonFilePath();
 }
 
 // =============================================================================
@@ -26,7 +37,11 @@ static QString jsonFilePath()
 // =============================================================================
 static QJsonObject readJsonFile()
 {
-    QFile file(jsonFilePath());
+    QString primary = primaryJsonFilePath();
+    QString legacy = legacyJsonFilePath();
+    QString path = QFile::exists(primary) ? primary : legacy;
+
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return QJsonObject();
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
@@ -39,9 +54,9 @@ static QJsonObject readJsonFile()
 // =============================================================================
 static void writeJsonFile(const QJsonObject &obj)
 {
-    QFile file(jsonFilePath());
+    QFile file(primaryJsonFilePath());
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        qWarning() << "LruParamDialog: 无法写入" << jsonFilePath();
+        qWarning() << "LruParamDialog: 无法写入" << primaryJsonFilePath();
         return;
     }
     file.write(QJsonDocument(obj).toJson(QJsonDocument::Indented));
@@ -150,19 +165,89 @@ LruParamDialog::LruParamDialog(const QString &lruTypeName,
       m_defaultParams(LRUpresetData().value(lruTypeName)),
       m_editedParams(currentParams)
 {
-    setWindowTitle(QString("二级升降参数设置 - 当前 LRU：%1").arg(lruTypeName));
+    setWindowTitle("二级升降参数设置");
     setMinimumSize(680, 600);
     resize(760, 680);
     setupUi(currentParams);
+}
+
+bool LruParamDialog::promptSaveUnsavedChanges()
+{
+    if (!m_paramsDirty)
+        return true; // continue switching
+
+    auto answer = QMessageBox::question(
+        this, "未保存修改",
+        QString("当前 LRU 类型 \"%1\" 的参数已修改，是否保存后再切换？")
+            .arg(m_lruTypeName),
+        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+        QMessageBox::Save);
+
+    if (answer == QMessageBox::Save) {
+        collectParams(m_editedParams);
+        saveOverride(m_lruTypeName, m_editedParams);
+        return true;
+    } else if (answer == QMessageBox::Discard) {
+        return true;
+    }
+    return false; // Cancel
+}
+
+void LruParamDialog::onLruTypeChanged(int index)
+{
+    Q_UNUSED(index)
+    QString newType = m_lruTypeCombo->currentText();
+    if (newType == m_lruTypeName)
+        return;
+
+    if (!promptSaveUnsavedChanges()) {
+        // revert combo selection
+        m_lruTypeCombo->setCurrentText(m_lruTypeName);
+        return;
+    }
+
+    m_lruTypeName = newType;
+    m_defaultParams = LRUpresetData().value(m_lruTypeName);
+    m_editedParams = loadWithOverride(m_lruTypeName, m_defaultParams);
+    m_paramsDirty = false;
+
+    setWindowTitle(QString("二级升降参数设置 - 当前 LRU：%1").arg(m_lruTypeName));
+    emit lruTypeChanged(m_lruTypeName);
+
+    // 重建 UI 以反映新类型参数
+    QLayout *oldLayout = layout();
+    if (oldLayout) {
+        QLayoutItem *item;
+        while ((item = oldLayout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                delete item->widget();
+            }
+            delete item;
+        }
+        delete oldLayout;
+    }
+    setupUi(m_editedParams);
 }
 
 void LruParamDialog::setupUi(const LRUInnerParams &params)
 {
     auto *mainLayout = new QVBoxLayout(this);
 
+    // 顶部 LRU 类型下拉框
+    auto *typeLayout = new QHBoxLayout;
+    typeLayout->addWidget(new QLabel("LRU 类型："));
+    m_lruTypeCombo = new QComboBox;
+    m_lruTypeCombo->addItems(LRUpresetData().keys());
+    m_lruTypeCombo->setCurrentText(m_lruTypeName);
+    connect(m_lruTypeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &LruParamDialog::onLruTypeChanged);
+    typeLayout->addWidget(m_lruTypeCombo);
+    typeLayout->addStretch();
+    mainLayout->addLayout(typeLayout);
+
     // 提示标签
     auto *hintLabel = new QLabel(
-        QString("正在编辑当前 LRU 类型 \"%1\" 的二级升降参数。保存后写入 lru_params.json，并立即生效。").arg(m_lruTypeName));
+        QString("正在编辑 LRU 类型 \"%1\" 的二级升降参数。保存后写入当前工作目录/lru_params.json，并立即生效。").arg(m_lruTypeName));
     hintLabel->setWordWrap(true);
     hintLabel->setStyleSheet("color: #555; margin-bottom: 4px;");
     mainLayout->addWidget(hintLabel);
@@ -182,31 +267,28 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
         sb->setSingleStep(step);
         sb->setValue(val);
         sb->setMinimumWidth(120);
+        connect(sb, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+                [this](double) { m_paramsDirty = true; });
         return sb;
     };
-
-    // === 目标位置参数 ===
-    auto *gapGroup = new QGroupBox("目标位置参数");
-    auto *gapForm = new QFormLayout(gapGroup);
-    m_x_gap   = makeDouble(params.x_gap,   0, 500, 2, 0.5);
-    m_y_gap   = makeDouble(params.y_gap,   0, 500, 2, 0.5);
-    m_final_z = makeDouble(params.final_z, 0, 5000, 1, 5.0);
-    gapForm->addRow("目标 X 间隙 (x_gap, mm)", m_x_gap);
-    gapForm->addRow("目标 Y 间隙 (y_gap, mm)", m_y_gap);
-    gapForm->addRow("最终上升高度 (final_z, mm)", m_final_z);
-    formLayout->addRow(gapGroup);
+    auto makeInt = [&](int val, int min, int max) {
+        auto *sb = new QSpinBox;
+        sb->setRange(min, max);
+        sb->setValue(val);
+        connect(sb, QOverload<int>::of(&QSpinBox::valueChanged),
+                [this](int) { m_paramsDirty = true; });
+        return sb;
+    };
 
     // === ArUco 码参数 ===
     auto *markerGroup = new QGroupBox("ArUco 码参数");
     auto *markerForm = new QFormLayout(markerGroup);
-    m_marker_id = new QSpinBox;
-    m_marker_id->setRange(0, 99);
-    m_marker_id->setValue(params.marker_id);
-    markerForm->addRow("ArUco 码编号 (marker_id)", m_marker_id);
+    m_marker_id = makeInt(params.marker_id, 0, 99);
+    markerForm->addRow("ArUco 码编号", m_marker_id);
     formLayout->addRow(markerGroup);
 
-    // === 相机、码、LRU 的安装距离 ===
-    auto *geoGroup = new QGroupBox("相机、码、LRU 的安装距离");
+    // === 几何距离 ===
+    auto *geoGroup = new QGroupBox("几何距离");
     auto *geoForm = new QFormLayout(geoGroup);
     m_aruco_to_gapx    = makeDouble(params.aruco_to_gapx,    -1000, 1000, 2, 1.0);
     m_aruco_to_gapy    = makeDouble(params.aruco_to_gapy,    -1000, 1000, 2, 1.0);
@@ -214,50 +296,62 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
     m_camera_to_lruy_50 = makeDouble(params.camera_to_lruy_50, -1000, 1000, 2, 1.0);
     m_camera_to_lrux_16 = makeDouble(params.camera_to_lrux_16, -1000, 1000, 2, 1.0);
     m_camera_to_lruy_16 = makeDouble(params.camera_to_lruy_16, -1000, 1000, 2, 1.0);
-    geoForm->addRow("ArUco 码到目标缝隙 X 距离 (aruco_to_gapx, mm)", m_aruco_to_gapx);
-    geoForm->addRow("ArUco 码到目标缝隙 Y 距离 (aruco_to_gapy, mm)", m_aruco_to_gapy);
-    geoForm->addRow("50 型相机到 LRU X 距离 (camera_to_lrux_50, mm)", m_camera_to_lrux_50);
-    geoForm->addRow("50 型相机到 LRU Y 距离 (camera_to_lruy_50, mm)", m_camera_to_lruy_50);
-    geoForm->addRow("16 型相机到 LRU X 距离 (camera_to_lrux_16, mm)", m_camera_to_lrux_16);
-    geoForm->addRow("16 型相机到 LRU Y 距离 (camera_to_lruy_16, mm)", m_camera_to_lruy_16);
+    geoForm->addRow("ArUco 到孔洞前边中点：车头方向 (aruco_to_gapx, mm)", m_aruco_to_gapx);
+    geoForm->addRow("ArUco 到孔洞前边中点：车左方向 (aruco_to_gapy, mm)", m_aruco_to_gapy);
+    geoForm->addRow("50mm 相机到 LRU 前边中点：车头方向 (camera_to_lrux_50, mm)", m_camera_to_lrux_50);
+    geoForm->addRow("50mm 相机到 LRU 前边中点：车左方向 (camera_to_lruy_50, mm)", m_camera_to_lruy_50);
+    geoForm->addRow("16mm 相机到 LRU 前边中点：车头方向 (camera_to_lrux_16, mm)", m_camera_to_lrux_16);
+    geoForm->addRow("16mm 相机到 LRU 前边中点：车左方向 (camera_to_lruy_16, mm)", m_camera_to_lruy_16);
     formLayout->addRow(geoGroup);
 
-    // === 视觉测量补偿参数 ===
-    auto *corrGroup = new QGroupBox("视觉测量补偿参数");
-    auto *corrForm = new QFormLayout(corrGroup);
-    m_offset_x_50 = makeDouble(params.offset_x_50, -100, 100, 2, 0.5);
-    m_offset_y_50 = makeDouble(params.offset_y_50, -100, 100, 2, 0.5);
-    m_offset_x_16 = makeDouble(params.offset_x_16, -100, 100, 2, 0.5);
-    m_offset_y_16 = makeDouble(params.offset_y_16, -100, 100, 2, 0.5);
-    m_z0_tvec_x_offset    = makeDouble(params.z0_tvec_x_offset,    -50, 50, 2, 0.1);
-    m_z0_tvec_y_offset    = makeDouble(params.z0_tvec_y_offset,    -50, 50, 2, 0.1);
-    m_z1700_tvec_x_offset = makeDouble(params.z1700_tvec_x_offset, -50, 50, 2, 0.1);
-    m_z1700_tvec_y_offset = makeDouble(params.z1700_tvec_y_offset, -50, 50, 2, 0.1);
-    corrForm->addRow("50 型视觉 X 修正量 (offset_x_50, mm)", m_offset_x_50);
-    corrForm->addRow("50 型视觉 Y 修正量 (offset_y_50, mm)", m_offset_y_50);
-    corrForm->addRow("16 型视觉 X 修正量 (offset_x_16, mm)", m_offset_x_16);
-    corrForm->addRow("16 型视觉 Y 修正量 (offset_y_16, mm)", m_offset_y_16);
-    corrForm->addRow("低位视觉 X 补偿 (z0_tvec_x_offset, mm)", m_z0_tvec_x_offset);
-    corrForm->addRow("低位视觉 Y 补偿 (z0_tvec_y_offset, mm)", m_z0_tvec_y_offset);
-    corrForm->addRow("高位视觉 X 补偿 (z1700_tvec_x_offset, mm)", m_z1700_tvec_x_offset);
-    corrForm->addRow("高位视觉 Y 补偿 (z1700_tvec_y_offset, mm)", m_z1700_tvec_y_offset);
-    formLayout->addRow(corrGroup);
+    // === 最终上升高度 ===
+    auto *heightGroup = new QGroupBox("最终上升高度");
+    auto *heightForm = new QFormLayout(heightGroup);
+    m_final_z = makeDouble(params.final_z, 0, 5000, 1, 5.0);
+    heightForm->addRow("最终上升高度 (final_z, mm)", m_final_z);
+    formLayout->addRow(heightGroup);
 
     // 隐藏字段 — 保留数据完整性但不显示在 UI
+    m_x_gap = makeDouble(params.x_gap, 0, 500, 2, 0.5);
+    m_x_gap->setVisible(false);
+    m_y_gap = makeDouble(params.y_gap, 0, 500, 2, 0.5);
+    m_y_gap->setVisible(false);
+    m_offset_x_50 = makeDouble(params.offset_x_50, -100, 100, 2, 0.5);
+    m_offset_x_50->setVisible(false);
+    m_offset_y_50 = makeDouble(params.offset_y_50, -100, 100, 2, 0.5);
+    m_offset_y_50->setVisible(false);
+    m_offset_x_16 = makeDouble(params.offset_x_16, -100, 100, 2, 0.5);
+    m_offset_x_16->setVisible(false);
+    m_offset_y_16 = makeDouble(params.offset_y_16, -100, 100, 2, 0.5);
+    m_offset_y_16->setVisible(false);
+    m_z0_tvec_x_offset    = makeDouble(params.z0_tvec_x_offset,    -50, 50, 2, 0.1);
+    m_z0_tvec_x_offset->setVisible(false);
+    m_z0_tvec_y_offset    = makeDouble(params.z0_tvec_y_offset,    -50, 50, 2, 0.1);
+    m_z0_tvec_y_offset->setVisible(false);
+    m_z1700_tvec_x_offset = makeDouble(params.z1700_tvec_x_offset, -50, 50, 2, 0.1);
+    m_z1700_tvec_x_offset->setVisible(false);
+    m_z1700_tvec_y_offset = makeDouble(params.z1700_tvec_y_offset, -50, 50, 2, 0.1);
+    m_z1700_tvec_y_offset->setVisible(false);
     m_angle = makeDouble(params.angle, -180, 180, 2, 0.5);
     m_angle->setVisible(false);
     m_target_rx = makeDouble(params.target_rx, -10, 10, 4, 0.01);
     m_target_rx->setVisible(false);
     m_target_ry = makeDouble(params.target_ry, -10, 10, 4, 0.01);
     m_target_ry->setVisible(false);
-    m_camera0_exposureTime = new QSpinBox;
-    m_camera0_exposureTime->setRange(1, 10000000);
-    m_camera0_exposureTime->setValue(params.camera0_exposureTime);
+    m_camera0_exposureTime = makeInt(params.camera0_exposureTime, 1, 10000000);
     m_camera0_exposureTime->setVisible(false);
-    m_camera1_exposureTime = new QSpinBox;
-    m_camera1_exposureTime->setRange(1, 10000000);
-    m_camera1_exposureTime->setValue(params.camera1_exposureTime);
+    m_camera1_exposureTime = makeInt(params.camera1_exposureTime, 1, 10000000);
     m_camera1_exposureTime->setVisible(false);
+    formLayout->addRow(m_x_gap);
+    formLayout->addRow(m_y_gap);
+    formLayout->addRow(m_offset_x_50);
+    formLayout->addRow(m_offset_y_50);
+    formLayout->addRow(m_offset_x_16);
+    formLayout->addRow(m_offset_y_16);
+    formLayout->addRow(m_z0_tvec_x_offset);
+    formLayout->addRow(m_z0_tvec_y_offset);
+    formLayout->addRow(m_z1700_tvec_x_offset);
+    formLayout->addRow(m_z1700_tvec_y_offset);
     formLayout->addRow(m_angle);
     formLayout->addRow(m_target_rx);
     formLayout->addRow(m_target_ry);
@@ -318,6 +412,7 @@ void LruParamDialog::onSave()
 {
     collectParams(m_editedParams);
     m_restoreRequested = false;
+    m_paramsDirty = false;
     accept();
 }
 

@@ -114,10 +114,17 @@ public slots:
     void CheckDetach();
 
     //视觉加六自由度平台-开始
+    enum class SearchSuccessMode {
+        ReturnToStart,        // 成功后换算回原点并回到原点
+        StayAtFoundPosition   // 成功后停在找到码的位置（用于自动闭环）
+    };
+
     bool StatusModifyLatte();
     bool auto_StatusModifyLatte();
     bool descent_StatusModifyLatte();
     bool vision_detected();
+    bool search_vision_detected();
+    bool auto_align();
     bool auto_vision_detected();
     bool auto_lift();
     void stop_auto_lift();
@@ -125,10 +132,14 @@ public slots:
     bool waitSixDofForSearch(int timeoutMs = 15000);
     bool auto_descent();
 
+    // 公共 helper：根据二级高度和六自由度高度选择相机索引
+    bool getCurrentVisionDeviceIndex(int &deviceIndex, float &z);
+
     // 多帧采样检测
     MultiFrameResult detectMultiFrame(int deviceIndex);
-    // 多帧检测 + 六自由度平移找码（失败时自动移动平台重试）
-    MultiFrameResult detectMultiFrameWithSixDofSearch(int deviceIndex);
+    // 多帧检测 + 六自由度平移找码
+    MultiFrameResult detectMultiFrameWithSixDofSearch(int deviceIndex,
+                                                       SearchSuccessMode mode = SearchSuccessMode::ReturnToStart);
     // 等待一帧新帧，超时返回空Mat
     std::pair<cv::Mat, int64_t> waitNextFrame(int deviceIndex, int64_t afterSeq, int timeoutMs);
     // 软停止（不调用 EmergencyStop）
@@ -137,6 +148,7 @@ public slots:
     double residualScore(double xRes, double yRes, double yawRes);
 
     bool runAutoLiftVisionStage(int deviceIndex, const QString& label, StageResidual& outResidual);
+    bool runAutoDescentVisionStage(int deviceIndex, const QString& label, StageResidual& outResidual);
 
     void onParamsReceived(const LRUInnerParams &params);
 
@@ -193,6 +205,7 @@ private:
     float m_gapwidth_x;
     float m_gapwidth_y;
 
+    // 视觉相关（保留读取以兼容旧 JSON，但新模型下不再用于补偿）
     float x_gap_lift;
     float y_gap_lift;
     float final_z_lift;

@@ -219,11 +219,15 @@ private slots:
     //视觉模块****************开始
     void on_btn_secondary_lift_clicked();
 
-    void on_btn_stop_secondry_clicked();
+    void on_btn_AutoAlign_clicked();
 
     void on_btn_CheckStatus_clicked();
 
     void on_btn_StatusModifyLatter_clicked();
+
+    void on_btn_SearchDetect_clicked();
+
+    void on_btn_auto_descent_clicked();
     // 主线程接收信号后执行：更新UI显示
     void slot_updateGapInfo(nsTaskMgr::DetectedDisplayData vision_data);
     //新增的
@@ -468,11 +472,7 @@ private slots:
 
     void on_btnTest_clicked();
 
-    void on_btn_auto_descent_clicked();
-
     void on_btn_AGVPositionAdjust_clicked();
-
-    void on_radioButton_leftPlate_toggled(bool checked);
 
     void on_radioButton_rightPlate_toggled(bool checked);
 

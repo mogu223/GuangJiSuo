@@ -40,12 +40,12 @@ ArucoDetector::ArucoResult ArucoDetector::detectOneArucoCode(cv::Mat &image)
     result.detected = false;
 
     if (m_intrinsicMatrix.empty() || m_distCoeffs.empty()) {
-        arucoUpdateUI("相机参数为空！");
+        qWarning() << "相机参数为空！";
         return result;
     }
 
     if (image.empty()) {
-        arucoUpdateUI("图片为空！");
+        qWarning() << "图片为空！";
         return result;
     }
 
@@ -55,10 +55,9 @@ ArucoDetector::ArucoResult ArucoDetector::detectOneArucoCode(cv::Mat &image)
     m_detector->detectMarkers(image, corners, ids);
 
     if (ids.empty()) {
-        arucoUpdateUI("二维码ID为空，检测失败！");
+        qWarning() << "二维码ID为空，检测失败！";
         return result;
     }
-    arucoUpdateUI("二维码ID有！");
 
     // 图像中心 (2592x1944)
     const cv::Point2f imageCenter(1296.0f, 972.0f);
@@ -72,7 +71,7 @@ ArucoDetector::ArucoResult ArucoDetector::detectOneArucoCode(cv::Mat &image)
     }
 
     if (matchingIndices.empty()) {
-        arucoUpdateUI(QString("未找到目标ID(%1)，检测失败！").arg(marker_id));
+        qWarning() << "未找到目标ID(" << marker_id << ")，检测失败！";
         return result;
     }
 
@@ -128,11 +127,11 @@ ArucoDetector::solvePnPPose(const std::vector<cv::Point2f> &cornerPixels,
 
     // 参数检查
     if (cornerPixels.size() != 4) {
-        arucoUpdateUI("PnP失败：角点数量必须为4");
+        qWarning() << "PnP失败：角点数量必须为4";
         return pose;
     }
     if (m_intrinsicMatrix.empty() || m_distCoeffs.empty()) {
-        arucoUpdateUI("PnP失败：相机内参或畸变系数为空");
+        qWarning() << "PnP失败：相机内参或畸变系数为空";
         return pose;
     }
 
@@ -140,20 +139,8 @@ ArucoDetector::solvePnPPose(const std::vector<cv::Point2f> &cornerPixels,
     cv::Point2f mid2 = (cornerPixels[2] + cornerPixels[3]) * 0.5f;
     float dx = mid2.x - mid1.x;
     float dy = mid2.y - mid1.y;
-    arucoUpdateUI(QString("cornerPixels[0](%1)！").arg(cornerPixels[0].x));
-    arucoUpdateUI(QString("cornerPixels[0](%1)！").arg(cornerPixels[0].y));
-    arucoUpdateUI(QString("cornerPixels[1](%1)！").arg(cornerPixels[1].x));
-    arucoUpdateUI(QString("cornerPixels[1](%1)！").arg(cornerPixels[1].y));
-
-    arucoUpdateUI(QString("cornerPixels[2](%1)！").arg(cornerPixels[2].x));
-    arucoUpdateUI(QString("cornerPixels[2](%1)！").arg(cornerPixels[2].y));
-    arucoUpdateUI(QString("cornerPixels[3](%1)！").arg(cornerPixels[3].x));
-    arucoUpdateUI(QString("cornerPixels[3](%1)！").arg(cornerPixels[3].y));
-    // arucoUpdateUI(QString("dx(%1)！").arg(dx));
-    // arucoUpdateUI(QString("dy(%1)！").arg(dy));
     // 与 y 轴的夹角，单位：弧度
     double angleRad = std::atan2(dx, dy);
-    arucoUpdateUI(QString("angleRad(%1)！").arg(angleRad));
     // 转成角度
     double angleDeg = angleRad * 180.0 / CV_PI;
 
@@ -182,12 +169,12 @@ ArucoDetector::solvePnPPose(const std::vector<cv::Point2f> &cornerPixels,
             cv::SOLVEPNP_IPPE_SQUARE
             );
     } catch (const cv::Exception &e) {
-        arucoUpdateUI(QString("solvePnPGeneric 异常：%1").arg(e.what()));
+        qWarning() << "solvePnPGeneric 异常：" << e.what();
         return pose;
     }
 
     if (solutions <= 0 || rvecs.empty() || tvecs.empty()) {
-        arucoUpdateUI("PnP求解失败：无有效解");
+        qWarning() << "PnP求解失败：无有效解";
         return pose;
     }
 
@@ -509,12 +496,12 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     QString paramsFile = getCameraParamsFile(z);
     if (paramsFile.isEmpty()) {
         result.failureReason = QString("当前高度(%1)无匹配相机标定参数").arg(z, 0, 'f', 1);
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
     if (!readCameraParamsFromJson(paramsFile)) {
         result.failureReason = QString("读取相机标定参数失败: %1").arg(paramsFile);
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
 
@@ -522,7 +509,7 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     ArucoResult detection = detectOneArucoCode(image);
     if (!detection.detected) {
         result.failureReason = "检测二维码失败";
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
     result.targetIdFound = true;
@@ -550,7 +537,7 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     if (detection.cornerPixels.size() != 4) {
         result.hasFourCorners = false;
         result.failureReason = QString("角点数量为%1，预期4个").arg(detection.cornerPixels.size());
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
 
@@ -563,7 +550,7 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
             pt.y <= margin || pt.y >= (h - margin)) {
             result.cornersInBounds = false;
             result.failureReason = "角点贴边或出画";
-            arucoUpdateUI(result.failureReason);
+            qWarning() << result.failureReason;
             return result;
         }
     }
@@ -573,7 +560,7 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
     if (!pose.valid) {
         result.pnpSuccess = false;
         result.failureReason = "PnP位姿计算失败";
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
     result.pnpSuccess = true;
@@ -592,44 +579,45 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
         result.failureReason = QString("重投影误差过大: %1 px (阈值: %2)")
                                    .arg(pose.reprojectionError, 0, 'f', 2)
                                    .arg(m_reprojectionErrorMaxPx, 0, 'f', 1);
-        arucoUpdateUI(result.failureReason);
+        qWarning() << result.failureReason;
         return result;
     }
 
-    // 7. 打印位姿信息（保留原日志）
-    QString info = QString("PnP成功 | 重投影误差: %1 px\n"
-                           "tvec(mm): X=%2  Y=%3  Z=%4\n"
-                           "Euler(deg): Roll=%5  Pitch=%6  Yaw=%7")
-                       .arg(pose.reprojectionError, 0, 'f', 4)
-                       .arg(pose.tvec[0], 0, 'f', 2)
-                       .arg(pose.tvec[1], 0, 'f', 2)
-                       .arg(pose.tvec[2], 0, 'f', 2)
-                       .arg(pose.roll,  0, 'f', 2)
-                       .arg(pose.pitch, 0, 'f', 2)
-                       .arg(pose.yaw,   0, 'f', 2);
-    arucoUpdateUI(info);
+    // 7. 打印位姿信息到文件日志
+    qInfo() << QString("PnP成功 | 重投影误差: %1 px | tvec(mm): X=%2 Y=%3 Z=%4 | Euler(deg): Roll=%5 Pitch=%6 Yaw=%7")
+                   .arg(pose.reprojectionError, 0, 'f', 4)
+                   .arg(pose.tvec[0], 0, 'f', 2)
+                   .arg(pose.tvec[1], 0, 'f', 2)
+                   .arg(pose.tvec[2], 0, 'f', 2)
+                   .arg(pose.roll,  0, 'f', 2)
+                   .arg(pose.pitch, 0, 'f', 2)
+                   .arg(pose.yaw,   0, 'f', 2);
 
-    // 8. 坐标系转换（与现有 processImage 一致）
+    // 8. 新视觉模型：相机为原点，孔洞/LRU 前边中点对齐
+    //    +X = 车头方向 (Forward), +Y = 车左方向 (Left)
     result.yaw = pose.yaw;
 
-    if(-0.5<=z && z <= 0.5){
-        pose.tvec[0] += z0_tvec_x_offset;
-        pose.tvec[1] += z0_tvec_y_offset;
-    }else if (1699.5<=z && z <= 1700.5) {
-        pose.tvec[0] += z1700_tvec_x_offset;
-        pose.tvec[1] += z1700_tvec_y_offset;
+    double markerForwardMm = -pose.tvec[1];
+    double markerLeftMm    =  pose.tvec[0];
+
+    double holeFrontEdgeForwardMm = markerForwardMm + aruco_to_gapx;
+    double holeFrontEdgeLeftMm    = markerLeftMm    + aruco_to_gapy;
+
+    double lruFrontEdgeForwardMm = 0.0;
+    double lruFrontEdgeLeftMm    = 0.0;
+    if (-0.5 <= z && z <= 0.5) {
+        lruFrontEdgeForwardMm = camera_to_lrux_50;
+        lruFrontEdgeLeftMm    = camera_to_lruy_50;
+    } else if (1699.5 <= z && z <= 1700.5) {
+        lruFrontEdgeForwardMm = camera_to_lrux_16;
+        lruFrontEdgeLeftMm    = camera_to_lruy_16;
     }
 
-    float x_platform = -pose.tvec[1];
-    float y_platform = pose.tvec[0];
+    double alignErrorForwardMm = holeFrontEdgeForwardMm - lruFrontEdgeForwardMm;
+    double alignErrorLeftMm    = holeFrontEdgeLeftMm    - lruFrontEdgeLeftMm;
 
-    if(-0.5<=z && z <= 0.5){
-        result.x =(aruco_to_gapx + x_platform) - camera_to_lrux_50 + offset_x_50;
-        result.y = camera_to_lruy_50 - (aruco_to_gapy + y_platform) + offset_y_50;
-    }else if (1699.5<=z && z <= 1700.5) {
-        result.x = (aruco_to_gapx + x_platform)-camera_to_lrux_16 + offset_x_16;
-        result.y = camera_to_lruy_16 - (aruco_to_gapy + y_platform) + offset_y_16;
-    }
+    result.x = alignErrorForwardMm;
+    result.y = alignErrorLeftMm;
 
     result.valid = true;
     return result;

@@ -6767,7 +6767,7 @@ border: 2px solid black; </string>
                 </size>
                </property>
                <property name="text">
-                <string>自动抬升</string>
+                <string>自动抬升并对齐</string>
                </property>
               </widget>
              </item>
@@ -10000,7 +10000,7 @@ QGroupBox::title {
                 </size>
                </property>
                <property name="text">
-                <string>X宽度(mm)：</string>
+                <string>对齐误差X(mm)：</string>
                </property>
               </widget>
              </item>
@@ -10032,20 +10032,10 @@ QGroupBox::title {
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="btn_auto_descent">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="btn_LRUParamAdjust">
                <property name="text">
-                <string>自动下降</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="4">
-              <widget class="QSpinBox" name="light2_value">
-               <property name="maximum">
-                <number>255</number>
+                <string>LRU参数设置</string>
                </property>
               </widget>
              </item>
@@ -10067,32 +10057,29 @@ QGroupBox::title {
                 </size>
                </property>
                <property name="text">
-                <string>检测姿态</string>
+                <string>视觉检测</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="6">
-              <widget class="QLabel" name="lbl_GapWidth_x">
+             <item row="0" column="2">
+              <widget class="QPushButton" name="btn_SearchDetect">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>50</width>
+                 <width>100</width>
                  <height>0</height>
                 </size>
                </property>
-               <property name="maximumSize">
-                <size>
-                 <width>50</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="text">
-                <string>2.0</string>
+                <string>平移找码检测</string>
                </property>
               </widget>
              </item>
@@ -10125,12 +10112,12 @@ QGroupBox::title {
               </widget>
              </item>
              <item row="6" column="0">
-              <widget class="QPushButton" name="btn_stop_secondry">
+              <widget class="QPushButton" name="btn_StatusModifyLatter">
                <property name="enabled">
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>手动接管</string>
+                <string>执行一次对齐</string>
                </property>
               </widget>
              </item>
@@ -10173,7 +10160,7 @@ QGroupBox::title {
                 </size>
                </property>
                <property name="text">
-                <string>缝隙角度(deg)：</string>
+                <string>Yaw误差(deg)：</string>
                </property>
               </widget>
              </item>
@@ -10185,7 +10172,7 @@ QGroupBox::title {
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QPushButton" name="btn_StatusModifyLatter">
+              <widget class="QPushButton" name="btn_AutoAlign">
                <property name="enabled">
                 <bool>true</bool>
                </property>
@@ -10196,7 +10183,17 @@ QGroupBox::title {
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>姿态调整</string>
+                <string>自动对齐</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="3">
+              <widget class="QPushButton" name="btn_auto_descent">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>自动下降</string>
                </property>
               </widget>
              </item>
@@ -10207,13 +10204,13 @@ QGroupBox::title {
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
+             <item row="6" column="2">
               <widget class="QPushButton" name="btn_secondary_lift">
                <property name="enabled">
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>自动抬升</string>
+                <string>自动抬升并对齐</string>
                </property>
               </widget>
              </item>
@@ -10288,14 +10285,7 @@ QGroupBox::title {
                 </size>
                </property>
                <property name="text">
-                <string>Y宽度(mm)：</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2">
-              <widget class="QPushButton" name="btn_LRUParamAdjust">
-               <property name="text">
-                <string>LRU参数设置</string>
+                <string>对齐误差Y(mm)：</string>
                </property>
               </widget>
              </item>
