@@ -150,9 +150,9 @@ LruParamDialog::LruParamDialog(const QString &lruTypeName,
       m_defaultParams(LRUpresetData().value(lruTypeName)),
       m_editedParams(currentParams)
 {
-    setWindowTitle(QString("LRU 参数调整 —— %1").arg(lruTypeName));
-    setMinimumSize(520, 600);
-    resize(560, 680);
+    setWindowTitle(QString("二级升降参数设置 - 当前 LRU：%1").arg(lruTypeName));
+    setMinimumSize(680, 600);
+    resize(760, 680);
     setupUi(currentParams);
 }
 
@@ -162,7 +162,7 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
 
     // 提示标签
     auto *hintLabel = new QLabel(
-        QString("编辑 \"%1\" 的参数。保存后写入 lru_params.json，即时生效。").arg(m_lruTypeName));
+        QString("正在编辑当前 LRU 类型 \"%1\" 的二级升降参数。保存后写入 lru_params.json，并立即生效。").arg(m_lruTypeName));
     hintLabel->setWordWrap(true);
     hintLabel->setStyleSheet("color: #555; margin-bottom: 4px;");
     mainLayout->addWidget(hintLabel);
@@ -185,28 +185,28 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
         return sb;
     };
 
-    // === 目标缝隙参数 ===
-    auto *gapGroup = new QGroupBox("目标缝隙参数");
+    // === 目标位置参数 ===
+    auto *gapGroup = new QGroupBox("目标位置参数");
     auto *gapForm = new QFormLayout(gapGroup);
     m_x_gap   = makeDouble(params.x_gap,   0, 500, 2, 0.5);
     m_y_gap   = makeDouble(params.y_gap,   0, 500, 2, 0.5);
     m_final_z = makeDouble(params.final_z, 0, 5000, 1, 5.0);
-    gapForm->addRow("x_gap (mm)", m_x_gap);
-    gapForm->addRow("y_gap (mm)", m_y_gap);
-    gapForm->addRow("final_z (mm)", m_final_z);
+    gapForm->addRow("目标 X 间隙 (x_gap, mm)", m_x_gap);
+    gapForm->addRow("目标 Y 间隙 (y_gap, mm)", m_y_gap);
+    gapForm->addRow("最终上升高度 (final_z, mm)", m_final_z);
     formLayout->addRow(gapGroup);
 
-    // === Marker 参数 ===
-    auto *markerGroup = new QGroupBox("Marker 参数");
+    // === ArUco 码参数 ===
+    auto *markerGroup = new QGroupBox("ArUco 码参数");
     auto *markerForm = new QFormLayout(markerGroup);
     m_marker_id = new QSpinBox;
     m_marker_id->setRange(0, 99);
     m_marker_id->setValue(params.marker_id);
-    markerForm->addRow("marker_id", m_marker_id);
+    markerForm->addRow("ArUco 码编号 (marker_id)", m_marker_id);
     formLayout->addRow(markerGroup);
 
-    // === 相机 / ArUco 几何关系 ===
-    auto *geoGroup = new QGroupBox("相机 / ArUco 几何关系");
+    // === 相机、码、LRU 的安装距离 ===
+    auto *geoGroup = new QGroupBox("相机、码、LRU 的安装距离");
     auto *geoForm = new QFormLayout(geoGroup);
     m_aruco_to_gapx    = makeDouble(params.aruco_to_gapx,    -1000, 1000, 2, 1.0);
     m_aruco_to_gapy    = makeDouble(params.aruco_to_gapy,    -1000, 1000, 2, 1.0);
@@ -214,16 +214,16 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
     m_camera_to_lruy_50 = makeDouble(params.camera_to_lruy_50, -1000, 1000, 2, 1.0);
     m_camera_to_lrux_16 = makeDouble(params.camera_to_lrux_16, -1000, 1000, 2, 1.0);
     m_camera_to_lruy_16 = makeDouble(params.camera_to_lruy_16, -1000, 1000, 2, 1.0);
-    geoForm->addRow("aruco_to_gapx (mm)",   m_aruco_to_gapx);
-    geoForm->addRow("aruco_to_gapy (mm)",   m_aruco_to_gapy);
-    geoForm->addRow("camera_to_lrux_50 (mm)", m_camera_to_lrux_50);
-    geoForm->addRow("camera_to_lruy_50 (mm)", m_camera_to_lruy_50);
-    geoForm->addRow("camera_to_lrux_16 (mm)", m_camera_to_lrux_16);
-    geoForm->addRow("camera_to_lruy_16 (mm)", m_camera_to_lruy_16);
+    geoForm->addRow("ArUco 码到目标缝隙 X 距离 (aruco_to_gapx, mm)", m_aruco_to_gapx);
+    geoForm->addRow("ArUco 码到目标缝隙 Y 距离 (aruco_to_gapy, mm)", m_aruco_to_gapy);
+    geoForm->addRow("50 型相机到 LRU X 距离 (camera_to_lrux_50, mm)", m_camera_to_lrux_50);
+    geoForm->addRow("50 型相机到 LRU Y 距离 (camera_to_lruy_50, mm)", m_camera_to_lruy_50);
+    geoForm->addRow("16 型相机到 LRU X 距离 (camera_to_lrux_16, mm)", m_camera_to_lrux_16);
+    geoForm->addRow("16 型相机到 LRU Y 距离 (camera_to_lruy_16, mm)", m_camera_to_lruy_16);
     formLayout->addRow(geoGroup);
 
-    // === 视觉修正参数 ===
-    auto *corrGroup = new QGroupBox("视觉修正参数");
+    // === 视觉测量补偿参数 ===
+    auto *corrGroup = new QGroupBox("视觉测量补偿参数");
     auto *corrForm = new QFormLayout(corrGroup);
     m_offset_x_50 = makeDouble(params.offset_x_50, -100, 100, 2, 0.5);
     m_offset_y_50 = makeDouble(params.offset_y_50, -100, 100, 2, 0.5);
@@ -233,14 +233,14 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
     m_z0_tvec_y_offset    = makeDouble(params.z0_tvec_y_offset,    -50, 50, 2, 0.1);
     m_z1700_tvec_x_offset = makeDouble(params.z1700_tvec_x_offset, -50, 50, 2, 0.1);
     m_z1700_tvec_y_offset = makeDouble(params.z1700_tvec_y_offset, -50, 50, 2, 0.1);
-    corrForm->addRow("offset_x_50 (mm)",  m_offset_x_50);
-    corrForm->addRow("offset_y_50 (mm)",  m_offset_y_50);
-    corrForm->addRow("offset_x_16 (mm)",  m_offset_x_16);
-    corrForm->addRow("offset_y_16 (mm)",  m_offset_y_16);
-    corrForm->addRow("z0 tvec X offset (mm)",  m_z0_tvec_x_offset);
-    corrForm->addRow("z0 tvec Y offset (mm)",  m_z0_tvec_y_offset);
-    corrForm->addRow("z1700 tvec X offset (mm)", m_z1700_tvec_x_offset);
-    corrForm->addRow("z1700 tvec Y offset (mm)", m_z1700_tvec_y_offset);
+    corrForm->addRow("50 型视觉 X 修正量 (offset_x_50, mm)", m_offset_x_50);
+    corrForm->addRow("50 型视觉 Y 修正量 (offset_y_50, mm)", m_offset_y_50);
+    corrForm->addRow("16 型视觉 X 修正量 (offset_x_16, mm)", m_offset_x_16);
+    corrForm->addRow("16 型视觉 Y 修正量 (offset_y_16, mm)", m_offset_y_16);
+    corrForm->addRow("低位视觉 X 补偿 (z0_tvec_x_offset, mm)", m_z0_tvec_x_offset);
+    corrForm->addRow("低位视觉 Y 补偿 (z0_tvec_y_offset, mm)", m_z0_tvec_y_offset);
+    corrForm->addRow("高位视觉 X 补偿 (z1700_tvec_x_offset, mm)", m_z1700_tvec_x_offset);
+    corrForm->addRow("高位视觉 Y 补偿 (z1700_tvec_y_offset, mm)", m_z1700_tvec_y_offset);
     formLayout->addRow(corrGroup);
 
     // 隐藏字段 — 保留数据完整性但不显示在 UI

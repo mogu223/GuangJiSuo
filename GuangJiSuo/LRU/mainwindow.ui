@@ -10295,7 +10295,7 @@ QGroupBox::title {
              <item row="6" column="2">
               <widget class="QPushButton" name="btn_LRUParamAdjust">
                <property name="text">
-                <string>参数调整</string>
+                <string>LRU参数设置</string>
                </property>
               </widget>
              </item>
