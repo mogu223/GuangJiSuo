@@ -41,6 +41,7 @@ SOURCES += \
     CrashHandler.cpp \
     CrashHandlerDbg.cpp \
     DatabaseManager.cpp \
+    DiagnosticsManager.cpp \
     STLModel/coverplatewidget.cpp \
     STLModel/newform.cpp \
     STLModel/coverplaterrglwidget.cpp \
@@ -103,6 +104,7 @@ HEADERS += \
     CrashHandlerDbg.h \
     DataType.h \
     DatabaseManager.h \
+    DiagnosticsManager.h \
     LRUdatadef.h \
     lruparamdialog.h \
     PMC_lib/PMC006xxLib.h \

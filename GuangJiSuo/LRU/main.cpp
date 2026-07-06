@@ -5,10 +5,12 @@
 #include "DataType.h" // 包含你的结构体定义
 //新增
 #include "CrashHandler.h"
+#include "DiagnosticsManager.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    DiagnosticsManager::instance().initialize();
 
     QString qss;
     QFile file(":/MyQss.qss");

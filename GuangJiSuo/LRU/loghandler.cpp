@@ -1,4 +1,5 @@
 #include "LogHandler.h"
+#include "DiagnosticsManager.h"
 
 // 初始化 static 变量
 QMutex LogHandlerPrivate::logMutex;
@@ -27,8 +28,11 @@ LogHandlerPrivate::LogHandlerPrivate() {
     if (logFile == nullptr) {
         logFile = new QFile(logPath);
         logOut  = (logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) ?  new QTextStream(logFile) : nullptr;
-        if (logOut != nullptr)
+        if (logOut != nullptr) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             logOut->setCodec("UTF-8");
+#endif
+        }
     }
 
     // 定时刷新日志输出缓存到文件，单位ms
@@ -86,13 +90,17 @@ void LogHandlerPrivate::messageHandler(QtMsgType type, const QMessageLogContext 
 
     std::cout << std::string(localMsg) << std::endl;
 
+    QString line = QString("%1 [%2] %3 %4: %5\n")
+                       .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"))
+                       .arg(level, -5, ' ').arg(context.line).arg(context.function).arg(msg);
+
+    DiagnosticsManager::instance().appendRuntimeLog(line);
+
     if (nullptr == LogHandlerPrivate::logOut)
         return;
 
     // 输出到日志文件, 格式: 时间 [Level] 函数 行数: 消息
-    (*LogHandlerPrivate::logOut) << QString("%1 [%2] %3 %4: %5\n")
-                                        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"))
-                                        .arg(level, -5, ' ').arg(context.line).arg(context.function).arg(msg);
+    (*LogHandlerPrivate::logOut) << line;
 }
 
 LogHandler::LogHandler() : d(nullptr) {}
