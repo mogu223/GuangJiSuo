@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     DiagnosticsManager::instance().initialize();
+    LogHandler::Get().installMessageHandler();
+    CrashHandler::install();//新增
 
     QString qss;
     QFile file(":/MyQss.qss");
@@ -21,8 +23,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType<nsTaskMgr::DetectedDisplayData>("nsTaskMgr::DetectedDisplayData");
     MainWindow w;
     w.show();
-    LogHandler::Get().installMessageHandler();
-    CrashHandler::install();//新增
     return a.exec();
 }
 

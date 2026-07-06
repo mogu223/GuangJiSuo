@@ -1,23 +1,57 @@
 #include "CrashHandler.h"
+#include "DiagnosticsManager.h"
 #include "qcoreapplication.h"
+#include <QDir>
+#include <QFileInfo>
+
+namespace {
+
+QString buildCrashLogText(EXCEPTION_POINTERS* exceptionInfo)
+{
+    QString text;
+    QTextStream out(&text);
+    out << "\n=== Crash Occurred at " << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") << " ===\n";
+    out << QString("Exception Code: 0x%1\n")
+               .arg(exceptionInfo->ExceptionRecord->ExceptionCode, 0, 16);
+    out << QString("Exception Address: 0x%1\n")
+               .arg(reinterpret_cast<quintptr>(exceptionInfo->ExceptionRecord->ExceptionAddress), 0, 16);
+    out << "Call stack not available (DbgHelp not used).\n";
+    out << "============================================================\n";
+    return text;
+}
+
+void appendTextFile(const QString &path, const QString &text)
+{
+    if (path.isEmpty()) {
+        return;
+    }
+
+    QDir().mkpath(QFileInfo(path).absolutePath());
+    QFile file(path);
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        out.setCodec("UTF-8");
+#endif
+        out << text;
+        out.flush();
+        file.close();
+    }
+}
+
+}
 
 void CrashHandler::install() {
     SetUnhandledExceptionFilter(CrashHandler::exceptionFilter);
-    qInstallMessageHandler(CrashHandler::qtMessageHandler);
 }
 
 LONG WINAPI CrashHandler::exceptionFilter(EXCEPTION_POINTERS* exceptionInfo) {
-    QFile file("crash_log.txt");
-    if (file.open(QIODevice::Append | QIODevice::Text)) {
-        QTextStream out(&file);
-        out << "\n=== Crash Occurred at " << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss") << " ===\n";
-        out << QString("Exception Code: 0x%1\n")
-                   .arg(exceptionInfo->ExceptionRecord->ExceptionCode, 0, 16);
-        out << QString("Exception Address: 0x%1\n")
-                   .arg(reinterpret_cast<quintptr>(exceptionInfo->ExceptionRecord->ExceptionAddress), 0, 16);
-        out << "Call stack not available (DbgHelp not used).\n";
-        out << "============================================================\n";
-        file.close();
+    const QString crashText = buildCrashLogText(exceptionInfo);
+    appendTextFile("crash_log.txt", crashText);
+
+    const QString diagnosticsDir = DiagnosticsManager::instance().sessionDir();
+    if (!diagnosticsDir.isEmpty()) {
+        appendTextFile(QDir(diagnosticsDir).absoluteFilePath("crash_log.txt"), crashText);
     }
 
     // 重启应用
@@ -26,36 +60,6 @@ LONG WINAPI CrashHandler::exceptionFilter(EXCEPTION_POINTERS* exceptionInfo) {
     return EXCEPTION_EXECUTE_HANDLER;
 }
 
-void CrashHandler::qtMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-    QFile file("crash_log.txt");
-    if (file.open(QIODevice::Append | QIODevice::Text)) {
-        QTextStream out(&file);
-        QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-        QString level;
-
-        switch (type) {
-        case QtDebugMsg:    level = "Debug"; break;
-        case QtInfoMsg:     level = "Info"; break;
-        case QtWarningMsg:  level = "Warning"; break;
-        case QtCriticalMsg: level = "Critical"; break;
-        case QtFatalMsg:    level = "Fatal"; break;
-        }
-
-        out << QString("[%1] [%2] %3 (%4:%5, %6)\n")
-                   .arg(time)
-                   .arg(level)
-                   .arg(msg)
-                   .arg(context.file ? context.file : "")
-                   .arg(context.line)
-                   .arg(context.function ? context.function : "");
-
-        file.close();
-    }
-
-    if (type == QtFatalMsg) {
-        abort(); // Fatal 要终止程序
-    }
-}
 void CrashHandler::restartApplication() {
     TCHAR moduleName[MAX_PATH];
     GetModuleFileName(NULL, moduleName, MAX_PATH);

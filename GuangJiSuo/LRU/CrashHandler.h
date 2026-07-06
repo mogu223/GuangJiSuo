@@ -14,7 +14,6 @@ public:
 
 private:
     static LONG WINAPI exceptionFilter(EXCEPTION_POINTERS* exceptionInfo);
-    static void qtMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     static void restartApplication();  // 自动重启
     static void restartApplication2();
 };
