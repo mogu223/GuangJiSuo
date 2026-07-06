@@ -112,6 +112,9 @@ public slots:
 
 private:
     bool readCameraParamsFromJson(const QString &jsonPath);
+    QString resolveCameraParamsPath(const QString &jsonPath) const;
+    void clearCameraParams();
+    bool failCameraParamsRead(const QString &message);
     QString getCameraParamsFile(float z);
 
 private:

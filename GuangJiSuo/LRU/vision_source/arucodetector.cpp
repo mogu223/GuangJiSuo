@@ -1,4 +1,8 @@
 ﻿#include "arucoDetector.h"
+#include <QCoreApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QStringList>
 
 ArucoDetector::ArucoDetector(QObject *parent) : QObject(parent)
 {
@@ -310,86 +314,164 @@ void ArucoDetector::rotationVectorToEuler(const cv::Vec3d &rvec,
     yaw   = z * 180.0 / M_PI;
 }
 
+void ArucoDetector::clearCameraParams()
+{
+    m_intrinsicMatrix.release();
+    m_distCoeffs.release();
+    m_rotationMatrix.release();
+    m_translationVector.release();
+}
+
+bool ArucoDetector::failCameraParamsRead(const QString &message)
+{
+    qWarning() << message;
+    arucoUpdateUI(message);
+    clearCameraParams();
+    return false;
+}
+
+QString ArucoDetector::resolveCameraParamsPath(const QString &jsonPath) const
+{
+    QFileInfo directInfo(jsonPath);
+    if (directInfo.isAbsolute() && directInfo.exists() && directInfo.isFile()) {
+        return directInfo.absoluteFilePath();
+    }
+
+    QStringList candidates;
+    candidates << QCoreApplication::applicationDirPath() + QDir::separator() + jsonPath;
+    candidates << QDir::currentPath() + QDir::separator() + jsonPath;
+    candidates << jsonPath;
+
+    for (const QString &candidate : candidates) {
+        QFileInfo info(candidate);
+        if (info.exists() && info.isFile()) {
+            return info.absoluteFilePath();
+        }
+    }
+
+    return QString();
+}
+
 bool ArucoDetector::readCameraParamsFromJson(const QString &jsonPath)
 {
-    QFile file(jsonPath);
+    clearCameraParams();
+
+    const QString resolvedPath = resolveCameraParamsPath(jsonPath);
+    if (resolvedPath.isEmpty()) {
+        QString msg = QString("相机标定文件不存在: %1, appDir=%2, cwd=%3")
+                          .arg(jsonPath)
+                          .arg(QCoreApplication::applicationDirPath())
+                          .arg(QDir::currentPath());
+        return failCameraParamsRead(msg);
+    }
+
+    QFile file(resolvedPath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << QString("Cannot open file: %1").arg(jsonPath);
-        arucoUpdateUI("无法打开文件");
-        return false;
+        QString msg = QString("相机标定文件无法打开: %1, error=%2")
+                          .arg(resolvedPath)
+                          .arg(file.errorString());
+        return failCameraParamsRead(msg);
     }
 
     QByteArray data = file.readAll();
-    QJsonDocument doc = QJsonDocument::fromJson(data);
-    if (doc.isNull()) {
-        arucoUpdateUI("JSON parsing failed");
-        return false;
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
+    if (parseError.error != QJsonParseError::NoError || !doc.isObject()) {
+        QString msg = QString("相机标定JSON解析失败: %1, offset=%2, error=%3")
+                          .arg(resolvedPath)
+                          .arg(parseError.offset)
+                          .arg(parseError.errorString());
+        return failCameraParamsRead(msg);
     }
 
     QJsonObject obj = doc.object();
 
     // 读取内参矩阵
-    if (obj.contains("camera_matrix") && obj["camera_matrix"].isArray()) {
-        QJsonArray arr = obj["camera_matrix"].toArray();
-        m_intrinsicMatrix = cv::Mat::eye(3, 3, CV_64F);
-        int rows = std::min(3, arr.size());
-        for (int i = 0; i < rows; ++i) {
-            QJsonArray row = arr[i].toArray();
-            int cols = std::min(3, row.size());
-            for (int j = 0; j < cols; ++j) {
+    if (!obj.contains("camera_matrix") || !obj["camera_matrix"].isArray()) {
+        return failCameraParamsRead(QString("相机标定参数缺失: camera_matrix, file=%1").arg(resolvedPath));
+    }
+    {
+        const QJsonArray arr = obj["camera_matrix"].toArray();
+        if (arr.size() != 3) {
+            return failCameraParamsRead(QString("相机标定参数格式错误: camera_matrix 必须为3x3, file=%1").arg(resolvedPath));
+        }
+        m_intrinsicMatrix = cv::Mat::zeros(3, 3, CV_64F);
+        for (int i = 0; i < 3; ++i) {
+            if (!arr[i].isArray() || arr[i].toArray().size() != 3) {
+                return failCameraParamsRead(QString("相机标定参数格式错误: camera_matrix 必须为3x3, file=%1").arg(resolvedPath));
+            }
+            const QJsonArray row = arr[i].toArray();
+            for (int j = 0; j < 3; ++j) {
+                if (!row[j].isDouble()) {
+                    return failCameraParamsRead(QString("相机标定参数格式错误: camera_matrix 包含非数字, file=%1").arg(resolvedPath));
+                }
                 m_intrinsicMatrix.at<double>(i, j) = row[j].toDouble();
             }
         }
-    } else {
-        arucoUpdateUI("camera_matrix not found in JSON");
-        return false;
     }
 
     // 读取畸变系数（二维数组形式 [[k1,k2,p1,p2,k3]]）
-    if (obj.contains("distortion_coefficients") && obj["distortion_coefficients"].isArray()) {
-        QJsonArray outerArr = obj["distortion_coefficients"].toArray();
-        if (outerArr.size() > 0 && outerArr[0].isArray()) {
-            QJsonArray innerArr = outerArr[0].toArray();
-            m_distCoeffs = cv::Mat::zeros(innerArr.size(), 1, CV_64F);
-            for (int i = 0; i < innerArr.size(); ++i) {
-                m_distCoeffs.at<double>(i) = innerArr[i].toDouble();
-            }
-        } else {
-            qDebug() << "distortion_coefficients format error (expected 2D array)";
-            return false;
+    if (!obj.contains("distortion_coefficients") || !obj["distortion_coefficients"].isArray()) {
+        return failCameraParamsRead(QString("相机标定参数缺失: distortion_coefficients, file=%1").arg(resolvedPath));
+    }
+    {
+        const QJsonArray outerArr = obj["distortion_coefficients"].toArray();
+        if (outerArr.size() < 1 || !outerArr[0].isArray()) {
+            return failCameraParamsRead(QString("相机标定参数格式错误: distortion_coefficients, file=%1").arg(resolvedPath));
         }
-    } else {
-        qDebug() << "distortion_coefficients not found in JSON";
-        return false;
+        const QJsonArray innerArr = outerArr[0].toArray();
+        if (innerArr.size() < 4) {
+            return failCameraParamsRead(QString("相机标定参数格式错误: distortion_coefficients 至少需要4个数, file=%1").arg(resolvedPath));
+        }
+        m_distCoeffs = cv::Mat::zeros(innerArr.size(), 1, CV_64F);
+        for (int i = 0; i < innerArr.size(); ++i) {
+            if (!innerArr[i].isDouble()) {
+                return failCameraParamsRead(QString("相机标定参数格式错误: distortion_coefficients 包含非数字, file=%1").arg(resolvedPath));
+            }
+            m_distCoeffs.at<double>(i) = innerArr[i].toDouble();
+        }
     }
 
     // 读取旋转矩阵
-    if (obj.contains("rotation_matrix") && obj["rotation_matrix"].isArray()) {
-        QJsonArray arr = obj["rotation_matrix"].toArray();
-        m_rotationMatrix = cv::Mat::eye(3, 3, CV_64F);
-        int rows = std::min(3, arr.size());
-        for (int i = 0; i < rows; ++i) {
-            QJsonArray row = arr[i].toArray();
-            int cols = std::min(3, row.size());
-            for (int j = 0; j < cols; ++j) {
+    if (!obj.contains("rotation_matrix") || !obj["rotation_matrix"].isArray()) {
+        return failCameraParamsRead(QString("相机标定参数缺失: rotation_matrix, file=%1").arg(resolvedPath));
+    }
+    {
+        const QJsonArray arr = obj["rotation_matrix"].toArray();
+        if (arr.size() != 3) {
+            return failCameraParamsRead(QString("相机标定参数格式错误: rotation_matrix 必须为3x3, file=%1").arg(resolvedPath));
+        }
+        m_rotationMatrix = cv::Mat::zeros(3, 3, CV_64F);
+        for (int i = 0; i < 3; ++i) {
+            if (!arr[i].isArray() || arr[i].toArray().size() != 3) {
+                return failCameraParamsRead(QString("相机标定参数格式错误: rotation_matrix 必须为3x3, file=%1").arg(resolvedPath));
+            }
+            const QJsonArray row = arr[i].toArray();
+            for (int j = 0; j < 3; ++j) {
+                if (!row[j].isDouble()) {
+                    return failCameraParamsRead(QString("相机标定参数格式错误: rotation_matrix 包含非数字, file=%1").arg(resolvedPath));
+                }
                 m_rotationMatrix.at<double>(i, j) = row[j].toDouble();
             }
         }
-    } else {
-        qDebug() << "rotation_matrix not found in JSON";
-        return false;
     }
 
     // 读取平移向量
-    if (obj.contains("translation_vector") && obj["translation_vector"].isArray()) {
-        QJsonArray arr = obj["translation_vector"].toArray();
-        m_translationVector = cv::Mat::zeros(arr.size(), 1, CV_64F);
-        for (int i = 0; i < arr.size(); ++i) {
+    if (!obj.contains("translation_vector") || !obj["translation_vector"].isArray()) {
+        return failCameraParamsRead(QString("相机标定参数缺失: translation_vector, file=%1").arg(resolvedPath));
+    }
+    {
+        const QJsonArray arr = obj["translation_vector"].toArray();
+        if (arr.size() != 3) {
+            return failCameraParamsRead(QString("相机标定参数格式错误: translation_vector 必须为3个数, file=%1").arg(resolvedPath));
+        }
+        m_translationVector = cv::Mat::zeros(3, 1, CV_64F);
+        for (int i = 0; i < 3; ++i) {
+            if (!arr[i].isDouble()) {
+                return failCameraParamsRead(QString("相机标定参数格式错误: translation_vector 包含非数字, file=%1").arg(resolvedPath));
+            }
             m_translationVector.at<double>(i) = arr[i].toDouble();
         }
-    } else {
-        qDebug() << "translation_vector not found in JSON";
-        return false;
     }
 
     return true;
@@ -431,7 +513,7 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
         return result;
     }
     if (!readCameraParamsFromJson(paramsFile)) {
-        result.failureReason = "读取相机参数错误";
+        result.failureReason = QString("读取相机标定参数失败: %1").arg(paramsFile);
         arucoUpdateUI(result.failureReason);
         return result;
     }
