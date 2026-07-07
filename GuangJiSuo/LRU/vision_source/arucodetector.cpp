@@ -593,33 +593,124 @@ ArucoDetector::DetailedFrameResult ArucoDetector::processImageDetailed(cv::Mat &
                    .arg(pose.pitch, 0, 'f', 2)
                    .arg(pose.yaw,   0, 'f', 2);
 
-    // 8. 新视觉模型：相机为原点，孔洞/LRU 前边中点对齐
-    //    +X = 车头方向 (Forward), +Y = 车左方向 (Left)
-    result.yaw = pose.yaw;
+    // 8. 矩形框对齐模型：用"前左角 + 后右角"两个对角点确定矩形框
+    //    坐标系：+X = 车头方向 (Forward), +Y = 车左方向 (Left), 单位 mm
+    //
+    //    孔洞矩形：前左角、后右角填写为"相对 ArUco 中心"的 X/Y，
+    //              需随 ArUco 当前 yaw 旋转到平台坐标。
+    //    LRU  矩形：前左角、后右角填写为"相对相机中心"的 X/Y，
+    //              不随 ArUco yaw 旋转。
+    //
+    //    误差输出：
+    //      result.x   = 孔洞中心X - LRU中心X
+    //      result.y   = 孔洞中心Y - LRU中心Y
+    //      result.yaw = 孔洞矩形方向角 - LRU矩形方向角
+    //
+    //    运动层补偿方向约定（不要在这里反过来）：
+    //      X/Y：平台 x + result.x，y + result.y
+    //      Yaw：平台 rz - result.yaw
 
     double markerForwardMm = -pose.tvec[1];
     double markerLeftMm    =  pose.tvec[0];
+    double markerYawDeg    =  pose.yaw;
 
-    double holeFrontEdgeForwardMm = markerForwardMm + aruco_to_gapx;
-    double holeFrontEdgeLeftMm    = markerLeftMm    + aruco_to_gapy;
-
-    double lruFrontEdgeForwardMm = 0.0;
-    double lruFrontEdgeLeftMm    = 0.0;
+    // ---- 选取当前高度对应的 LRU 矩形参数 ----
+    // 50mm = 相机标定工况 camera_calibration_50.json (z≈0)
+    // 16mm = 相机标定工况 camera_calibration_16.json (z≈1700)
+    // 注意：50mm/16mm 是相机标定工况名，不是二级高度。
+    double lruFLx = 0, lruFLy = 0, lruRRx = 0, lruRRy = 0;
+    bool lruRectConfigured = false;
     if (-0.5 <= z && z <= 0.5) {
-        lruFrontEdgeForwardMm = camera_to_lrux_50;
-        lruFrontEdgeLeftMm    = camera_to_lruy_50;
+        lruFLx = m_lru50_front_left_x;  lruFLy = m_lru50_front_left_y;
+        lruRRx = m_lru50_rear_right_x;  lruRRy = m_lru50_rear_right_y;
+        lruRectConfigured = (m_lru50_front_left_x != LRU_RECT_UNSET &&
+                             m_lru50_front_left_y != LRU_RECT_UNSET &&
+                             m_lru50_rear_right_x != LRU_RECT_UNSET &&
+                             m_lru50_rear_right_y != LRU_RECT_UNSET);
     } else if (1699.5 <= z && z <= 1700.5) {
-        lruFrontEdgeForwardMm = camera_to_lrux_16;
-        lruFrontEdgeLeftMm    = camera_to_lruy_16;
+        lruFLx = m_lru16_front_left_x;  lruFLy = m_lru16_front_left_y;
+        lruRRx = m_lru16_rear_right_x;  lruRRy = m_lru16_rear_right_y;
+        lruRectConfigured = (m_lru16_front_left_x != LRU_RECT_UNSET &&
+                             m_lru16_front_left_y != LRU_RECT_UNSET &&
+                             m_lru16_rear_right_x != LRU_RECT_UNSET &&
+                             m_lru16_rear_right_y != LRU_RECT_UNSET);
     }
 
-    double alignErrorForwardMm = holeFrontEdgeForwardMm - lruFrontEdgeForwardMm;
-    double alignErrorLeftMm    = holeFrontEdgeLeftMm    - lruFrontEdgeLeftMm;
+    // 检查孔洞矩形是否已标定
+    bool holeRectConfigured = (m_hole_front_left_x != LRU_RECT_UNSET &&
+                               m_hole_front_left_y != LRU_RECT_UNSET &&
+                               m_hole_rear_right_x != LRU_RECT_UNSET &&
+                               m_hole_rear_right_y != LRU_RECT_UNSET);
 
-    result.x = alignErrorForwardMm;
-    result.y = alignErrorLeftMm;
+    if (!holeRectConfigured || !lruRectConfigured) {
+        result.failureReason = QString("该 LRU 类型未配置矩形对角点参数（%1），需要重新标定")
+                                   .arg(!holeRectConfigured ? "孔洞" : "LRU");
+        qWarning() << result.failureReason;
+        return result;
+    }
+
+    // ---- 工具函数：2D 点与 yaw 旋转 ----
+    struct Point2d { double x; double y; }; // x=forward(+X), y=left(+Y)
+
+    // 将"相对 ArUco 中心"的点按 markerYaw 旋转到平台坐标。
+    // ★ yaw 旋转方向集中封装于此 ★
+    // 如果实机确认 yaw 旋转方向相反，只在这里调整符号，并写清原因。
+    auto rotateByYaw = [](Point2d p, double yawDeg) -> Point2d {
+        double a = yawDeg * M_PI / 180.0;
+        double c = std::cos(a);
+        double s = std::sin(a);
+        return { p.x * c - p.y * s,
+                 p.x * s + p.y * c };
+    };
+
+    auto center = [](Point2d a, Point2d b) -> Point2d {
+        return { (a.x + b.x) / 2.0, (a.y + b.y) / 2.0 };
+    };
+
+    // 对角线方向角（度），rearRight - frontLeft 向量
+    auto diagonalAngleDeg = [](Point2d frontLeft, Point2d rearRight) -> double {
+        double dx = rearRight.x - frontLeft.x;
+        double dy = rearRight.y - frontLeft.y;
+        return std::atan2(dy, dx) * 180.0 / M_PI;
+    };
+
+    // 归一化角度到 [-180, 180]
+    auto normalizeAngleDeg = [](double deg) -> double {
+        while (deg > 180.0)  deg -= 360.0;
+        while (deg <= -180.0) deg += 360.0;
+        return deg;
+    };
+
+    // ---- 计算孔洞矩形两点（平台坐标）----
+    Point2d marker = { markerForwardMm, markerLeftMm };
+    Point2d holeFL = { m_hole_front_left_x, m_hole_front_left_y };
+    Point2d holeRR = { m_hole_rear_right_x, m_hole_rear_right_y };
+    Point2d holeFLRot = rotateByYaw(holeFL, markerYawDeg);
+    Point2d holeRRRot = rotateByYaw(holeRR, markerYawDeg);
+    Point2d holeFLPlatform = { marker.x + holeFLRot.x, marker.y + holeFLRot.y };
+    Point2d holeRRPlatform = { marker.x + holeRRRot.x, marker.y + holeRRRot.y };
+    Point2d holeCenter = center(holeFLPlatform, holeRRPlatform);
+    double  holeAngle  = diagonalAngleDeg(holeFLPlatform, holeRRPlatform);
+
+    // ---- 计算 LRU 矩形两点（平台坐标，不旋转）----
+    Point2d lruFL = { lruFLx, lruFLy };
+    Point2d lruRR = { lruRRx, lruRRy };
+    Point2d lruCenter = center(lruFL, lruRR);
+    double  lruAngle  = diagonalAngleDeg(lruFL, lruRR);
+
+    // ---- 输出误差 ----
+    result.x   = holeCenter.x - lruCenter.x;
+    result.y   = holeCenter.y - lruCenter.y;
+    result.yaw = normalizeAngleDeg(holeAngle - lruAngle);
 
     result.valid = true;
+
+    // ---- 简短摘要日志（不刷大量逐帧日志到 UI，详细内容留在文件日志）----
+    qInfo() << QString("检测成功：X=%1 Y=%2 yaw=%3，孔洞中心=(%4, %5)，LRU中心=(%6, %7)")
+                   .arg(result.x, 0, 'f', 2).arg(result.y, 0, 'f', 2).arg(result.yaw, 0, 'f', 2)
+                   .arg(holeCenter.x, 0, 'f', 2).arg(holeCenter.y, 0, 'f', 2)
+                   .arg(lruCenter.x, 0, 'f', 2).arg(lruCenter.y, 0, 'f', 2);
+
     return result;
 }
 
@@ -655,6 +746,20 @@ void ArucoDetector::onParamsReceived(const LRUInnerParams &params)
     z0_tvec_y_offset    = params.z0_tvec_y_offset;
     z1700_tvec_x_offset = params.z1700_tvec_x_offset;
     z1700_tvec_y_offset = params.z1700_tvec_y_offset;
+
+    // 矩形框对齐模型参数
+    m_hole_front_left_x  = params.hole_front_left_x;
+    m_hole_front_left_y  = params.hole_front_left_y;
+    m_hole_rear_right_x  = params.hole_rear_right_x;
+    m_hole_rear_right_y  = params.hole_rear_right_y;
+    m_lru50_front_left_x = params.lru50_front_left_x;
+    m_lru50_front_left_y = params.lru50_front_left_y;
+    m_lru50_rear_right_x = params.lru50_rear_right_x;
+    m_lru50_rear_right_y = params.lru50_rear_right_y;
+    m_lru16_front_left_x = params.lru16_front_left_x;
+    m_lru16_front_left_y = params.lru16_front_left_y;
+    m_lru16_rear_right_x = params.lru16_rear_right_x;
+    m_lru16_rear_right_y = params.lru16_rear_right_y;
 }
 
 

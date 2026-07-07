@@ -146,6 +146,25 @@ private:
     float z1700_tvec_x_offset;
     float z1700_tvec_y_offset;
 
+    // ===== 矩形框对齐模型参数（与 LRUInnerParams 对应）=====
+    // 坐标系：+X = 车头方向, +Y = 车左方向, 单位 mm
+    // 默认初始化为 LRU_RECT_UNSET，确保 onParamsReceived() 调用前
+    // processImageDetailed() 能正确识别"未配置"并提示，不会用随机值通过检查。
+    // 孔洞相对 ArUco 中心（随 markerYaw 旋转）
+    float m_hole_front_left_x = LRU_RECT_UNSET;
+    float m_hole_front_left_y = LRU_RECT_UNSET;
+    float m_hole_rear_right_x = LRU_RECT_UNSET;
+    float m_hole_rear_right_y = LRU_RECT_UNSET;
+    // LRU 相对相机中心（不随 ArUco yaw 旋转）
+    float m_lru50_front_left_x = LRU_RECT_UNSET;
+    float m_lru50_front_left_y = LRU_RECT_UNSET;
+    float m_lru50_rear_right_x = LRU_RECT_UNSET;
+    float m_lru50_rear_right_y = LRU_RECT_UNSET;
+    float m_lru16_front_left_x = LRU_RECT_UNSET;
+    float m_lru16_front_left_y = LRU_RECT_UNSET;
+    float m_lru16_rear_right_x = LRU_RECT_UNSET;
+    float m_lru16_rear_right_y = LRU_RECT_UNSET;
+
     cv::aruco::Dictionary         m_arucoDict;
     cv::aruco::DetectorParameters m_parameters;
     cv::Ptr<cv::aruco::ArucoDetector> m_detector;

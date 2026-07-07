@@ -9,6 +9,7 @@
 #include <QDialogButtonBox>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QStringList>
 #include <QFile>
 #include <QMessageBox>
 #include <QApplication>
@@ -92,6 +93,19 @@ static QJsonObject paramsToJson(const LRUInnerParams &p)
     o["z0_tvec_y_offset"] = p.z0_tvec_y_offset;
     o["z1700_tvec_x_offset"] = p.z1700_tvec_x_offset;
     o["z1700_tvec_y_offset"] = p.z1700_tvec_y_offset;
+    // 矩形框对齐模型
+    o["hole_front_left_x"]  = static_cast<double>(p.hole_front_left_x);
+    o["hole_front_left_y"]  = static_cast<double>(p.hole_front_left_y);
+    o["hole_rear_right_x"]  = static_cast<double>(p.hole_rear_right_x);
+    o["hole_rear_right_y"]  = static_cast<double>(p.hole_rear_right_y);
+    o["lru50_front_left_x"] = static_cast<double>(p.lru50_front_left_x);
+    o["lru50_front_left_y"] = static_cast<double>(p.lru50_front_left_y);
+    o["lru50_rear_right_x"] = static_cast<double>(p.lru50_rear_right_x);
+    o["lru50_rear_right_y"] = static_cast<double>(p.lru50_rear_right_y);
+    o["lru16_front_left_x"] = static_cast<double>(p.lru16_front_left_x);
+    o["lru16_front_left_y"] = static_cast<double>(p.lru16_front_left_y);
+    o["lru16_rear_right_x"] = static_cast<double>(p.lru16_rear_right_x);
+    o["lru16_rear_right_y"] = static_cast<double>(p.lru16_rear_right_y);
     return o;
 }
 
@@ -121,6 +135,19 @@ static LRUInnerParams jsonToParams(const QJsonObject &o, const LRUInnerParams &f
     if (o.contains("z0_tvec_y_offset"))   p.z0_tvec_y_offset = static_cast<float>(o["z0_tvec_y_offset"].toDouble());
     if (o.contains("z1700_tvec_x_offset")) p.z1700_tvec_x_offset = static_cast<float>(o["z1700_tvec_x_offset"].toDouble());
     if (o.contains("z1700_tvec_y_offset")) p.z1700_tvec_y_offset = static_cast<float>(o["z1700_tvec_y_offset"].toDouble());
+    // 矩形框对齐模型（缺失时保留 fallback 默认值，即哨兵 LRU_RECT_UNSET）
+    if (o.contains("hole_front_left_x"))  p.hole_front_left_x  = static_cast<float>(o["hole_front_left_x"].toDouble());
+    if (o.contains("hole_front_left_y"))  p.hole_front_left_y  = static_cast<float>(o["hole_front_left_y"].toDouble());
+    if (o.contains("hole_rear_right_x"))  p.hole_rear_right_x  = static_cast<float>(o["hole_rear_right_x"].toDouble());
+    if (o.contains("hole_rear_right_y"))  p.hole_rear_right_y  = static_cast<float>(o["hole_rear_right_y"].toDouble());
+    if (o.contains("lru50_front_left_x")) p.lru50_front_left_x = static_cast<float>(o["lru50_front_left_x"].toDouble());
+    if (o.contains("lru50_front_left_y")) p.lru50_front_left_y = static_cast<float>(o["lru50_front_left_y"].toDouble());
+    if (o.contains("lru50_rear_right_x")) p.lru50_rear_right_x = static_cast<float>(o["lru50_rear_right_x"].toDouble());
+    if (o.contains("lru50_rear_right_y")) p.lru50_rear_right_y = static_cast<float>(o["lru50_rear_right_y"].toDouble());
+    if (o.contains("lru16_front_left_x")) p.lru16_front_left_x = static_cast<float>(o["lru16_front_left_x"].toDouble());
+    if (o.contains("lru16_front_left_y")) p.lru16_front_left_y = static_cast<float>(o["lru16_front_left_y"].toDouble());
+    if (o.contains("lru16_rear_right_x")) p.lru16_rear_right_x = static_cast<float>(o["lru16_rear_right_x"].toDouble());
+    if (o.contains("lru16_rear_right_y")) p.lru16_rear_right_y = static_cast<float>(o["lru16_rear_right_y"].toDouble());
     return p;
 }
 
@@ -184,7 +211,8 @@ bool LruParamDialog::promptSaveUnsavedChanges()
         QMessageBox::Save);
 
     if (answer == QMessageBox::Save) {
-        collectParams(m_editedParams);
+        if (!collectAndConfirmParamsForSave())
+            return false; // 阻止切换，让用户先完成标定
         saveOverride(m_lruTypeName, m_editedParams);
         return true;
     } else if (answer == QMessageBox::Discard) {
@@ -287,22 +315,87 @@ void LruParamDialog::setupUi(const LRUInnerParams &params)
     markerForm->addRow("ArUco 码编号", m_marker_id);
     formLayout->addRow(markerGroup);
 
-    // === 几何距离 ===
-    auto *geoGroup = new QGroupBox("几何距离");
-    auto *geoForm = new QFormLayout(geoGroup);
+    // === 旧几何距离（已废弃，隐藏保留以兼容旧 JSON）===
     m_aruco_to_gapx    = makeDouble(params.aruco_to_gapx,    -1000, 1000, 2, 1.0);
     m_aruco_to_gapy    = makeDouble(params.aruco_to_gapy,    -1000, 1000, 2, 1.0);
     m_camera_to_lrux_50 = makeDouble(params.camera_to_lrux_50, -1000, 1000, 2, 1.0);
     m_camera_to_lruy_50 = makeDouble(params.camera_to_lruy_50, -1000, 1000, 2, 1.0);
     m_camera_to_lrux_16 = makeDouble(params.camera_to_lrux_16, -1000, 1000, 2, 1.0);
     m_camera_to_lruy_16 = makeDouble(params.camera_to_lruy_16, -1000, 1000, 2, 1.0);
-    geoForm->addRow("ArUco 到孔洞前边中点：车头方向 (aruco_to_gapx, mm)", m_aruco_to_gapx);
-    geoForm->addRow("ArUco 到孔洞前边中点：车左方向 (aruco_to_gapy, mm)", m_aruco_to_gapy);
-    geoForm->addRow("50mm 相机到 LRU 前边中点：车头方向 (camera_to_lrux_50, mm)", m_camera_to_lrux_50);
-    geoForm->addRow("50mm 相机到 LRU 前边中点：车左方向 (camera_to_lruy_50, mm)", m_camera_to_lruy_50);
-    geoForm->addRow("16mm 相机到 LRU 前边中点：车头方向 (camera_to_lrux_16, mm)", m_camera_to_lrux_16);
-    geoForm->addRow("16mm 相机到 LRU 前边中点：车左方向 (camera_to_lruy_16, mm)", m_camera_to_lruy_16);
-    formLayout->addRow(geoGroup);
+    m_aruco_to_gapx->setVisible(false);
+    m_aruco_to_gapy->setVisible(false);
+    m_camera_to_lrux_50->setVisible(false);
+    m_camera_to_lruy_50->setVisible(false);
+    m_camera_to_lrux_16->setVisible(false);
+    m_camera_to_lruy_16->setVisible(false);
+    formLayout->addRow(m_aruco_to_gapx);
+    formLayout->addRow(m_aruco_to_gapy);
+    formLayout->addRow(m_camera_to_lrux_50);
+    formLayout->addRow(m_camera_to_lruy_50);
+    formLayout->addRow(m_camera_to_lrux_16);
+    formLayout->addRow(m_camera_to_lruy_16);
+
+    // === 矩形框对齐模型 ===
+    // 坐标系：+X = 车头方向, +Y = 车左方向, 单位 mm
+    // 未标定字段（LRU_RECT_UNSET）显示为 0，但通过 m_rectUnset 跟踪确认状态。
+    // 用户一旦修改控件，就认为该字段已确认；这样合法的 0 坐标也可以保存。
+    int rectIdx = 0; // 用于填充 m_rectUnset[12]
+    auto makeRectDouble = [&](double val) {
+        auto *sb = new QDoubleSpinBox;
+        sb->setRange(-2000, 2000);
+        sb->setDecimals(2);
+        sb->setSingleStep(1.0);
+        const int currentRectIdx = rectIdx++;
+        bool unset = (val == LRU_RECT_UNSET);
+        m_rectUnset[currentRectIdx] = unset;
+        sb->setValue(unset ? 0.0 : val);
+        sb->setMinimumWidth(120);
+        connect(sb, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
+                [this, currentRectIdx](double) {
+                    m_rectUnset[currentRectIdx] = false;
+                    m_paramsDirty = true;
+                });
+        return sb;
+    };
+
+    // 孔洞相对 ArUco
+    auto *holeGroup = new QGroupBox("孔洞相对ArUco");
+    auto *holeForm = new QFormLayout(holeGroup);
+    m_hole_front_left_x = makeRectDouble(params.hole_front_left_x);
+    m_hole_front_left_y = makeRectDouble(params.hole_front_left_y);
+    m_hole_rear_right_x = makeRectDouble(params.hole_rear_right_x);
+    m_hole_rear_right_y = makeRectDouble(params.hole_rear_right_y);
+    holeForm->addRow("前左角X（车头为正，mm）", m_hole_front_left_x);
+    holeForm->addRow("前左角Y（车左为正，mm）", m_hole_front_left_y);
+    holeForm->addRow("后右角X（车头为正，mm）", m_hole_rear_right_x);
+    holeForm->addRow("后右角Y（车左为正，mm）", m_hole_rear_right_y);
+    formLayout->addRow(holeGroup);
+
+    // LRU 相对相机（50mm）
+    auto *lru50Group = new QGroupBox("LRU相对相机（50mm）");
+    auto *lru50Form = new QFormLayout(lru50Group);
+    m_lru50_front_left_x = makeRectDouble(params.lru50_front_left_x);
+    m_lru50_front_left_y = makeRectDouble(params.lru50_front_left_y);
+    m_lru50_rear_right_x = makeRectDouble(params.lru50_rear_right_x);
+    m_lru50_rear_right_y = makeRectDouble(params.lru50_rear_right_y);
+    lru50Form->addRow("前左角X（车头为正，mm）", m_lru50_front_left_x);
+    lru50Form->addRow("前左角Y（车左为正，mm）", m_lru50_front_left_y);
+    lru50Form->addRow("后右角X（车头为正，mm）", m_lru50_rear_right_x);
+    lru50Form->addRow("后右角Y（车左为正，mm）", m_lru50_rear_right_y);
+    formLayout->addRow(lru50Group);
+
+    // LRU 相对相机（16mm）
+    auto *lru16Group = new QGroupBox("LRU相对相机（16mm）");
+    auto *lru16Form = new QFormLayout(lru16Group);
+    m_lru16_front_left_x = makeRectDouble(params.lru16_front_left_x);
+    m_lru16_front_left_y = makeRectDouble(params.lru16_front_left_y);
+    m_lru16_rear_right_x = makeRectDouble(params.lru16_rear_right_x);
+    m_lru16_rear_right_y = makeRectDouble(params.lru16_rear_right_y);
+    lru16Form->addRow("前左角X（车头为正，mm）", m_lru16_front_left_x);
+    lru16Form->addRow("前左角Y（车左为正，mm）", m_lru16_front_left_y);
+    lru16Form->addRow("后右角X（车头为正，mm）", m_lru16_rear_right_x);
+    lru16Form->addRow("后右角Y（车左为正，mm）", m_lru16_rear_right_y);
+    formLayout->addRow(lru16Group);
 
     // === 最终上升高度 ===
     auto *heightGroup = new QGroupBox("最终上升高度");
@@ -406,11 +499,80 @@ void LruParamDialog::collectParams(LRUInnerParams &out)
     out.target_ry  = static_cast<float>(m_target_ry->value());
     out.camera0_exposureTime = m_camera0_exposureTime->value();
     out.camera1_exposureTime = m_camera1_exposureTime->value();
+    // 矩形框对齐模型
+    // 未标定字段（初始 LRU_RECT_UNSET 且用户未确认）保留 LRU_RECT_UNSET，
+    // 避免把"未配置"保存成 0 覆盖哨兵值。
+    auto collectRect = [&](QDoubleSpinBox *sb, int idx) -> float {
+        if (m_rectUnset[idx])
+            return LRU_RECT_UNSET;
+        return static_cast<float>(sb->value());
+    };
+    out.hole_front_left_x  = collectRect(m_hole_front_left_x,  0);
+    out.hole_front_left_y  = collectRect(m_hole_front_left_y,  1);
+    out.hole_rear_right_x  = collectRect(m_hole_rear_right_x,  2);
+    out.hole_rear_right_y  = collectRect(m_hole_rear_right_y,  3);
+    out.lru50_front_left_x = collectRect(m_lru50_front_left_x, 4);
+    out.lru50_front_left_y = collectRect(m_lru50_front_left_y, 5);
+    out.lru50_rear_right_x = collectRect(m_lru50_rear_right_x, 6);
+    out.lru50_rear_right_y = collectRect(m_lru50_rear_right_y, 7);
+    out.lru16_front_left_x = collectRect(m_lru16_front_left_x, 8);
+    out.lru16_front_left_y = collectRect(m_lru16_front_left_y, 9);
+    out.lru16_rear_right_x = collectRect(m_lru16_rear_right_x, 10);
+    out.lru16_rear_right_y = collectRect(m_lru16_rear_right_y, 11);
+}
+
+QString LruParamDialog::validateRectParams() const
+{
+    // 检查 collectParams 后的参数是否仍有未标定的矩形组
+    // 返回未标定组名（空字符串表示全部通过）
+    auto groupUnset = [](float a, float b, float c, float d) -> bool {
+        return a == LRU_RECT_UNSET || b == LRU_RECT_UNSET ||
+               c == LRU_RECT_UNSET || d == LRU_RECT_UNSET;
+    };
+    QStringList missing;
+    if (groupUnset(m_editedParams.hole_front_left_x, m_editedParams.hole_front_left_y,
+                   m_editedParams.hole_rear_right_x, m_editedParams.hole_rear_right_y))
+        missing << "孔洞相对ArUco";
+    if (groupUnset(m_editedParams.lru50_front_left_x, m_editedParams.lru50_front_left_y,
+                   m_editedParams.lru50_rear_right_x, m_editedParams.lru50_rear_right_y))
+        missing << "LRU相对相机（50mm）";
+    if (groupUnset(m_editedParams.lru16_front_left_x, m_editedParams.lru16_front_left_y,
+                   m_editedParams.lru16_rear_right_x, m_editedParams.lru16_rear_right_y))
+        missing << "LRU相对相机（16mm）";
+    return missing.join("、");
+}
+
+bool LruParamDialog::collectAndConfirmParamsForSave()
+{
+    collectParams(m_editedParams);
+
+    QString missing = validateRectParams();
+    if (missing.isEmpty())
+        return true;
+
+    auto answer = QMessageBox::warning(
+        this, "矩形参数未完整标定",
+        QString("以下矩形对角点参数仍处于未标定状态：\n%1\n\n"
+                "如果当前界面显示的 0 就是你确认后的真实坐标，可以按当前值保存；"
+                "否则请选择取消并继续填写。")
+            .arg(missing),
+        QMessageBox::Save | QMessageBox::Cancel,
+        QMessageBox::Cancel);
+
+    if (answer != QMessageBox::Save)
+        return false;
+
+    for (bool &unset : m_rectUnset)
+        unset = false;
+    collectParams(m_editedParams);
+    return true;
 }
 
 void LruParamDialog::onSave()
 {
-    collectParams(m_editedParams);
+    if (!collectAndConfirmParamsForSave())
+        return;
+
     m_restoreRequested = false;
     m_paramsDirty = false;
     accept();

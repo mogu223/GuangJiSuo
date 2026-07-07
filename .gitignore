@@ -119,12 +119,14 @@ GuangJiSuo/LRU/debug/
 GuangJiSuo/LRU/release/
 GuangJiSuo/LRU/bin/
 GuangJiSuo/LRU/log/
+GuangJiSuo/log diagnose/
 GuangJiSuo/LRU/ThirdLibs/
 GuangJiSuo/LRU/.qmake.stash
 GuangJiSuo/LRU/.qtc_clangd/
 GuangJiSuo/LRU/.qtcreator/
 GuangJiSuo/LRU/*.pro.user
 GuangJiSuo/LRU/*.pro.user.*
+GuangJiSuo/LRU/build_release.bat
 
 # Debug sample bloat guards
 debug_samples/**/*.mp4

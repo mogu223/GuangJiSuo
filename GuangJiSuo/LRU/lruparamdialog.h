@@ -51,12 +51,22 @@ private:
     void setupUi(const LRUInnerParams &params);
     void collectParams(LRUInnerParams &out);
     bool promptSaveUnsavedChanges();
+    /// 校验矩形对角点参数是否完整标定。
+    /// 返回空字符串表示通过；否则返回未标定的组名用于弹窗提示。
+    QString validateRectParams() const;
+    /// 收集参数并在未标定字段仍存在时要求用户显式确认是否按当前值保存。
+    bool collectAndConfirmParamsForSave();
 
     QString m_lruTypeName;
     LRUInnerParams m_defaultParams;
     LRUInnerParams m_editedParams;
     bool m_restoreRequested = false;
     bool m_paramsDirty = false;
+
+    // 矩形框对角点初始 unset 状态跟踪（12 个字段，与 m_hole_*/m_lru50_*/m_lru16_* 顺序对应）
+    // true 表示该字段初始为 LRU_RECT_UNSET（未标定）。
+    // valueChanged 或保存时显式确认后，该字段会被视为已确认，因此合法的 0 坐标也可以保存。
+    bool m_rectUnset[12] = {false};
 
     QComboBox *m_lruTypeCombo = nullptr;
 
@@ -79,6 +89,23 @@ private:
     QDoubleSpinBox *m_z1700_tvec_x_offset = nullptr;
     QDoubleSpinBox *m_z1700_tvec_y_offset = nullptr;
     QSpinBox *m_marker_id = nullptr;
+
+    // 矩形框对齐模型 — UI widgets（前左角 + 后右角）
+    // 孔洞相对 ArUco
+    QDoubleSpinBox *m_hole_front_left_x = nullptr;
+    QDoubleSpinBox *m_hole_front_left_y = nullptr;
+    QDoubleSpinBox *m_hole_rear_right_x = nullptr;
+    QDoubleSpinBox *m_hole_rear_right_y = nullptr;
+    // LRU 相对相机（50mm 工况）
+    QDoubleSpinBox *m_lru50_front_left_x = nullptr;
+    QDoubleSpinBox *m_lru50_front_left_y = nullptr;
+    QDoubleSpinBox *m_lru50_rear_right_x = nullptr;
+    QDoubleSpinBox *m_lru50_rear_right_y = nullptr;
+    // LRU 相对相机（16mm 工况）
+    QDoubleSpinBox *m_lru16_front_left_x = nullptr;
+    QDoubleSpinBox *m_lru16_front_left_y = nullptr;
+    QDoubleSpinBox *m_lru16_rear_right_x = nullptr;
+    QDoubleSpinBox *m_lru16_rear_right_y = nullptr;
 
     // 保留但不在主界面显示的字段（用隐藏 spinbox 保持数据完整）
     QDoubleSpinBox *m_angle = nullptr;

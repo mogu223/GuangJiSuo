@@ -4,8 +4,13 @@
 #include <QString>
 #include <QMap>
 #include <QMetaType>
+#include <limits>
 
-// 内层结构体：10个float参数（纯聚合结构体，无构造函数，最简洁）
+// 矩形框对角点未配置哨兵值：表示该 LRU 类型尚未标定矩形对角点。
+// 视觉层检测到此值时不会静默使用，而是提示"需要重新标定"。
+static constexpr float LRU_RECT_UNSET = -9999.0f;
+
+// 内层结构体：纯聚合结构体，无构造函数
 //六自由度平台坐标系下的参数
 struct LRUInnerParams {
     float x_gap;//
@@ -32,6 +37,25 @@ struct LRUInnerParams {
     float z0_tvec_y_offset;
     float z1700_tvec_x_offset;
     float z1700_tvec_y_offset;
+
+    // ===== 矩形框对齐模型（前左角 + 后右角两个对角点确定矩形）=====
+    // 坐标系：+X = 车头方向, +Y = 车左方向, 单位 mm
+    // 孔洞相对 ArUco 中心的两点（会随 markerYaw 旋转到平台坐标）
+    float hole_front_left_x;   // 孔洞前左角 X（车头为正）
+    float hole_front_left_y;   // 孔洞前左角 Y（车左为正）
+    float hole_rear_right_x;   // 孔洞后右角 X（车头为正）
+    float hole_rear_right_y;   // 孔洞后右角 Y（车左为正）
+    // LRU 相对相机中心的两点（不随 ArUco yaw 旋转）
+    // 50mm = 相机标定工况 camera_calibration_50.json (z≈0)
+    float lru50_front_left_x;  // LRU前左角 X（车头为正）
+    float lru50_front_left_y;  // LRU前左角 Y（车左为正）
+    float lru50_rear_right_x;  // LRU后右角 X（车头为正）
+    float lru50_rear_right_y;  // LRU后右角 Y（车左为正）
+    // 16mm = 相机标定工况 camera_calibration_16.json (z≈1700)
+    float lru16_front_left_x;  // LRU前左角 X（车头为正）
+    float lru16_front_left_y;  // LRU前左角 Y（车左为正）
+    float lru16_rear_right_x;  // LRU后右角 X（车头为正）
+    float lru16_rear_right_y;  // LRU后右角 Y（车左为正）
 };
 Q_DECLARE_METATYPE(LRUInnerParams)
 
@@ -55,7 +79,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      0.0f,
                      -0.11f,0.57f,
                      500000,300000,
-                     -0.3f,7.1f,7.3f,3.3f}},
+                     -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右片架",   {7.0f,4.0f,
                      2655.0f,
                      41.73f,71.95f,
@@ -67,7 +94,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      0.0f,
                      -0.11f,0.57f,
                      500000,300000,
-                     -0.3f,7.1f,7.3f,3.3f}},
+                     -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
 
 
    {"安装车右右隔板玻璃",   {7.0f,30.0f,
@@ -81,7 +111,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            0.0f,
                            -0.11f,0.57f,
                            500000,300000,
-                           -0.3f,7.1f,7.3f,3.3f}},
+                           -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右右隔板玻璃",   {7.0f,30.0f,
                            2655.0f,
                            41.73f,71.95f,
@@ -93,7 +126,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            0.0f,
                            -0.11f,0.57f,
                            500000,300000,
-                           -0.3f,7.1f,7.3f,3.3f}},
+                           -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
 
 
    {"安装车右左隔板玻璃",   {7.0f,20.0f,
@@ -107,7 +143,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            0.0f,
                            -0.11f,0.57f,
                            500000,300000,
-                           -0.3f,7.1f,7.3f,3.3f}},
+                           -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右左隔板玻璃",   {7.0f,20.0f,
                            2675.0f,
                            41.73f,71.95f,
@@ -119,7 +158,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                            0.0f,
                            -0.11f,0.57f,
                            500000,300000,
-                           -0.3f,7.1f,7.3f,3.3f}},
+                           -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
 
 
    {"安装车右中灯箱",   {12.0f,3.0f,
@@ -133,7 +175,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0.0f,
                        -0.11f,0.57f,
                        500000,300000,
-                       -0.3f,7.1f,7.3f,3.3f}},
+                       -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右中灯箱",   {12.0f,3.0f,
                        2695.0f,
                        41.73f,605.95f,
@@ -145,7 +190,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0.0f,
                        -0.11f,0.57f,
                        500000,300000,
-                       -0.3f,7.1f,7.3f,3.3f}},
+                       -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
 
 
    {"安装车右侧灯箱",   {12.0f,5.0f,
@@ -159,7 +207,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0.0f,
                        -0.11f,0.57f,
                        500000,300000,
-                       -0.3f,7.1f,7.3f,3.3f}},
+                       -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右侧灯箱",   {12.0f,5.0f,
                        2695.0f,
                        45.73f,-160.0f,
@@ -171,7 +222,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                        0.0f,
                        -0.11f,0.57f,
                        500000,300000,
-                       -0.3f,7.1f,7.3f,3.3f}},
+                       -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
 
 
    {"安装车右片窗",   {7.25f,12.0f,
@@ -185,7 +239,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      0.0f,
                      -0.11f,0.57f,
                      500000,300000,
-                     -0.3f,7.1f,7.3f,3.3f}},
+                     -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    {"拆卸车右片窗",   {7.25f,12.0f,
                      2600.0f,
                      295.73f-32.0,30.95f,
@@ -197,7 +254,10 @@ inline const QMap<QString, LRUInnerParams>& LRUpresetData()
                      0.0f,
                      -0.11f,0.57f,
                      500000,300000,
-                     -0.3f,7.1f,7.3f,3.3f}},
+                     -0.3f,7.1f,7.3f,3.3f,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,
+                     LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET,LRU_RECT_UNSET}},
    };
     return LRU_DATA;
 }
