@@ -61,6 +61,11 @@ public:
     // 单高度闭环 helper：检测 → 补偿 → 复测 → 稳定确认
     struct StageResidual { double x = 0; double y = 0; double yaw = 0; };
 
+    enum class SearchSuccessMode {
+        ReturnToStart,        // 成功后换算回原点并回到原点
+        StayAtFoundPosition   // 成功后停在找到码的位置（用于自动闭环）
+    };
+
     //力实时信息
     float Check_ForceInfo[6] = {0.0f};
     float LastCheck_ForceInfo[6] = {0.0f};
@@ -112,12 +117,6 @@ public slots:
     void CheckCollision();
 
     void CheckDetach();
-
-    //视觉加六自由度平台-开始
-    enum class SearchSuccessMode {
-        ReturnToStart,        // 成功后换算回原点并回到原点
-        StayAtFoundPosition   // 成功后停在找到码的位置（用于自动闭环）
-    };
 
     bool StatusModifyLatte();
     bool auto_StatusModifyLatte();

@@ -470,9 +470,11 @@ private slots:
 
     void on_btn_PlatformLeveling_clicked();
 
-    void on_btnTest_clicked();
-
     void on_btn_AGVPositionAdjust_clicked();
+
+    void on_radioButton_leftPlate_toggled(bool checked);
+
+    void on_radioButton_middlePlate_toggled(bool checked);
 
     void on_radioButton_rightPlate_toggled(bool checked);
 
@@ -550,8 +552,6 @@ private slots:
 
 
     void on_btn_CheckDetach_clicked();
-
-    void on_radioButton_middlePlate_toggled(bool checked);
 
     void on_radioButton_middlePlate_clicked();
 

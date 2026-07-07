@@ -983,7 +983,7 @@ void MainWindow::on_StartCoverPlate3D_triggered()
 //保留使用
 void MainWindow::slotPrintInfo(QString info)
 {
-
+    Q_UNUSED(info)
 }
 
 //主窗口系统监测
@@ -1077,6 +1077,7 @@ void MainWindow::slotPrintStatus(eTaskStatus status)
 
 void MainWindow::HandleSubsystemState(eSubSystem system, eTaskstate state, QString& baseStyle, QLabel* readyLbl, QLabel* runningLbl, QLabel* completeLbl,QLabel* errorLbl)
 {
+    Q_UNUSED(system)
     if (state == eTaskstate::Error)
     {
         // 错误状态处理
@@ -1114,6 +1115,9 @@ void MainWindow::HandleSubsystemState(eSubSystem system, eTaskstate state, QStri
             //     }
             // }
 
+            break;
+        case eTaskstate::Init:
+        case eTaskstate::Error:
             break;
         }
     }
@@ -2689,6 +2693,7 @@ void MainWindow::on_btn_CoverPlateRapidStop_clicked(){
 //左侧
 void MainWindow::on_radioButton_leftPlate_toggled(bool checked)
 {
+    Q_UNUSED(checked)
     m_coverPlate->ChooseCoverPlate(true);
 }
 
@@ -2696,6 +2701,7 @@ void MainWindow::on_radioButton_leftPlate_toggled(bool checked)
 //中间
 void MainWindow::on_radioButton_middlePlate_toggled(bool checked)
 {
+    Q_UNUSED(checked)
     m_coverPlate->ChooseMiddleCoverPlate(true);
 }
 
@@ -2703,6 +2709,7 @@ void MainWindow::on_radioButton_middlePlate_toggled(bool checked)
 //右侧
 void MainWindow::on_radioButton_rightPlate_toggled(bool checked)
 {
+    Q_UNUSED(checked)
     m_coverPlate->ChooseCoverPlate(false);
 }
 
@@ -4369,6 +4376,7 @@ void MainWindow::on_btn_PlatformLeveling_clicked()
 }
 
 
+void MainWindow::on_btn_IOForward_pressed()
 {
     zm->SetIOOutput(6,1);
 }

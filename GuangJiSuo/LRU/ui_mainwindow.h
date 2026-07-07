@@ -670,6 +670,7 @@ public:
     QGridLayout *gridLayout_48;
     QGridLayout *gridLayout_13;
     QLabel *label_132;
+    QLabel *lbl_GapWidth_x;
     QLabel *lbl_GapWidth_y;
     QPushButton *btn_LRUParamAdjust;
     QPushButton *btn_CheckStatus;
@@ -684,6 +685,7 @@ public:
     QDoubleSpinBox *rz_offset;
     QLabel *label_129;
     QLabel *label_58;
+    QSpinBox *light2_value;
     QPushButton *btn_AutoAlign;
     QPushButton *btn_auto_descent;
     QLabel *label_59;
@@ -5807,6 +5809,15 @@ public:
 
         gridLayout_13->addWidget(label_132, 0, 5, 1, 1);
 
+        lbl_GapWidth_x = new QLabel(groupBox_21);
+        lbl_GapWidth_x->setObjectName(QString::fromUtf8("lbl_GapWidth_x"));
+        sizePolicy10.setHeightForWidth(lbl_GapWidth_x->sizePolicy().hasHeightForWidth());
+        lbl_GapWidth_x->setSizePolicy(sizePolicy10);
+        lbl_GapWidth_x->setMinimumSize(QSize(50, 0));
+        lbl_GapWidth_x->setMaximumSize(QSize(50, 16777215));
+
+        gridLayout_13->addWidget(lbl_GapWidth_x, 0, 6, 1, 1);
+
         lbl_GapWidth_y = new QLabel(groupBox_21);
         lbl_GapWidth_y->setObjectName(QString::fromUtf8("lbl_GapWidth_y"));
         sizePolicy10.setHeightForWidth(lbl_GapWidth_y->sizePolicy().hasHeightForWidth());
@@ -5868,7 +5879,7 @@ public:
         btn_StatusModifyLatter->setObjectName(QString::fromUtf8("btn_StatusModifyLatter"));
         btn_StatusModifyLatter->setEnabled(true);
 
-        gridLayout_13->addWidget(btn_StatusModifyLatter, 6, 0, 1, 1);
+        gridLayout_13->addWidget(btn_StatusModifyLatter, 2, 0, 1, 1);
 
         horizontalLayout_21 = new QHBoxLayout();
         horizontalLayout_21->setSpacing(6);
@@ -5902,19 +5913,25 @@ public:
 
         gridLayout_13->addWidget(label_58, 6, 3, 1, 1);
 
+        light2_value = new QSpinBox(groupBox_21);
+        light2_value->setObjectName(QString::fromUtf8("light2_value"));
+        light2_value->setMaximum(255);
+
+        gridLayout_13->addWidget(light2_value, 6, 4, 1, 1);
+
         btn_AutoAlign = new QPushButton(groupBox_21);
         btn_AutoAlign->setObjectName(QString::fromUtf8("btn_AutoAlign"));
         btn_AutoAlign->setEnabled(true);
         sizePolicy17.setHeightForWidth(btn_AutoAlign->sizePolicy().hasHeightForWidth());
         btn_AutoAlign->setSizePolicy(sizePolicy17);
 
-        gridLayout_13->addWidget(btn_AutoAlign, 6, 1, 1, 1);
+        gridLayout_13->addWidget(btn_AutoAlign, 6, 0, 1, 1);
 
         btn_auto_descent = new QPushButton(groupBox_21);
         btn_auto_descent->setObjectName(QString::fromUtf8("btn_auto_descent"));
         btn_auto_descent->setEnabled(true);
 
-        gridLayout_13->addWidget(btn_auto_descent, 6, 3, 1, 1);
+        gridLayout_13->addWidget(btn_auto_descent, 6, 2, 1, 1);
 
         label_59 = new QLabel(groupBox_21);
         label_59->setObjectName(QString::fromUtf8("label_59"));
@@ -5925,7 +5942,7 @@ public:
         btn_secondary_lift->setObjectName(QString::fromUtf8("btn_secondary_lift"));
         btn_secondary_lift->setEnabled(true);
 
-        gridLayout_13->addWidget(btn_secondary_lift, 6, 2, 1, 1);
+        gridLayout_13->addWidget(btn_secondary_lift, 6, 1, 1, 1);
 
         horizontalLayout_20 = new QHBoxLayout();
         horizontalLayout_20->setSpacing(6);
@@ -5949,7 +5966,7 @@ public:
         distance1 = new QLabel(groupBox_21);
         distance1->setObjectName(QString::fromUtf8("distance1"));
 
-        gridLayout_13->addWidget(distance1, 2, 0, 1, 1);
+        gridLayout_13->addWidget(distance1, 2, 4, 1, 1);
 
         lbl_GapAngle = new QLabel(groupBox_21);
         lbl_GapAngle->setObjectName(QString::fromUtf8("lbl_GapAngle"));
@@ -7578,6 +7595,7 @@ public:
         btnDisMove12->setText(QCoreApplication::translate("MainWindow", "\347\233\270\345\257\271\350\277\220\345\212\250", nullptr));
         groupBox_21->setTitle(QCoreApplication::translate("MainWindow", "\350\207\252\345\212\250\344\272\214\347\272\247\345\215\207\351\231\215(\345\237\272\344\272\216\350\247\206\350\247\211)", nullptr));
         label_132->setText(QCoreApplication::translate("MainWindow", "\345\257\271\351\275\220\350\257\257\345\267\256X(mm)\357\274\232", nullptr));
+        lbl_GapWidth_x->setText(QCoreApplication::translate("MainWindow", "2.0", nullptr));
         lbl_GapWidth_y->setText(QCoreApplication::translate("MainWindow", "2.0", nullptr));
         btn_LRUParamAdjust->setText(QCoreApplication::translate("MainWindow", "LRU\345\217\202\346\225\260\350\256\276\347\275\256", nullptr));
         btn_CheckStatus->setText(QCoreApplication::translate("MainWindow", "\350\247\206\350\247\211\346\243\200\346\265\213", nullptr));
