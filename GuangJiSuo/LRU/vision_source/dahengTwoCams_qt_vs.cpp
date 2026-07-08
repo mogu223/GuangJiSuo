@@ -60,6 +60,22 @@ void dahengTwoCams_qt_vs::closeEvent(QCloseEvent *event)
     // qDebug() << "dahengForm 已隐藏，资源未释放";
 }
 
+// =============================================================================
+// 相机状态查询：基于 CDeviceProcess::IsOpen() / IsSnap() 的实际设备状态
+// =============================================================================
+bool dahengTwoCams_qt_vs::isDeviceCapturing(int deviceIndex)
+{
+    auto it = m_mapDeviceInformation.find(deviceIndex);
+    if (it == m_mapDeviceInformation.end() || it->second == nullptr)
+        return false;
+    return it->second->IsOpen() && it->second->IsSnap();
+}
+
+bool dahengTwoCams_qt_vs::isVisionStarted()
+{
+    return isDeviceCapturing(0) && isDeviceCapturing(1);
+}
+
 // dahengTwoCams_qt_vs.cpp 中实现析构函数
 dahengTwoCams_qt_vs::~dahengTwoCams_qt_vs()
 {

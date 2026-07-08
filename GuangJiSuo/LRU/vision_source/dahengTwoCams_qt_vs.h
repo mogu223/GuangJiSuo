@@ -65,6 +65,11 @@ private:
     bool m_bVisionStarted = false;
 
 public:
+    /// 视觉是否已启动（两台设备均已打开并开始采集）
+    bool isVisionStarted();
+    /// 指定设备是否正在采集（已打开且正在 Snap）
+    bool isDeviceCapturing(int deviceIndex);
+
 	double		m_dEditShutter;
 	double		m_dEditGain;
 	int64_t		m_nEditSnapSpeed;

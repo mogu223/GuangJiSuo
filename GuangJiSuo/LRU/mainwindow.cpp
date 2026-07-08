@@ -1,8 +1,17 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "lrumonitor.h"
+#include "lruparamdialog.h"
 #include <QFileDialog>
 #include <QDir>
+#include <QDoubleSpinBox>
+#include <QFormLayout>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QGroupBox>
 #include <QCoreApplication>
 #include <functional>
 #include <QDateTime>
@@ -3398,17 +3407,100 @@ void MainWindow::on_btn_CheckStatus_clicked()
 
 void MainWindow::on_btn_StatusModifyLatter_clicked()
 {
-    ui->btn_StatusModifyLatter->setEnabled(false);
-    QThread* startThread = new QThread;
-    QObject::connect(startThread, &QThread::started, [this,startThread]() {
-        m_lift->StatusModifyLatte();
-        startThread->quit();
+    // 姿态补偿弹窗：以主界面当前选中 LRU 类型为源
+    QString lruName = ui->comboBox_LRUdata->currentText();
+    if (!LRUpresetData().contains(lruName)) {
+        UpdateUI("当前未选中有效的 LRU 类型");
+        return;
+    }
+
+    // 加载当前已保存的参数（含 JSON 覆盖）
+    LRUInnerParams defaults = LRUpresetData().value(lruName);
+    LRUInnerParams params = LruParamDialog::loadWithOverride(lruName, defaults);
+
+    // ---- 构建弹窗 ----
+    QDialog dlg(this);
+    dlg.setWindowTitle(QString("姿态补偿 - %1").arg(lruName));
+    dlg.setMinimumWidth(360);
+
+    auto *layout = new QVBoxLayout(&dlg);
+
+    auto *formGroup = new QGroupBox("姿态补偿值（保存值）");
+    auto *form = new QFormLayout(formGroup);
+    auto *sbX = new QDoubleSpinBox;
+    sbX->setRange(-70, 25);  // 前方 25mm、后方 70mm
+    sbX->setDecimals(2);
+    sbX->setSingleStep(0.5);
+    sbX->setValue(static_cast<double>(params.vision_comp_x));
+    sbX->setMinimumWidth(120);
+    auto *sbY = new QDoubleSpinBox;
+    sbY->setRange(-70, 70);  // 左右 70mm
+    sbY->setDecimals(2);
+    sbY->setSingleStep(0.5);
+    sbY->setValue(static_cast<double>(params.vision_comp_y));
+    sbY->setMinimumWidth(120);
+    form->addRow("X 补偿（车头为正，mm）", sbX);
+    form->addRow("Y 补偿（车左为正，mm）", sbY);
+    layout->addWidget(formGroup);
+
+    auto *hintLabel = new QLabel("保存后平台将按本次修改差值立即移动。\n保存值会叠加到后续所有视觉对齐运动中。\nX 范围 [-70, 25] mm，Y 范围 [-70, 70] mm。");
+    hintLabel->setStyleSheet("color: #555;");
+    hintLabel->setWordWrap(true);
+    layout->addWidget(hintLabel);
+
+    auto *btnLayout = new QHBoxLayout;
+    auto *saveBtn = new QPushButton("保存");
+    saveBtn->setDefault(true);
+    saveBtn->setStyleSheet("QPushButton { font-weight: bold; }");
+    auto *cancelBtn = new QPushButton("取消");
+    btnLayout->addStretch();
+    btnLayout->addWidget(saveBtn);
+    btnLayout->addWidget(cancelBtn);
+    layout->addLayout(btnLayout);
+
+    QObject::connect(cancelBtn, &QPushButton::clicked, &dlg, &QDialog::reject);
+    QObject::connect(saveBtn, &QPushButton::clicked, &dlg, [&, this]() {
+        float inputX = static_cast<float>(sbX->value());
+        float inputY = static_cast<float>(sbY->value());
+        float moveX = inputX - params.vision_comp_x;
+        float moveY = inputY - params.vision_comp_y;
+
+        // 保存确认
+        auto ans = QMessageBox::question(
+            &dlg, "确认保存",
+            QString("确认保存为 %1 的姿态补偿？\n保存值：X=%2 mm  Y=%3 mm\n本次移动：X=%4 mm  Y=%5 mm")
+                .arg(lruName)
+                .arg(inputX, 0, 'f', 2).arg(inputY, 0, 'f', 2)
+                .arg(moveX, 0, 'f', 2).arg(moveY, 0, 'f', 2),
+            QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (ans != QMessageBox::Yes)
+            return;
+
+        // ---- 先按新旧差值运动，后保存绝对补偿值 ----
+        // 弹窗里的值是 per-LRU 的绝对补偿；平台即时移动只执行本次变化量，避免重复保存导致累积偏移。
+        const bool needMove = (qAbs(moveX) > 0.001f || qAbs(moveY) > 0.001f);
+        if (needMove) {
+            QString error;
+            if (!m_lift->applyManualVisionCompensation(moveX, moveY, &error)) {
+                QMessageBox::warning(&dlg, "运动失败", error);
+                return;  // 不关闭弹窗，不保存
+            }
+        }
+
+        // 运动指令已发出，保存到 JSON（覆盖旧值，非累积）
+        params.vision_comp_x = inputX;
+        params.vision_comp_y = inputY;
+        LruParamDialog::saveOverride(lruName, params);
+        emit paramsSelected(params);
+        UpdateUI(QString("已保存 %1 的姿态补偿：X=%2 Y=%3，本次移动：X=%4 Y=%5")
+                     .arg(lruName)
+                     .arg(inputX, 0, 'f', 2).arg(inputY, 0, 'f', 2)
+                     .arg(moveX, 0, 'f', 2).arg(moveY, 0, 'f', 2));
+
+        dlg.accept();
     });
-    QObject::connect(startThread, &QThread::finished, startThread, &QObject::deleteLater);
-    QObject::connect(startThread, &QThread::finished, this,  [this](){
-        ui->btn_StatusModifyLatter->setEnabled(true);
-    });
-    startThread->start();
+
+    dlg.exec();
 }
 
 void MainWindow::on_btn_SearchDetect_clicked()

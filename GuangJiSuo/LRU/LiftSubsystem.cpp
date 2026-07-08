@@ -392,19 +392,27 @@ bool Lift::StatusModifyLatte()
     float distance_x = m_gapwidth_x;
     float distance_y = m_gapwidth_y;
 
-    // 新模型下：mfr.x/y 即 alignError，目标值 = 0
-    float xCorr = distance_x * m_cfgCorrectionGain;
-    float yCorr = distance_y * m_cfgCorrectionGain;
+    // 姿态补偿叠加：adjustedX/Y = raw + comp，yaw 保持原始视觉 yaw
+    float adjustedX = distance_x + m_vision_comp_x;
+    float adjustedY = distance_y + m_vision_comp_y;
+
+    // 新模型下：adjustedX/Y 即补偿后误差，目标值 = 0
+    float xCorr = adjustedX * m_cfgCorrectionGain;
+    float yCorr = adjustedY * m_cfgCorrectionGain;
     float yawCorr = angle * m_cfgCorrectionGain;
 
     if (qAbs(angle) > m_cfgSettleYawDeg) {
         m_SixDof->posePointMotion(x, y, z, rx, ry, rz - yawCorr, 2, 1);
         LiftUpdateUI("执行一次对齐：调整 yaw");
-    } else if (qAbs(distance_x) > m_cfgSettleXyMm || qAbs(distance_y) > m_cfgSettleXyMm) {
+    } else if (qAbs(adjustedX) > m_cfgSettleXyMm || qAbs(adjustedY) > m_cfgSettleXyMm) {
         m_SixDof->posePointMotion(x + xCorr, y + yCorr, z, rx, ry, rz, 2, 1);
+        qInfo() << QString("执行一次对齐：raw(%1,%2) comp(%3,%4) adjusted(%5,%6)")
+                       .arg(distance_x, 0, 'f', 3).arg(distance_y, 0, 'f', 3)
+                       .arg(m_vision_comp_x, 0, 'f', 3).arg(m_vision_comp_y, 0, 'f', 3)
+                       .arg(adjustedX, 0, 'f', 3).arg(adjustedY, 0, 'f', 3);
         LiftUpdateUI(QString("执行一次对齐：X=%1 Y=%2 yaw=%3")
-                         .arg(distance_x, 0, 'f', 2)
-                         .arg(distance_y, 0, 'f', 2)
+                         .arg(adjustedX, 0, 'f', 2)
+                         .arg(adjustedY, 0, 'f', 2)
                          .arg(angle, 0, 'f', 2));
     } else {
         LiftUpdateUI("执行一次对齐：误差已在阈值内");
@@ -435,23 +443,120 @@ bool Lift::getCurrentVisionDeviceIndex(int &deviceIndex, float &z)
     return true;
 }
 
+bool Lift::visionPreflightCheck(bool checkZ)
+{
+    // 1. 控制器已连接
+    if (!m_zm->GetConnectStatus()) {
+        LiftUpdateUI("未连接控制器");
+        return false;
+    }
+    // 2. 六自由度通信在线
+    if (!m_SixDof || !m_SixDof->isRunning()) {
+        LiftUpdateUI("六自由度通信未启动");
+        return false;
+    }
+    if (!m_SixDof->isCommunicationSuccess()) {
+        LiftUpdateUI("六自由度通信异常");
+        return false;
+    }
+    // 3. 相机已启动
+    if (!m_dahengCamera) {
+        LiftUpdateUI("相机对象失效");
+        return false;
+    }
+    if (!m_dahengCamera->isVisionStarted()) {
+        LiftUpdateUI("相机未启动，请先打开相机并开始采集");
+        return false;
+    }
+    // 4. 高度检查（可选）
+    if (checkZ) {
+        int deviceIndex = -1;
+        float z = 0.0f;
+        if (!getCurrentVisionDeviceIndex(deviceIndex, z))
+            return false;
+    }
+    return true;
+}
+
+bool Lift::applyManualVisionCompensation(float dxMm, float dyMm, QString *errorMessage)
+{
+    auto setError = [&](const QString &msg) {
+        LiftUpdateUI(msg);
+        if (errorMessage) *errorMessage = msg;
+    };
+
+    // 1. 控制器已连接
+    if (!m_zm->GetConnectStatus()) {
+        setError("姿态补偿：未连接控制器");
+        return false;
+    }
+    // 2. 非自动运动中
+    if (autolift || autodescent) {
+        setError("姿态补偿：自动运动中，无法移动");
+        return false;
+    }
+    // 3. 六自由度在线
+    if (!m_SixDof || !m_SixDof->isRunning()) {
+        setError("姿态补偿：六自由度通信未启动");
+        return false;
+    }
+    if (!m_SixDof->isCommunicationSuccess()) {
+        setError("姿态补偿：六自由度通信异常");
+        return false;
+    }
+    // 4. 平台非运动中
+    if (m_SixDof->isPlatformMoving()) {
+        setError("姿态补偿：平台运动中，无法移动");
+        return false;
+    }
+    // 5. 输入范围安全限制（与搜索安全范围一致）
+    //    前方 25mm、后方 70mm、左右 70mm
+    const float safeFwd = static_cast<float>(m_cfgSearchSafetyForwardMm);  // 正 X 上限
+    const float safeBack = static_cast<float>(m_cfgSearchSafetyBackwardMm); // 负 X 上限
+    const float safeLeft = static_cast<float>(m_cfgSearchSafetyLeftMm);   // 正 Y 上限
+    const float safeRight = static_cast<float>(m_cfgSearchSafetyRightMm); // 负 Y 上限
+    if (dxMm > safeFwd || dxMm < -safeBack) {
+        setError(QString("姿态补偿：X=%1 超出安全范围[%2, %3] mm")
+                     .arg(dxMm, 0, 'f', 2).arg(-safeBack).arg(safeFwd));
+        return false;
+    }
+    if (dyMm > safeLeft || dyMm < -safeRight) {
+        setError(QString("姿态补偿：Y=%1 超出安全范围[%2, %3] mm")
+                     .arg(dyMm, 0, 'f', 2).arg(-safeRight).arg(safeLeft));
+        return false;
+    }
+
+    // 6. 读取当前位姿并运动
+    QJsonObject coords = m_SixDof->getCurrentCoordinates();
+    float curX  = QString::number(coords["x"].toDouble(),  'f', 2).toFloat();
+    float curY  = QString::number(coords["y"].toDouble(),  'f', 2).toFloat();
+    float curZ  = QString::number(coords["z"].toDouble(),  'f', 2).toFloat();
+    float curRx = QString::number(coords["rx"].toDouble(), 'f', 2).toFloat();
+    float curRy = QString::number(coords["ry"].toDouble(), 'f', 2).toFloat();
+    float curRz = QString::number(coords["rz"].toDouble(), 'f', 2).toFloat();
+
+    // 输入值即平台移动距离，符号不反转
+    m_SixDof->posePointMotion(curX + dxMm, curY + dyMm, curZ,
+                               curRx, curRy, curRz, 2, 1);
+    qInfo() << QString("姿态补偿运动：原坐标(%1,%2) 补偿(%3,%4) 目标(%5,%6)")
+                   .arg(curX).arg(curY).arg(dxMm, 0, 'f', 2).arg(dyMm, 0, 'f', 2)
+                   .arg(curX + dxMm).arg(curY + dyMm);
+    return true;
+}
+
 bool Lift::vision_detected()
 {
     if (autodescent || autolift) {
         LiftUpdateUI("自动运动中，请勿手动检测");
         return false;
     }
+    LiftUpdateUI("视觉检测：准备检查");
     detected_flag = false;
 
-    if (!m_zm->GetConnectStatus()) {
-        LiftUpdateUI("未连接控制器");
+    if (!visionPreflightCheck(true))
         return false;
-    }
-    if (!m_dahengCamera) {
-        LiftUpdateUI("相机对象失效");
-        return false;
-    }
 
+    LiftUpdateUI("视觉检测：25%/100%");
     emit sendBrightnessValueToMainWindow(255);
     QThread::sleep(1);
 
@@ -460,7 +565,7 @@ bool Lift::vision_detected()
     if (!getCurrentVisionDeviceIndex(deviceIndex, z))
         return false;
 
-    LiftUpdateUI("视觉检测：开始");
+    LiftUpdateUI("视觉检测：50%/100%");
     MultiFrameResult mfr = detectMultiFrame(deviceIndex);
     if (!mfr.valid) {
         LiftUpdateUI("视觉检测失败：未找到目标码，可尝试平移找码检测");
@@ -477,7 +582,7 @@ bool Lift::vision_detected()
     vision_data.rho2 = m_gapwidth_y;
     emit lift_updateGapInfo(vision_data);
     detected_flag = true;
-    LiftUpdateUI(QString("视觉检测：成功 X=%1 Y=%2 yaw=%3 有效帧%4/%5")
+    LiftUpdateUI(QString("视觉检测：100%/100% 成功 X=%1 Y=%2 yaw=%3 有效帧%4/%5")
                      .arg(m_gapwidth_x, 0, 'f', 2)
                      .arg(m_gapwidth_y, 0, 'f', 2)
                      .arg(m_angle, 0, 'f', 2)
@@ -491,17 +596,13 @@ bool Lift::search_vision_detected()
         LiftUpdateUI("自动运动中，请勿手动检测");
         return false;
     }
+    LiftUpdateUI("平移找码：准备检查");
     detected_flag = false;
 
-    if (!m_zm->GetConnectStatus()) {
-        LiftUpdateUI("未连接控制器");
+    if (!visionPreflightCheck(true))
         return false;
-    }
-    if (!m_dahengCamera) {
-        LiftUpdateUI("相机对象失效");
-        return false;
-    }
 
+    LiftUpdateUI("平移找码：25%/100%");
     emit sendBrightnessValueToMainWindow(255);
     QThread::sleep(1);
 
@@ -510,12 +611,14 @@ bool Lift::search_vision_detected()
     if (!getCurrentVisionDeviceIndex(deviceIndex, z))
         return false;
 
-    LiftUpdateUI("平移找码：开始");
+    LiftUpdateUI("平移找码：50%/100%");
     MultiFrameResult mfr = detectMultiFrameWithSixDofSearch(deviceIndex, SearchSuccessMode::ReturnToStart);
     if (!mfr.valid) {
         LiftUpdateUI("平移找码失败：请检查遮挡/光源/marker_id");
         return false;
     }
+
+    LiftUpdateUI("平移找码：75%/100% 找到码");
 
     m_angle = mfr.yaw;
     m_gapwidth_x = mfr.x;
@@ -527,7 +630,7 @@ bool Lift::search_vision_detected()
     vision_data.rho2 = m_gapwidth_y;
     emit lift_updateGapInfo(vision_data);
     detected_flag = true;
-    LiftUpdateUI("平移找码：找到码，已回到找码前位置");
+    LiftUpdateUI("平移找码：100%/100% 找到码，已回到找码前位置");
     return true;
 }
 
@@ -537,14 +640,13 @@ bool Lift::auto_align()
         LiftUpdateUI("自动运动中，请勿手动操作");
         return false;
     }
-    if (!m_zm->GetConnectStatus()) {
-        LiftUpdateUI("未连接控制器");
-        return false;
-    }
     if (checkCollision_flag == false) {
         LiftUpdateUI("请先开启碰撞检测!");
         return false;
     }
+
+    if (!visionPreflightCheck(true))
+        return false;
 
     int deviceIndex = -1;
     float z = 0.0f;
@@ -589,8 +691,9 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
         }
 
         // 新模型下：mfr.x/y 就是 alignError，目标值 = 0
-        float xRes = mfr.x;
-        float yRes = mfr.y;
+        // 姿态补偿叠加：adjustedX/Y = raw + comp，yaw 保持原始视觉 yaw
+        float xRes = mfr.x + m_vision_comp_x;
+        float yRes = mfr.y + m_vision_comp_y;
         float yawRes = mfr.yaw;
 
         if (qAbs(xRes) <= m_cfgSettleXyMm && qAbs(yRes) <= m_cfgSettleXyMm && qAbs(yawRes) <= m_cfgSettleYawDeg) {
@@ -622,10 +725,14 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
             yawCorr = yawRes * m_cfgCorrectionGain;
             m_SixDof->posePointMotion(cx, cy, cz, crx, cry, crz - yawCorr, 2, 1);
         } else {
-            xCorr = mfr.x * m_cfgCorrectionGain;
-            yCorr = mfr.y * m_cfgCorrectionGain;
+            xCorr = xRes * m_cfgCorrectionGain;
+            yCorr = yRes * m_cfgCorrectionGain;
             m_SixDof->posePointMotion(cx + xCorr, cy + yCorr, cz, crx, cry, crz, 2, 1);
         }
+        qInfo() << QString("%1: 补偿运动 raw(%2,%3) comp(%4,%5) adjusted(%6,%7)")
+                       .arg(label).arg(mfr.x, 0, 'f', 3).arg(mfr.y, 0, 'f', 3)
+                       .arg(m_vision_comp_x, 0, 'f', 3).arg(m_vision_comp_y, 0, 'f', 3)
+                       .arg(xRes, 0, 'f', 3).arg(yRes, 0, 'f', 3);
         waitSixDof();
         corrections++;
 
@@ -643,14 +750,18 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
             softStop(diag);
             return false;
         }
-        double postScore = residualScore(postMfr.x, postMfr.y, postMfr.yaw);
+        // 复测结果叠加补偿后参与稳定判断和残差评分
+        float postXRes = postMfr.x + m_vision_comp_x;
+        float postYRes = postMfr.y + m_vision_comp_y;
+        float postYawRes = postMfr.yaw;
+        double postScore = residualScore(postXRes, postYRes, postYawRes);
         if (postScore > oldScore * m_cfgResidualGrowthStopRatio) {
             AutoLiftDiagnostics diag;
             diag.mfr = postMfr;
             diag.stageLabel = label;
             diag.correctionCount = corrections;
             diag.maxCorrections = m_cfgMaxCorrections;
-            diag.xRes = postMfr.x; diag.yRes = postMfr.y; diag.yawRes = postMfr.yaw;
+            diag.xRes = postXRes; diag.yRes = postYRes; diag.yawRes = postYawRes;
             diag.xCorrection = xCorr; diag.yCorrection = yCorr; diag.yawCorrection = yawCorr;
             diag.residualGrew = true;
             diag.stopReason = QString("补偿后残差增大: score %1→%2").arg(oldScore, 0, 'f', 2).arg(postScore, 0, 'f', 2);
@@ -658,10 +769,6 @@ bool Lift::runAutoLiftVisionStage(int deviceIndex, const QString& label,
             return false;
         }
 
-        // 复测结果参与稳定判断
-        float postXRes = postMfr.x;
-        float postYRes = postMfr.y;
-        float postYawRes = postMfr.yaw;
         if (qAbs(postXRes) <= m_cfgSettleXyMm && qAbs(postYRes) <= m_cfgSettleXyMm && qAbs(postYawRes) <= m_cfgSettleYawDeg) {
             stableCount++;
             LiftUpdateUI(QString("%1: 补偿后稳定%2/%3").arg(label).arg(stableCount).arg(m_cfgStablePassCount));
@@ -705,11 +812,14 @@ bool Lift::runAutoDescentVisionStage(int deviceIndex, const QString& label,
             return false;
         }
 
-        float xRes = mfr.x;
-        float yRes = mfr.y;
+        // 姿态补偿叠加：adjustedX/Y = raw + comp，yaw 保持原始视觉 yaw
+        float xRes = mfr.x + m_vision_comp_x;
+        float yRes = mfr.y + m_vision_comp_y;
         float yawRes = mfr.yaw;
-        qInfo() << QString("%1: 下降闭环检测 x=%2 y=%3 yaw=%4")
-                       .arg(label).arg(xRes, 0, 'f', 3).arg(yRes, 0, 'f', 3).arg(yawRes, 0, 'f', 3);
+        qInfo() << QString("%1: 下降闭环检测 raw(%2,%3) comp(%4,%5) adjusted(%6,%7) yaw=%8")
+                       .arg(label).arg(mfr.x, 0, 'f', 3).arg(mfr.y, 0, 'f', 3)
+                       .arg(m_vision_comp_x, 0, 'f', 3).arg(m_vision_comp_y, 0, 'f', 3)
+                       .arg(xRes, 0, 'f', 3).arg(yRes, 0, 'f', 3).arg(yawRes, 0, 'f', 3);
 
         if (qAbs(xRes) <= m_cfgSettleXyMm && qAbs(yRes) <= m_cfgSettleXyMm && qAbs(yawRes) <= m_cfgSettleYawDeg) {
             stableCount++;
@@ -727,8 +837,8 @@ bool Lift::runAutoDescentVisionStage(int deviceIndex, const QString& label,
 
         double oldScore = residualScore(xRes, yRes, yawRes);
         m_angle = mfr.yaw;
-        m_gapwidth_x = mfr.x;
-        m_gapwidth_y = mfr.y;
+        m_gapwidth_x = mfr.x + m_vision_comp_x;  // 补偿后值用于 descent_StatusModifyLatte
+        m_gapwidth_y = mfr.y + m_vision_comp_y;
         detected_flag = true;
 
         if (!autodescent) { LiftUpdateUI("自动下降已终止"); return false; }
@@ -763,10 +873,14 @@ bool Lift::runAutoDescentVisionStage(int deviceIndex, const QString& label,
             return false;
         }
 
-        double postScore = residualScore(postMfr.x, postMfr.y, postMfr.yaw);
+        // 复测结果叠加补偿后参与稳定判断和残差评分
+        float postXRes = postMfr.x + m_vision_comp_x;
+        float postYRes = postMfr.y + m_vision_comp_y;
+        float postYawRes = postMfr.yaw;
+        double postScore = residualScore(postXRes, postYRes, postYawRes);
         qInfo() << QString("%1: 补偿后残差 score %2 -> %3, x=%4 y=%5 yaw=%6")
                        .arg(label).arg(oldScore, 0, 'f', 3).arg(postScore, 0, 'f', 3)
-                       .arg(postMfr.x, 0, 'f', 3).arg(postMfr.y, 0, 'f', 3).arg(postMfr.yaw, 0, 'f', 3);
+                       .arg(postXRes, 0, 'f', 3).arg(postYRes, 0, 'f', 3).arg(postYawRes, 0, 'f', 3);
 
         if (postScore > oldScore * m_cfgResidualGrowthStopRatio) {
             AutoLiftDiagnostics diag;
@@ -774,7 +888,7 @@ bool Lift::runAutoDescentVisionStage(int deviceIndex, const QString& label,
             diag.stageLabel = label;
             diag.correctionCount = corrections;
             diag.maxCorrections = m_cfgMaxCorrections;
-            diag.xRes = postMfr.x; diag.yRes = postMfr.y; diag.yawRes = postMfr.yaw;
+            diag.xRes = postXRes; diag.yRes = postYRes; diag.yawRes = postYawRes;
             diag.residualGrew = true;
             diag.stopReason = QString("补偿后残差增大: score %1→%2").arg(oldScore, 0, 'f', 2).arg(postScore, 0, 'f', 2);
             softStop(diag);
@@ -782,11 +896,11 @@ bool Lift::runAutoDescentVisionStage(int deviceIndex, const QString& label,
             return false;
         }
 
-        if (qAbs(postMfr.x) <= m_cfgSettleXyMm && qAbs(postMfr.y) <= m_cfgSettleXyMm && qAbs(postMfr.yaw) <= m_cfgSettleYawDeg) {
+        if (qAbs(postXRes) <= m_cfgSettleXyMm && qAbs(postYRes) <= m_cfgSettleXyMm && qAbs(postYawRes) <= m_cfgSettleYawDeg) {
             stableCount++;
             LiftUpdateUI(QString("%1: 补偿后稳定%2/%3").arg(label).arg(stableCount).arg(m_cfgStablePassCount));
             if (stableCount >= m_cfgStablePassCount) {
-                outResidual.x = postMfr.x; outResidual.y = postMfr.y; outResidual.yaw = postMfr.yaw;
+                outResidual.x = postXRes; outResidual.y = postYRes; outResidual.yaw = postYawRes;
                 detected_flag = false;
                 LiftUpdateUI(label + ": 补偿后已稳定");
                 return true;
@@ -829,7 +943,12 @@ bool Lift::auto_lift()
         LiftUpdateUI("正在下降中！不能抬升");
         return false;
     }
+    if (!visionPreflightCheck(false)) {
+        autolift = false;
+        return false;
+    }
 
+    LiftUpdateUI("自动抬升：准备检查");
     m_autoLiftCompleted = false;
     float goal_z = final_z_lift;
     float z = 0.0;
@@ -837,6 +956,7 @@ bool Lift::auto_lift()
 
     // ================================================================
     //  阶段1：z≈0，相机1
+    LiftUpdateUI("自动抬升：25%/100%");
     // ================================================================
     StageResidual z0Residual;
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
@@ -848,6 +968,7 @@ bool Lift::auto_lift()
     // ================================================================
     //  升到 z≈1700
     // ================================================================
+    LiftUpdateUI("自动抬升：50%/100%");
     QThread::msleep(500);
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
     if (z < 1700) {
@@ -863,6 +984,7 @@ bool Lift::auto_lift()
     // ================================================================
     //  阶段2：z≈1700，相机0
     // ================================================================
+    LiftUpdateUI("自动抬升：75%/100%");
     QThread::msleep(500);
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
     StageResidual z1700Residual;
@@ -897,6 +1019,7 @@ bool Lift::auto_lift()
     // ================================================================
     //  升到 final_z_lift
     // ================================================================
+    LiftUpdateUI("自动抬升：90%/100%");
     QThread::msleep(500);
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
     if (1700 <= z) {
@@ -916,7 +1039,7 @@ bool Lift::auto_lift()
     emit sigAutoLiftFinalSixDofCoordinates(six_x, six_y);
     autolift = false;
     m_autoLiftCompleted = true;
-    LiftUpdateUI("自动抬升运动完成");
+    LiftUpdateUI("自动抬升：100%/100% 完成");
     return true;
 }
 
@@ -983,6 +1106,10 @@ bool Lift::auto_descent()
     z = m_zm->myZmotionStatus->allAxisStatus[12].posi;
 
     if (z > 1699.5f && z < 1700.5f && autodescent) {
+        if (!visionPreflightCheck(false)) {
+            autodescent = false;
+            return false;
+        }
         StageResidual descentResidual;
         if (!runAutoDescentVisionStage(0, "自动下降1700mm", descentResidual)) {
             return false;
@@ -1220,7 +1347,7 @@ Lift::MultiFrameResult Lift::detectMultiFrame(int deviceIndex)
         mfr.validFrameCount = filteredCount;
         mfr.valid = true;
 
-        LiftUpdateUI(QString("自动对齐：复测 X=%1 Y=%2 yaw=%3")
+        LiftUpdateUI(QString("多帧检测：X=%1 Y=%2 yaw=%3")
                          .arg(mfr.x, 0, 'f', 3).arg(mfr.y, 0, 'f', 3).arg(mfr.yaw, 0, 'f', 3));
         qInfo() << QString("多帧检测成功: 采样%1, 有效%2, 过滤后%3/%4, x=%5 y=%6 yaw=%7")
                          .arg(sampledFrames).arg(rawValidFrames).arg(filteredCount).arg(m_cfgFrameCount)
@@ -1561,6 +1688,9 @@ void Lift::onParamsReceived(const LRUInnerParams &params)
     final_z_lift = params.final_z;
     m_SixDof->target_rx = params.target_rx;
     m_SixDof->target_ry = params.target_ry;
+    // 姿态补偿（per-LRU 保存的绝对值）
+    m_vision_comp_x = params.vision_comp_x;
+    m_vision_comp_y = params.vision_comp_y;
 }
 
 void Lift::setcollisionState(bool newState)
@@ -1655,15 +1785,19 @@ bool Lift::auto_StatusModifyLatte()
     float distance_x = m_gapwidth_x;
     float distance_y = m_gapwidth_y;
 
-    // 新模型下：distance_x/y 即 alignError，目标值 = 0
-    float xCorr = distance_x * m_cfgCorrectionGain;
-    float yCorr = distance_y * m_cfgCorrectionGain;
+    // 姿态补偿叠加：adjustedX/Y = raw + comp，yaw 保持原始视觉 yaw
+    float adjustedX = distance_x + m_vision_comp_x;
+    float adjustedY = distance_y + m_vision_comp_y;
+
+    // 新模型下：adjustedX/Y 即补偿后误差，目标值 = 0
+    float xCorr = adjustedX * m_cfgCorrectionGain;
+    float yCorr = adjustedY * m_cfgCorrectionGain;
     float yawCorr = angle * m_cfgCorrectionGain;
 
     if (qAbs(angle) > m_cfgSettleYawDeg) {
         m_SixDof->posePointMotion(x, y, z, rx, ry, rz - yawCorr, 2, 1);
         qInfo() << "auto_StatusModifyLatte: 调整 yaw";
-    } else if (qAbs(distance_x) > m_cfgSettleXyMm || qAbs(distance_y) > m_cfgSettleXyMm) {
+    } else if (qAbs(adjustedX) > m_cfgSettleXyMm || qAbs(adjustedY) > m_cfgSettleXyMm) {
         m_SixDof->posePointMotion(x + xCorr, y + yCorr, z, rx, ry, rz, 2, 1);
         qInfo() << "auto_StatusModifyLatte: 调整 xy";
     } else {
@@ -1693,10 +1827,10 @@ bool Lift::descent_StatusModifyLatte()
     float rz = QString::number(coordinates["rz"].toDouble(), 'f', 2).toFloat();
 
     float angle = m_angle;
-    float distance_x = m_gapwidth_x;
+    float distance_x = m_gapwidth_x;  // 已在 runAutoDescentVisionStage 中叠加补偿
     float distance_y = m_gapwidth_y;
 
-    // 新模型下：distance_x/y 即 alignError，目标值 = 0；下降用全量补偿
+    // 下降用全量补偿
     float xCorr = distance_x;
     float yCorr = distance_y;
     float yawCorr = angle;

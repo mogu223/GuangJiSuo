@@ -742,6 +742,7 @@ void ArucoDetector::onParamsReceived(const LRUInnerParams &params)
     offset_x_16 = params.offset_x_16;
     offset_y_16 = params.offset_y_16;
     marker_id = params.marker_id;
+    qInfo() << "ArucoDetector: marker_id 已同步为" << marker_id;
     z0_tvec_x_offset    = params.z0_tvec_x_offset;
     z0_tvec_y_offset    = params.z0_tvec_y_offset;
     z1700_tvec_x_offset = params.z1700_tvec_x_offset;

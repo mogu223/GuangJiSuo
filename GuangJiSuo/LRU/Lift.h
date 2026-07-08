@@ -134,6 +134,19 @@ public slots:
     // 公共 helper：根据二级高度和六自由度高度选择相机索引
     bool getCurrentVisionDeviceIndex(int &deviceIndex, float &z);
 
+    /// 视觉操作前的共享安全预检：
+    /// 控制器已连接、六自由度通信在线、相机已启动、Z 在工作范围。
+    /// 失败时通过 LiftUpdateUI 输出原因并返回 false。
+    /// checkZ=true 时检查 Z≈0/1700（视觉检测/搜索/自动对齐需要）；
+    /// checkZ=false 时跳过高度检查（姿态补偿弹窗运动不需要）。
+    bool visionPreflightCheck(bool checkZ);
+
+    /// 手动姿态补偿运动：在当前六自由度位姿上叠加 dx/dy mm 并移动。
+    /// 不检查二级高度 Z（姿态补偿弹窗允许任意高度）。
+    /// 内部检查控制器连接、非自动运动、六自由度在线且非运动中、输入范围安全。
+    /// 成功发出运动指令后返回 true；失败时通过 errorMessage 返回原因并返回 false。
+    bool applyManualVisionCompensation(float dxMm, float dyMm, QString *errorMessage = nullptr);
+
     // 多帧采样检测
     MultiFrameResult detectMultiFrame(int deviceIndex);
     // 多帧检测 + 六自由度平移找码
@@ -208,6 +221,10 @@ private:
     float x_gap_lift;
     float y_gap_lift;
     float final_z_lift;
+    // 姿态补偿（per-LRU 保存的绝对值，非累积）
+    // 应用于所有视觉对齐运动；纯视觉检测显示值不叠加。
+    float m_vision_comp_x = 0.0f;
+    float m_vision_comp_y = 0.0f;
     bool checkCollision_flag = false;
     bool m_autoLiftCompleted = false;   // auto_lift 成功完成后为 true
 

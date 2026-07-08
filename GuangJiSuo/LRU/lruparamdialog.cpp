@@ -106,6 +106,9 @@ static QJsonObject paramsToJson(const LRUInnerParams &p)
     o["lru16_front_left_y"] = static_cast<double>(p.lru16_front_left_y);
     o["lru16_rear_right_x"] = static_cast<double>(p.lru16_rear_right_x);
     o["lru16_rear_right_y"] = static_cast<double>(p.lru16_rear_right_y);
+    // 姿态补偿
+    o["vision_comp_x"] = static_cast<double>(p.vision_comp_x);
+    o["vision_comp_y"] = static_cast<double>(p.vision_comp_y);
     return o;
 }
 
@@ -148,6 +151,9 @@ static LRUInnerParams jsonToParams(const QJsonObject &o, const LRUInnerParams &f
     if (o.contains("lru16_front_left_y")) p.lru16_front_left_y = static_cast<float>(o["lru16_front_left_y"].toDouble());
     if (o.contains("lru16_rear_right_x")) p.lru16_rear_right_x = static_cast<float>(o["lru16_rear_right_x"].toDouble());
     if (o.contains("lru16_rear_right_y")) p.lru16_rear_right_y = static_cast<float>(o["lru16_rear_right_y"].toDouble());
+    // 姿态补偿（缺失时保留 fallback 默认值 0.0f）
+    if (o.contains("vision_comp_x")) p.vision_comp_x = static_cast<float>(o["vision_comp_x"].toDouble());
+    if (o.contains("vision_comp_y")) p.vision_comp_y = static_cast<float>(o["vision_comp_y"].toDouble());
     return p;
 }
 
@@ -571,6 +577,14 @@ bool LruParamDialog::collectAndConfirmParamsForSave()
 void LruParamDialog::onSave()
 {
     if (!collectAndConfirmParamsForSave())
+        return;
+
+    // 二次确认
+    auto ans = QMessageBox::question(
+        this, "确认保存",
+        QString("确认保存为 %1 的参数？").arg(m_lruTypeName),
+        QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    if (ans != QMessageBox::Yes)
         return;
 
     m_restoreRequested = false;

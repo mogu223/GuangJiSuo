@@ -10142,7 +10142,7 @@ QGroupBox::title {
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>执行一次对齐</string>
+                <string>姿态补偿</string>
                </property>
               </widget>
              </item>
